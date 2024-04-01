@@ -1,0 +1,143 @@
+body {
+    background: url('../images/background.webp');
+    background-size: cover;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../images/header.webp');
+    height: 100px;
+    margin: 0 auto;
+    padding: 10px;
+    max-width: 1200px;
+    color:#f1f1f1;
+    text-align: center;
+    font-size: 2.2em;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+}
+
+main {
+    margin: 0 auto;
+    min-height: 750px;
+    max-width: 1200px;
+    padding: 10px;
+    background-color: #232323;
+    color:#e7e7e7
+}
+
+h1 {
+    border-bottom: 4px double #ccc;
+}
+
+.report-container {
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.about-container {
+    display: flex;
+}
+
+.lucky-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 750px;
+    border-top: 5px dotted green;
+    border-bottom: 5px dotted red;
+    border-left: 5px dotted blue;
+    border-right: 5px dotted yellow;
+}
+
+.links-column {
+    flex: 1;
+    max-width: 180px;
+    background-color: #333;
+}
+
+.content-column {
+    flex: 2;
+    padding-left: 20px;
+}
+
+.links-column ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 180px;
+    background-color: #333;
+}
+
+.links-column ul li {
+    margin-bottom: 10px;
+}
+
+.links-column ul li a {
+    display: block;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.links-column ul li a:hover {
+    background-color: #111;
+    color: white;
+}
+
+.links-column a {
+    display: block;
+    margin-bottom: 10px;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.links-column a:hover {
+    text-decoration: underline;
+}
+
+.navbar {
+    margin: 0 auto;
+    max-width: 1220px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: #fff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.navbar .active {
+    background-color: #04AA6D;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(35, 35, 35, 0.5);
+    color: #c9c9c9;
+    text-align: center;
+}

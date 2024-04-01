@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}About{% endblock %}
+
+{% block body %}
+    <h1>About</h1>
+    <div class="about-container">
+        <div class="links-column">
+            <ul>
+                <li><a href="https://github.com/iWestling/mvc">Github</a></li>
+                <li><a href="https://dbwebb.se/kurser/mvc-v2/">Kurs</a></li>
+            </ul>
+        </div>
+        <div class="content-column">
+            <p>An image which can be clicked on.</p>
+            <a href="{{ asset('img/glider.svg') }}">
+                <img src="{{ asset('img/glider.svg') }}" alt="">
+            </a>
+        </div>
+    </div>
+{% endblock %}

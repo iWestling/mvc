@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}APIs{% endblock %}
+
+{% block body %}
+    <h1>APIs</h1>
+    <p>Tillgängliga JSON routes:</p>
+    <div class="links-column">
+        <ul>
+            <li><a href="{{ path('api_lucky_number') }}">{{ routes['api_lucky_number'] }}</a></li>
+            <li><a href="{{ path('api_quote') }}">{{ routes['api_quote'] }}</a></li>
+        </ul>
+    </div>
+{% endblock %}
