@@ -23,7 +23,7 @@ class ReportSite extends AbstractController
         return $this->render('lucky_number.html.twig', $data);
     }
     
-    #[Route("/home", name: "home")]
+    #[Route("/", name: "home")]
     public function home(): Response
     {
         return $this->render('home.html.twig');

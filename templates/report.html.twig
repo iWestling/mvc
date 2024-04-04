@@ -19,17 +19,27 @@
         <div class="content-column">
             <h2 id="kmom01">Kmom01</h2>
             <p>Rapport för kmom01.</p>
+            <p>Jag har tidigare sett (och lite smått testat på) objektorienterad programmering i C# och python, så logiken är inte helt ny för mig även om det var ett tag sedan jag jobbat med det. Förrutom det lilla vi stött på i tidigare kurser är objektorientering i PHP helt nytt för mig så det blir kul att lära sig det mer djupgående i ett annat språk.
+            </p>
             <p>
-                Berätta kort om dina förkunskaper och tidigare erfarenheter kring objektorientering.<br>
-                Berätta kort om PHPs modell för klasser och objekt. Vilka är de grunder man behöver veta/förstå för att kunna komma igång och skapa sina första klasser?<br>
-                Reflektera kort över den kodbas, koden, strukturen som användes till uppgiften me/report, hur uppfattar du den?<br>
-                Med tanke på artikeln “PHP The Right Way”, vilka delar in den finner du extra intressanta och värdefulla? Är det några särskilda områden som du känner att du vill veta mer om? Lyft fram några delar av artikeln som du känner mer värdefulla.<br>
-                Vilken är din TIL för detta kmom?<br>
-                Berätta kort om dina förkunskaper och tidigare erfarenheter kring objektorientering.<br>
-                Berätta kort om PHPs modell för klasser och objekt. Vilka är de grunder man behöver veta/förstå för att kunna komma igång och skapa sina första klasser?<br>
-                Reflektera kort över den kodbas, koden, strukturen som användes till uppgiften me/report, hur uppfattar du den?<br>
-                Med tanke på artikeln “PHP The Right Way”, vilka delar in den finner du extra intressanta och värdefulla? Är det några särskilda områden som du känner att du vill veta mer om? Lyft fram några delar av artikeln som du känner mer värdefulla.<br>
-                Vilken är din TIL för detta kmom?<br>
+                Klasser definierar olika properties och metoder som ett objekt av en klass har. Objektet är en "instans" av en klass, properties är individuellt för varje objekt medans metoder delas av alla objekt tillhörande en klass. 
+                Man kan se det som en wrapper för en kollektion av olika funktioner och variablar.<br>
+                Variablar har olika visibility, det finns public (kan användas utanför klassen), protected (kan endas användas inom klassen och dess subklasser) och private (kan endast användas inom klassen). 
+                För grunderna kan det även vara bra att ha koll på inheritance som gör att man kan ärva properties och metoder från andra klasser samt constructors som "initierar" object properties eller gör olika setup tasks som behövs när man skapar ett objekt.
+            </p>
+            <p>
+                För me/report-uppgiften börjar vi med model-view-controller upplägget. Vi bygger en webbplats med controller som hanterar olika routes och händelser och använder vyer för att rendera webbsidorna med base.html.twig some base template. <br> 
+                Vi använder App\Controller som namespace där vi skapar klasser och objekt för olika routes, Encore hanterar asset management och Composer används för Dependency management. För mitt specifika upplägg har jag en ReportSiteJson.php controller för att inkapsla Json "endpoints" separat från ReportSite.php<br>
+            </p>
+            <p>
+                I artikeln “PHP The Right Way” tycker jag att några mer värdefulla delar är:
+                Code Style Guide - Att ha en konsekvent kod för läsbarhet
+                Dependency Management: Att använda dependencies för PHP
+                Coding Practices: Grunderna i att koda i PHP, date och time hantering, design patterns, att använda UTF-8 samt internationalization och lacalization. 
+                Security - Att förstå best practices web application security, som t.ex password hashing och data filtering.
+                Dessa känns mest värdefulla för en nybörjare, men det skulle även vara intressant att lära sig mer om enhetstestning och databaser vilket jag tror vi kommer att lära oss mer av senare i kursen. 
+            </p>
+            <p>Min TIL för detta kmom är hela MVC strukturen och Symfony samt en del om objektorientering i PHP, det var mycket nytt för mig men kul och lärorikt.  
             </p>
             <h2 id="kmom02">Kmom02</h2>
             <p>Rapport för kmom02.</p>
@@ -41,7 +51,7 @@
             <p>Rapport för kmom05.</p>
             <h2 id="kmom06">Kmom06</h2>
             <p>Rapport för kmom06.</p>
-            <h2 id="kmom07">Kmom07</h2>
+            <h2 id="kmom07">Kmom07</h2> 
             <p>Rapport för kmom07.</p>
         </div>
     </div>
