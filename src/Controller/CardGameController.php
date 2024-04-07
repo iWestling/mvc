@@ -80,6 +80,59 @@ class CardGameController extends AbstractController
         return $this->redirectToRoute('card_shuffle_page');
     }
 
+    #[Route("/card/deck/draw", name: "card_draw")]
+    public function drawCard(SessionInterface $session): Response
+    {
+        $deck = $session->get('deck', []);
+    
+        if (empty($deck)) {
+            $this->addFlash('warning', 'No more cards left in the deck.');
+            return $this->redirectToRoute('card_deck');
+        }
+    
+        $drawnCard = array_shift($deck);
+        $session->set('deck', $deck);
+    
+        $cardHand = new CardHand();
+        $cardHand->add($drawnCard);
+    
+        return $this->render('card/draw.html.twig', [
+            'drawnCards' => $cardHand->getString(),
+            'remainingCards' => count($deck)
+        ]);
+    }
+    
+
+    #[Route("/card/deck/draw/{number}", name: "card_draw_number", methods: ["GET"])]
+    public function drawNumberCards(int $number, SessionInterface $session): Response
+    {
+        $deck = $session->get('deck', []);
+    
+        if (empty($deck)) {
+            $this->addFlash('warning', 'No more cards left in the deck.');
+            return $this->redirectToRoute('card_deck');
+        }
+    
+        $cardHand = new CardHand();
+    
+        for ($i = 0; $i < $number; $i++) {
+            if (!empty($deck)) {
+                $drawnCard = array_shift($deck);
+                $cardHand->add($drawnCard);
+            } else {
+                break;
+            }
+        }
+    
+        $session->set('deck', $deck);
+    
+        return $this->render('card/draw_number.html.twig', [
+            'drawnCards' => $cardHand->getString(),
+            'remainingCards' => count($deck)
+        ]);
+    }
+    
+    
     // #[Route("/game/pig/test/roll", name: "test_roll_dice")]
     // public function testRollDice(): Response
     // {
