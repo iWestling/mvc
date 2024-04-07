@@ -10,7 +10,7 @@ header {
     background: url('../images/header.webp');
     height: 100px;
     margin: 0 auto;
-    padding: 10px;
+    padding: 15px;
     max-width: 1200px;
     color:#f1f1f1;
     text-align: center;
@@ -22,7 +22,7 @@ main {
     margin: 0 auto;
     min-height: 750px;
     max-width: 1200px;
-    padding: 10px;
+    padding: 15px;
     background-color: #232323;
     color:#e7e7e7
 }
@@ -104,7 +104,7 @@ p {
 
 .navbar {
     margin: 0 auto;
-    max-width: 1220px;
+    max-width: 1230px;
 }
 
 .navbar ul {
@@ -144,4 +144,46 @@ footer {
     background-color: rgba(35, 35, 35, 0.5);
     color: #c9c9c9;
     text-align: center;
+}
+
+/**
+* kmom02
+*/
+
+input {
+    font-size: 1em;
+}
+
+.die {
+    font-size: 2.3em;
+}
+
+ul .dicearea {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul .dicearea li {
+    display: inline;
+}
+
+.flash-notice {
+    padding: 0.5em;
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+}
+.flash-notice:before {
+    content: "ⓘ";
+}
+
+.flash-warning {
+    padding: 0.5em;
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.flash-warning:before {
+    content: "⚠";
 }

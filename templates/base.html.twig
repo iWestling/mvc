@@ -25,10 +25,12 @@
                 <li><a href="{{ path('report') }}">Report</a></li>
                 <li><a href="{{ path('lucky_number') }}">Lucky</a></li>
                 <li><a href="{{ path('api') }}">APIs</a></li>
+                <li><a href="{{ path('pig_start') }}">Pig game</a></li>
+                <li><a href="{{ path('card_start') }}">Card</a></li>
             </ul>
         </nav>
         <main>
-        {% block body %}{% endblock %}
+        {% block main %}{% endblock %}
         </main>
 
         <footer>

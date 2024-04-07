@@ -22,7 +22,7 @@ class ReportSite extends AbstractController
 
         return $this->render('lucky_number.html.twig', $data);
     }
-    
+
     #[Route("/", name: "home")]
     public function home(): Response
     {
@@ -46,7 +46,8 @@ class ReportSite extends AbstractController
     {
         $routes = [
             'api_lucky_number' => '/api/lucky',
-            'api_quote' => '/api/quote'
+            'api_quote' => '/api/quote',
+            'api_deck' => '/api/deck'
         ];
 
         return $this->render('api.html.twig', ['routes' => $routes]);
