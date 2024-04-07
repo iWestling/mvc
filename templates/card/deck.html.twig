@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Deck of Cards{% endblock %}
+
+{% block main %}
+    <h1>Deck of Cards</h1>
+    <form method="post" action="{{ path('card_shuffle') }}">
+        <p>
+            <input type="submit" name="shuffle" value="Shuffle">
+        </p>
+    </form>
+    <ul>
+        {% for card in deck %}
+            <li>{{ card.getAsString() }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
