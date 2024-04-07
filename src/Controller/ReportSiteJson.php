@@ -91,18 +91,24 @@ class ReportSiteJson
         return $response;
     }
 
-    #[Route("/api/deck/shuffle", name: "api_deck_shuffle", methods: ["POST"])]
-    public function shuffleDeck(Request $request, SessionInterface $session): JsonResponse
+    #[Route("/api/deck/shuffle", name: "api_deck_shuffle", methods: ["GET", "POST"])]
+    public function shuffleDeck(SessionInterface $session): JsonResponse
     {
         // Retrieve the deck from the session
         $deck = $session->get('deck', []);
-
+    
+        // If the deck is not initialized, generate and store a new one in the session
+        if (empty($deck)) {
+            $deck = DeckOfCards::generateDeck();
+            $session->set('deck', $deck);
+        }
+    
         // Shuffle the deck
         shuffle($deck);
-
-        // Store the shuffled deck back in the session
+    
+        // Store the shuffled deck back into the session
         $session->set('deck', $deck);
-
+    
         // Convert deck to array of associative arrays for JSON response
         $deckArray = array_map(function ($card) {
             return [
@@ -110,13 +116,86 @@ class ReportSiteJson
                 'string' => $card->getAsString()
             ];
         }, $deck);
-
+    
         // Create JSON response with pretty print
         $response = new JsonResponse($deckArray);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
         );
-
+    
         return $response;
+    }
+    
+    #[Route("/api/deck/draw", name: "api_deck_draw", methods: ["GET", "POST"])]
+    public function drawCardFromDeck(SessionInterface $session): JsonResponse    
+    {
+        // Retrieve the deck from the session
+        $deck = $session->get('deck', []);
+
+        // If the deck is not initialized or empty, return an error response
+        if (empty($deck)) {
+            return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Draw a single card from the deck
+        $drawnCard = array_shift($deck);
+
+        // Update the deck in the session
+        $session->set('deck', $deck);
+
+        // Prepare the response JSON structure
+        $response = [
+            'drawnCard' => [
+                'value' => $drawnCard->getValue(),
+                'string' => $drawnCard->getAsString()
+            ],
+            'remainingCards' => count($deck)
+        ];
+
+        // Return the JSON response
+        return new JsonResponse($response);
+    }
+
+    #[Route("/api/deck/draw/{number}", name: "api_deck_draw_multiple", methods: ["GET", "POST"])]
+    public function drawMultipleCardsFromDeck(Request $request, SessionInterface $session, int $number): JsonResponse
+    {
+        // Retrieve the deck from the session
+        $deck = $session->get('deck', []);
+
+        // If the deck is not initialized or empty, return an error response
+        if (empty($deck)) {
+            return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Validate the number of cards to draw
+        if ($number <= 0) {
+            return new JsonResponse(['error' => 'Invalid number of cards to draw.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Draw the specified number of cards from the deck
+        $drawnCards = [];
+        for ($i = 0; $i < $number; $i++) {
+            if (!empty($deck)) {
+                $drawnCard = array_shift($deck);
+                $drawnCards[] = [
+                    'value' => $drawnCard->getValue(),
+                    'string' => $drawnCard->getAsString()
+                ];
+            } else {
+                break; // If there are no more cards left in the deck, stop drawing
+            }
+        }
+
+        // Update the deck in the session
+        $session->set('deck', $deck);
+
+        // Prepare the response JSON structure
+        $response = [
+            'drawnCards' => $drawnCards,
+            'remainingCards' => count($deck)
+        ];
+
+        // Return the JSON response
+        return new JsonResponse($response);
     }
 }

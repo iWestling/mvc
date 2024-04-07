@@ -7,10 +7,12 @@
     <p>Tillgängliga JSON routes:</p>
     <div class="links-column">
         <ul>
-            <li><a href="{{ path('api_lucky_number') }}">{{ routes['api_lucky_number'] }}</a></li>
-            <li><a href="{{ path('api_quote') }}">{{ routes['api_quote'] }}</a></li>
-            <li><a href="{{ path('api_deck') }}">{{ routes['api_deck'] }}</a></li>
-            <li><a href="{{ path('api_deck_shuffle') }}">{{ routes['api_deck_shuffle'] }}</a></li>
+            <li><a href="{{ path('api_lucky_number') }}">API Lucky Number</a></li>
+            <li><a href="{{ path('api_quote') }}">API Quote</a></li>
+            <li><a href="{{ path('api_deck') }}">API Full Sorted Deck</a></li>
+            <li><a href="{{ path('api_deck_shuffle') }}">API Shuffle Deck</a></li>
+            <li><a href="{{ path('api_deck_draw') }}">API Draw 1 Card</a></li>
+            <li><a href="{{ path('api_deck_draw_multiple', { 'number': 5 }) }}">API Draw Multiple Cards</a></li>
         </ul>
     </div>
 {% endblock %}

@@ -4,19 +4,44 @@
 
 {% block main %}
     <h1>Draw Cards</h1>
+    <div class="game-container">
+        <div class="links-column">
+            <ul>
+                <li><a href="{{ path('session_show') }}">Session Contents</a></li>
+                <li><a href="{{ path('session_delete') }}">Delete Session</a></li>
+                <li><a href="{{ path('card_deck') }}">Sorted Full Deck</a></li>
+                <li><a href="{{ path('card_shuffle') }}">Shuffle Full Deck</a></li>
+                <li><a href="{{ path('card_draw') }}">Draw 1 Card</a></li>
+                <li>
+                    <form method="post" action="{{ path('card_draw_number', {'number': 'placeholder'}) }}" id="drawForm" class="draw-form">
+                        <label for="number">Draw multiple cards:</label>
+                        <input type="number" name="number" id="number" class="number-input" min="1" max="52">
+                        <input type="submit" name="do_it" value="Draw">
+                    </form>
+                    <script>
+                        document.getElementById('drawForm').addEventListener('submit', function() {
+                            var numberValue = document.getElementById('number').value;
+                            this.action = this.action.replace('placeholder', numberValue);
+                        });
+                    </script>
+                </li>
+            </ul>
+        </div>
+        <div class="content-column">
+            {{ include('flash.html.twig') }}
 
-    {{ include('flash.html.twig') }}
+            <div>
+                <h2>Drawn Cards:</h2>
+                <ul>
+                    {% for card in drawnCards %}
+                        <li>{{ card }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-    <div>
-        <h2>Drawn Cards:</h2>
-        <ul>
-            {% for card in drawnCards %}
-                <li>{{ card }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        <p>Number of Remaining Cards in the Deck: {{ remainingCards }}</p>
+            <div>
+                <p>Number of Remaining Cards in the Deck: {{ remainingCards }}</p>
+            </div>
+        </div>
     </div>
 {% endblock %}

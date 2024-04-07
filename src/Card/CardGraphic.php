@@ -58,11 +58,6 @@ class CardGraphic extends Card
         '[Q♠]',
         '[K♠]'
     ];
-
-    public function __construct(int $value)
-    {
-        $this->value = $value;
-    }
     
     public function getAsString(): string
     {
