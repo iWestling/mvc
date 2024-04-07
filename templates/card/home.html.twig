@@ -9,8 +9,22 @@
         <li><a href="{{ path('session_show') }}">Session Contents</a></li>
         <li><a href="{{ path('session_delete') }}">Delete Session</a></li>
         <li><a href="{{ path('card_deck') }}">Reset Deck</a></li>
-        <li><a href="{{ path('card_shuffle_page') }}">Shuffle Deck</a></li>
-        <li><a href="{{ path('card_draw') }}">Draw Card</a></li>
-        <li><a href="{{ path('card_draw_number', {'number': 2}) }}">Draw 2 Cards</a></li>
+        <li><a href="{{ path('card_shuffle') }}">Shuffle Deck</a></li>
+        <li><a href="{{ path('card_draw') }}">Draw 1 Card</a></li>
+        <li>
+            <form method="post" action="{{ path('card_draw_number', {'number': 'placeholder'}) }}" id="drawForm">
+                <label for="number">Draw multiple cards:</label>
+                <input type="number" name="number" id="number" min="1" max="52">
+                <input type="submit" name="do_it" value="Draw">
+            </form>
+            <script>
+                document.getElementById('drawForm').addEventListener('submit', function() {
+                    var numberValue = document.getElementById('number').value;
+                    this.action = this.action.replace('placeholder', numberValue);
+                });
+            </script>
+        </li>
     </ul>
+    {{ include('flash.html.twig') }}
 {% endblock %}
+

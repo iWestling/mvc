@@ -3,7 +3,8 @@
 {% block title %}Deck of Cards{% endblock %}
 
 {% block main %}
-    <h1>Deck of Cards</h1>
+    <h1>Sorted Deck of Cards</h1>
+    
     <form method="post" action="{{ path('card_shuffle') }}">
         <p>
             <input type="submit" name="shuffle" value="Shuffle">
