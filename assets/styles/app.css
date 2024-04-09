@@ -47,6 +47,7 @@ p {
 .game-container {
     display: flex;
     padding-bottom: 20px;
+    padding-right: 30px;
 }
 
 .lucky-container {
@@ -195,10 +196,22 @@ ul .dicearea li {
 }
 
 .number-input {
-    width: 80px;
+    width: 55px;
 }
 
 .draw-form {
     padding-left: 15px;
     padding-bottom: 5px;
+}
+
+.deal-form {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.deal-form input[type="submit"] {
+    width: 60px;
 }
