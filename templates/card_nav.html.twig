@@ -1,0 +1,69 @@
+<div class="links-column">
+    <ul>
+        <li><a href="{{ path('session_show') }}">Session Contents</a></li>
+        <li><a href="{{ path('session_delete') }}">Delete Session</a></li>
+        <li><a href="{{ path('card_deck') }}">Sorted Full Deck</a></li>
+        <li><a href="{{ path('card_shuffle') }}">Shuffle Full Deck</a></li>
+        <li><a href="{{ path('card_draw') }}">Draw 1 Card</a></li>
+        <li>
+            <form method="post" action="{{ path('card_draw_number', {'number': 'placeholder'}) }}" id="drawForm" class="draw-form">
+                <label for="number">Draw multiple cards:</label>
+                <input type="number" name="number" id="number" class="number-input" min="1" max="52" required>
+                <input type="submit" name="do_it" value="Draw">
+            </form>
+        </li>
+        <li>
+            <form method="post" action="{{ path('card_deal', {'players': '1', 'cards': '1'}) }}" id="dealForm" class="deal-form">
+            <label for="dealing">Deal Cards:</label>
+                <label for="players">Players:</label>
+                <input type="number" name="players" id="players" class="number-input" min="1" max="10" required>
+                <br>
+                <label for="cards">Cards:</label>
+                <input type="number" name="cards" id="cards" class="number-input" min="1" max="52" required>
+                <br>
+                <input type="submit" name="deal" value="Deal">
+            </form>
+        </li>
+    </ul>
+</div>
+
+<script>
+    // Function to update the action attribute of the drawForm
+    function updateDrawFormAction() {
+        var numberValue = document.getElementById('number').value;
+        document.getElementById('drawForm').action = "{{ path('card_draw_number', {'number': 'placeholder'}) }}"
+            .replace('placeholder', numberValue);
+    }
+
+    // Function to update the action attribute of the dealForm
+    function updateDealFormAction() {
+        var playersValue = document.getElementById('players').value;
+        var cardsValue = document.getElementById('cards').value;
+        document.getElementById('dealForm').action = "{{ path('card_deal', {'players': ':players', 'cards': ':cards'}) }}"
+            .replace(':players', playersValue)
+            .replace(':cards', cardsValue);
+    }
+
+    // Event listeners for form submissions
+    document.getElementById('drawForm').addEventListener('submit', function(event) {
+        if (!document.getElementById('number').value) {
+            alert('Please select the number of cards to draw.');
+            event.preventDefault();
+            return;
+        }
+        event.preventDefault(); // Prevent default form submission
+        updateDrawFormAction(); // Update form action
+        this.submit(); // Submit the form
+    });
+
+    document.getElementById('dealForm').addEventListener('submit', function(event) {
+        if (!document.getElementById('players').value || !document.getElementById('cards').value) {
+            alert('Please select the number of players and the number of cards per player.');
+            event.preventDefault();
+            return;
+        }
+        event.preventDefault(); // Prevent default form submission
+        updateDealFormAction(); // Update form action
+        this.submit(); // Submit the form
+    });
+</script>

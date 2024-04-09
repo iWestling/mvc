@@ -5,50 +5,25 @@
 {% block main %}
     <h1>Card Game</h1>
     <div class="game-container">
-        <div class="links-column">
-        <ul>
-            <li><a href="{{ path('session_show') }}">Session Contents</a></li>
-            <li><a href="{{ path('session_delete') }}">Delete Session</a></li>
-            <li><a href="{{ path('card_deck') }}">Sorted Full Deck</a></li>
-            <li><a href="{{ path('card_shuffle') }}">Shuffle Full Deck</a></li>
-            <li><a href="{{ path('card_draw') }}">Draw 1 Card</a></li>
-            <li>
-                <form method="post" action="{{ path('card_draw_number', {'number': 'placeholder'}) }}" id="drawForm" class="draw-form">
-                    <label for="number">Draw multiple cards:</label>
-                    <input type="number" name="number" id="number" class="number-input" min="1" max="52">
-                    <input type="submit" name="do_it" value="Draw">
-                </form>
-                <script>
-                    document.getElementById('drawForm').addEventListener('submit', function() {
-                        var numberValue = document.getElementById('number').value;
-                        this.action = this.action.replace('placeholder', numberValue);
-                    });
-                </script>
-            </li>
-        </ul>
-        </div>
+        {{ include('card_nav.html.twig') }}
         <div class="content-column">
             {{ include('flash.html.twig') }}
             <h2>Klasser</h2>
             <p>
-                Card (App\Card\Card):
-                Denna klass representerar ett spelkort med ett numeriskt värde. 
-                Klassen innehåller metoder för att få fram kortets värde och dess strängrepresentation.
+                Card representerar ett spelkort med ett numeriskt värde. 
+                Klassen innehåller metoder för att få fram kortets värde och getCardAsString-metoden returnerar en sträng med kortets värde.
             </p>
             <p>
-                CardGraphic (App\Card\CardGraphic):
-                CardGraphic ärver från Card-klassen, den returnerar en grafisk representationen baserat på kortets värde.
+                CardGraphic ärver från Card-klassen, den returnerar en grafisk representationen baserat på kortets värde. Här använder jag en array med sökvägar till bildfiler för varje kort.
             </p>
             <p>
-                DeckOfCards (App\Card\DeckOfCards):
-                Genererar en kortlek med hjälp av instanser av CardGraphic.
-                Metoden generateDeck() skapar och returnerar en hel kortlek.
+                CardHand representerar en hand med kort och gör att användaren kan lägga till kort i handen, hämta kortvärden samt strängrepresentationer.<br>
+                CardHand innehåller en samling av Card-objekt i vad som kallas en Composition-relation, vilket innebär att om CardHand raderas så raderas även Card-objekten.
             </p>
             <p>
-                CardHand (App\Card\CardHand):
-                Representerar en hand med kort, tillåter användaren att lägga till kort i handen, "rolla" handen och hämta kortvärden och strängrepresentationer.
-                CardHand innehåller en samling av Card-objekt, vilket innebär att existensen av ett CardHand-objekt är beroende av att det finns Card-objekt (Composition).
-                </p>
+                DeckOfCards genererar en kortlek med hjälp av CardGraphic. <br>
+                Metoden generateDeck() skapar och returnerar en hel kortlek. Detta är nästan som composition men lite annorlunda då den inte "har" en annan klass, den använder istället temporärt CardGraphic för att generera en kortlek, så därför skulle jag klassa det som Dependency istället för Composition. 
+            </p>
         </div>
     </div>
 {% endblock %}

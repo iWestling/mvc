@@ -13,6 +13,7 @@
             <li><a href="{{ path('api_deck_shuffle') }}">API Shuffle Deck</a></li>
             <li><a href="{{ path('api_deck_draw') }}">API Draw 1 Card</a></li>
             <li><a href="{{ path('api_deck_draw_multiple', { 'number': 5 }) }}">API Draw Multiple Cards</a></li>
+            <li><a href="{{ path('api_deck_deal', {'players': '3', 'cards': '5'}) }}">API Deal Cards</a></li>
         </ul>
     </div>
 {% endblock %}

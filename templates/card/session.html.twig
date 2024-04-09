@@ -5,49 +5,36 @@
 {% block main %}
     <h1>Session Contents</h1>
     <div class="game-container">
-        <div class="links-column">
-            <ul>
-                <li><a href="{{ path('session_show') }}">Session Contents</a></li>
-                <li><a href="{{ path('session_delete') }}">Delete Session</a></li>
-                <li><a href="{{ path('card_deck') }}">Sorted Full Deck</a></li>
-                <li><a href="{{ path('card_shuffle') }}">Shuffle Full Deck</a></li>
-                <li><a href="{{ path('card_draw') }}">Draw 1 Card</a></li>
-                <li>
-                    <form method="post" action="{{ path('card_draw_number', {'number': 'placeholder'}) }}" id="drawForm" class="draw-form">
-                        <label for="number">Draw multiple cards:</label>
-                        <input type="number" name="number" id="number" class="number-input" min="1" max="52">
-                        <input type="submit" name="do_it" value="Draw">
-                    </form>
-                    <script>
-                        document.getElementById('drawForm').addEventListener('submit', function() {
-                            var numberValue = document.getElementById('number').value;
-                            this.action = this.action.replace('placeholder', numberValue);
-                        });
-                    </script>
-                </li>
-            </ul>
-        </div>
+        {{ include('card_nav.html.twig') }}
         <div class="content-column">
             {{ include('flash.html.twig') }}
         
             <h2>Session Data:</h2>
             <ul>
                 {% for key, value in sessionData %}
-                    {% if key == 'deck' %}
-                        <li><strong>{{ key }}</strong>: 
-                            {% if value is empty %}
-                                No cards in the deck.
-                            {% else %}
-                                <ul>
-                                    {% for card in value %}
-                                        <li>{{ card.getAsString() }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </li>
-                    {% else %}
-                        <li><strong>{{ key }}</strong>: {{ value|json_encode(constant('JSON_PRETTY_PRINT')) }}</li>
-                    {% endif %}
+                    <li>
+                        <strong>{{ key }}</strong>:
+                        {% if value is iterable %}
+                            <ul>
+                                {% for subKey, subValue in value %}
+                                    <li>
+                                        <strong>{{ subKey }}</strong>: 
+                                        {% if subValue is iterable %}
+                                            <ul>
+                                                {% for subSubKey, subSubValue in subValue %}
+                                                    <li>{{ subSubKey }}: {{ subSubValue }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            {{ subValue.getAsString() }}
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ul>
         </div>
