@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Card\DeckOfCards;
+use App\Card\CardHand;
 
 class ReportSiteJson
 {
@@ -78,7 +79,7 @@ class ReportSiteJson
         $deckArray = array_map(function ($card) {
             return [
                 'value' => $card->getValue(),
-                'string' => $card->getAsString()
+                'string' => $card->getCardAsString()
             ];
         }, $deck);
 
@@ -96,38 +97,38 @@ class ReportSiteJson
     {
         // Retrieve the deck from the session
         $deck = $session->get('deck', []);
-    
+
         // If the deck is not initialized, generate and store a new one in the session
         if (empty($deck)) {
             $deck = DeckOfCards::generateDeck();
             $session->set('deck', $deck);
         }
-    
+
         // Shuffle the deck
         shuffle($deck);
-    
+
         // Store the shuffled deck back into the session
         $session->set('deck', $deck);
-    
+
         // Convert deck to array of associative arrays for JSON response
         $deckArray = array_map(function ($card) {
             return [
                 'value' => $card->getValue(),
-                'string' => $card->getAsString()
+                'string' => $card->getCardAsString()
             ];
         }, $deck);
-    
+
         // Create JSON response with pretty print
         $response = new JsonResponse($deckArray);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
         );
-    
+
         return $response;
     }
-    
+
     #[Route("/api/deck/draw", name: "api_deck_draw", methods: ["GET", "POST"])]
-    public function drawCardFromDeck(SessionInterface $session): JsonResponse    
+    public function drawCardFromDeck(SessionInterface $session): JsonResponse
     {
         // Retrieve the deck from the session
         $deck = $session->get('deck', []);
@@ -147,7 +148,7 @@ class ReportSiteJson
         $response = [
             'drawnCard' => [
                 'value' => $drawnCard->getValue(),
-                'string' => $drawnCard->getAsString()
+                'string' => $drawnCard->getCardAsString()
             ],
             'remainingCards' => count($deck)
         ];
@@ -179,7 +180,7 @@ class ReportSiteJson
                 $drawnCard = array_shift($deck);
                 $drawnCards[] = [
                     'value' => $drawnCard->getValue(),
-                    'string' => $drawnCard->getAsString()
+                    'string' => $drawnCard->getCardAsString()
                 ];
             } else {
                 break; // If there are no more cards left in the deck, stop drawing
@@ -192,6 +193,62 @@ class ReportSiteJson
         // Prepare the response JSON structure
         $response = [
             'drawnCards' => $drawnCards,
+            'remainingCards' => count($deck)
+        ];
+
+        // Return the JSON response
+        return new JsonResponse($response);
+    }
+
+    #[Route("/api/deck/deal/{players}/{cards}", name: "api_deck_deal", methods: ["GET", "POST"])]
+    public function dealCardsToPlayers(int $players, int $cards, SessionInterface $session): JsonResponse
+    {
+        // Retrieve the deck from the session
+        $deck = $session->get('deck', []);
+
+        // If the deck is not initialized or empty, return an error response
+        if (empty($deck)) {
+            return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Validate the number of players and cards
+        if ($players <= 0 || $cards <= 0) {
+            return new JsonResponse(['error' => 'Invalid number of players or cards.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Initialize an array to store each player's hand
+        $playerHands = [];
+
+        // Create a CardHand instance for each player
+        for ($i = 1; $i <= $players; $i++) {
+            $playerHands[] = new CardHand();
+        }
+
+        // Deal cards to each player
+        for ($i = 0; $i < $cards; $i++) {
+            foreach ($playerHands as $hand) {
+                if (!empty($deck)) {
+                    $drawnCard = array_shift($deck);
+                    $hand->add($drawnCard);
+                } else {
+                    break; // If there are no more cards left in the deck, stop dealing
+                }
+            }
+        }
+
+        // Update the deck in the session
+        $session->set('deck', $deck);
+
+        // Prepare the response JSON structure
+        $response = [
+            'playerHands' => array_map(function ($hand) {
+                return array_map(function ($card) {
+                    return [
+                        'value' => $card->getValue(),
+                        'string' => $card->getCardAsString()
+                    ];
+                }, $hand->getHand());
+            }, $playerHands),
             'remainingCards' => count($deck)
         ];
 
