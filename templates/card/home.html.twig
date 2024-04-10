@@ -10,7 +10,7 @@
             {{ include('flash.html.twig') }}
             <h2>Klasser</h2>
             <p>
-                Card representerar ett spelkort med ett numeriskt värde. 
+                Card representerar ett spelkort med ett numeriskt värde.<br>
                 Klassen innehåller metoder för att få fram kortets värde och getCardAsString-metoden returnerar en sträng med kortets värde.
             </p>
             <p>
@@ -22,8 +22,10 @@
             </p>
             <p>
                 DeckOfCards genererar en kortlek med hjälp av CardGraphic. <br>
-                Metoden generateDeck() skapar och returnerar en hel kortlek. Detta är nästan som composition men lite annorlunda då den inte "har" en annan klass, den använder istället temporärt CardGraphic för att generera en kortlek, så därför skulle jag klassa det som Dependency istället för Composition. 
+                Metoden generateDeck() skapar och returnerar en hel kortlek. Detta är likt composition men lite annorlunda då den inte "har" en annan klass, den använder istället temporärt CardGraphic för att generera en kortlek, så därför skulle jag klassa det som Dependency istället för Composition. 
             </p>
+            <br>
+            <img src="{{ asset('img/carduml.webp') }}" alt="An MVC image">
         </div>
     </div>
 {% endblock %}

@@ -40,13 +40,12 @@ class CardGameController extends AbstractController
     #[Route("/card/deck", name: "card_deck", methods: ["GET"])]
     public function showDeck(SessionInterface $session): Response
     {
-        // Generate a new deck of cards
+        // New deck
         $deck = DeckOfCards::generateDeck();
 
-        // Store the new deck in the session
+        // Save deck in session
         $session->set('deck', $deck);
 
-        // Render the deck template
         return $this->render('card/deck.html.twig', ['deck' => $deck]);
     }
 
@@ -67,7 +66,7 @@ class CardGameController extends AbstractController
     #[Route("/card/deck/draw", name: "card_draw")]
     public function drawCard(SessionInterface $session): Response
     {
-        // Check if session data exists
+        // Check
         if (!$session->has('deck')) {
             $this->addFlash('warning', 'No cards in deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
@@ -76,11 +75,10 @@ class CardGameController extends AbstractController
         $deck = $session->get('deck', []);
 
         if (empty($deck)) {
-            // Add flash message if the deck is empty
             $this->addFlash('warning', 'No more cards left in the deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
         } else {
-            // Draw a card from the deck
+            // Draw card
             $drawnCard = array_shift($deck);
             $session->set('deck', $deck);
 
@@ -88,9 +86,8 @@ class CardGameController extends AbstractController
             $cardHand->add($drawnCard);
         }
 
-        // Render the draw template with the drawn card (or without if the deck is empty)
         return $this->render('card/draw.html.twig', [
-            'drawnCards' => isset($cardHand) ? $cardHand->getString() : [],
+            'drawnCards' => isset($cardHand) ? $cardHand->getHand() : [],
             'remainingCards' => count($deck)
         ]);
     }
@@ -99,22 +96,19 @@ class CardGameController extends AbstractController
     #[Route("/card/deck/draw", name: "card_draw_post", methods: ["POST"])]
     public function drawCardsPost(Request $request, SessionInterface $session): Response
     {
-        // Retrieve the number of cards from the form submission
+        // get number of cards from form
         $number = (int)$request->request->get('number');
 
-        // Redirect to the route for drawing a specified number of cards
         return $this->redirectToRoute('card_draw_number', ['number' => $number]);
     }
 
     #[Route("/card/deck/draw/{number}", name: "card_draw_number", methods: ["GET", "POST"])]
     public function drawNumberCards(Request $request, SessionInterface $session, ?int $number = null): Response
     {
-        // If the route parameter is not provided, try to get it from the request for POST requests
         if ($request->getMethod() === 'POST' && $number === null) {
             $number = (int)$request->request->get('number');
         }
 
-        // Check if session data exists
         if (!$session->has('deck')) {
             $this->addFlash('warning', 'No cards in deck. Resetting deck.');
             return $this->redirectToRoute('card_deck');
@@ -123,29 +117,27 @@ class CardGameController extends AbstractController
         $deck = $session->get('deck', []);
 
         if (empty($deck)) {
-            // Add flash message if the deck is empty
             $this->addFlash('warning', 'No more cards left in the deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
         } else {
             $cardHand = new CardHand();
 
-            // Draw the specified number of cards from the deck
+            // Draw X number of cards
             for ($i = 0; $i < $number; $i++) {
                 if (!empty($deck)) {
                     $drawnCard = array_shift($deck);
-                    $cardHand->add($drawnCard);
+                    $cardHand->add($drawnCard); // Add card
                 } else {
-                    break; // If there are no more cards left in the deck, stop drawing
+                    break;
                 }
             }
 
-            // Update the deck in the session
+            // Update deck
             $session->set('deck', $deck);
         }
 
-        // Render the draw_number template with the drawn cards (or without if the deck is empty)
         return $this->render('card/draw_number.html.twig', [
-            'drawnCards' => isset($cardHand) ? $cardHand->getString() : [],
+            'drawnCards' => isset($cardHand) ? $cardHand->getHand() : [],
             'remainingCards' => count($deck)
         ]);
     }
@@ -153,49 +145,45 @@ class CardGameController extends AbstractController
     #[Route("/card/deck/deal/{players}/{cards}", name: "card_deal")]
     public function dealCards(int $players, int $cards, SessionInterface $session): Response
     {
-        // Check if session data exists
+        // Check
         if (!$session->has('deck')) {
             $this->addFlash('warning', 'No cards in deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
         }
-    
-        // Retrieve the deck from the session
+
         $deck = $session->get('deck', []);
-    
-        // Initialize an array to store each player's hand
+
         $playerHands = [];
-    
-        // Create a CardHand instance for each player
+
+        // CardHand instance for each player
         for ($i = 1; $i <= $players; $i++) {
             $playerHands[] = new CardHand();
         }
-        
+
         if (empty($deck)) {
-            // Add flash message if the deck is empty
             $this->addFlash('warning', 'No more cards left in the deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
         } else {
-            // Deal cards to each player
+            // Deal to each player
             for ($i = 0; $i < $cards; $i++) {
                 foreach ($playerHands as $hand) {
                     if (!empty($deck)) {
                         $drawnCard = array_shift($deck);
                         $hand->add($drawnCard);
                     } else {
-                        break; // If there are no more cards left in the deck, stop dealing
+                        break;
                     }
                 }
             }
         }
-    
-        // Update the deck in the session
+
+        // Update deck
         $session->set('deck', $deck);
-    
-        // Render the template to display the dealt cards for each player
+
         return $this->render('card/deal.html.twig', [
             'playerHands' => $playerHands,
             'remainingCards' => count($deck)
         ]);
     }
-    
+
 }

@@ -30,7 +30,7 @@ class CardHand
     {
         $values = [];
         foreach ($this->hand as $card) {
-            $values[] = $card->getAsString();
+            $values[] = $card->getCardAsString();
         }
         return $values;
     }

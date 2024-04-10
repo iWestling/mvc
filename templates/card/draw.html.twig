@@ -13,7 +13,7 @@
                 <h2>Drawn Cards:</h2>
                 <ul>
                     {% for card in drawnCards %}
-                        <img src="{{ asset(card) }}" alt="Card Image">
+                        <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card Image">
                     {% endfor %}
                 </ul>
             </div>

@@ -11,7 +11,7 @@
             <p>You now have a full shuffled deck:</p>
             <ul>
                 {% for card in deck %}
-                    <img src="{{ asset(card.getAsString()) }}" alt="Card Image">
+                    <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card Image">
                 {% endfor %}
             </ul>
         </div>
