@@ -43,6 +43,40 @@
             </p>
             <h2 id="kmom02">Kmom02</h2>
             <p>Rapport för kmom02.</p>
+            <p>Arv gör att en klass kan ärva properties och metoder från en annan klass, det ger en "is a" relation mellan klasserna. 
+            Detta gör att man lätt kan återanvända kod, subclasses kan även lägga till nya metoder och egenskaper. Arv används med "extends" i PHP.<br>
+            Komposition är precis som det låter ett sätt att lägga ihop olika enklare objekt till ett större mer komplicerat i en "has a"-relation. Detta görs genom att skapa objekt av en klass inom en annan klass.<br>
+            Interface definierar ett "kontrakt" för klasser, där man anger olika metoder som klasser måste återge. Det skapar ett gemensamt API och tillåter objekt av olika klasser att behandlas på samma sätt.<br>
+            Trait är ett sätt för återanvänding av kod vid flera olika arv. De kapslar in metoder som kan återanvändas i olika klasser utan att använda traditionellt arv. Detta gör alltså att man kan använda funktionalitet i klasser oberoende av "hierarkin" i dess arv.<br>
+            <p>
+                För denna uppgift skapade jag 4 klasser:<br>
+                - Card, som representerar ett kort med ett värde.<br>
+                - CardGraphic, som ärver från Card och har en metod för att få ut den grafiska representationen av ett kort.<br>
+                - CardHand, som har en korthand och metoder för att lägga till kort, ta ut värden och värdet som sträng.<br>
+                - DeckOfCards, som genererar en kortlek med hjälp av CardGraphic<br>
+                Jag skapade routes för dessa i CardGameController och lade till routes för JSON-endpoints i ReportSiteJson.php.<br>
+            <p>
+            För session gjorde jag först så att den bara skrev ut allt i "deck", men sedan gjorde jag en till for-loop utifall att jag i framtiden skulle spara fler arrays/objekt i sessionen (följande värden skrivs sedan i fler for-loopar utifall de är iterabla). Delete Session tar sedan bort allt i sessionen med session->clear().
+            Konstruktorn initierar valuet av Card klassen, i CardGraphic används sedan $representation som har en array av filsökvägar som representerar bilder av korten i kortleken. getAsString tar ut sökvägen för filen, getCardAsString får ut nummervärdet på kortet i strängformat och getCardForAPI får ut en enklare representation av kortet, som "[Q♠]".
+            Kortleken genereras i olika routes med DeckOfCards::generateDeck() (och shufflas med shuffle($deck)). Den sparar sedan kortleken i sessionen och i mina twigs skrivs de ut.<br>
+            I draw-routen tar drawCard och drawNumberCards sedan ut ett eller flera kort från kortleken som sparats i sessionen och skriver ut den och hur många kort som finns kvar i kortleken.<br>
+            I deal-routen tar dealCards ett specifikt antal kort och delar ut till ett specifikt antal spelare, detta renderas också i sessionen.
+            På ett liknande sätt har jag gjort JSON routes for API där de istället returnerar en JSON struktur.<br>
+            Allting skrivs ut i twigs där jag valt att göra en separat fil för sido-kolumnen med olika valbara länkar (aktioner för spelet) som då inkluderas till varje sida. 
+
+            </p>
+            <p>Förbättringar:
+            Jag var lite osäker på hur man ville att uppgiften skulle visas på sidorna, för att uppfylla kravet om sidorna gjorde jag varje aktion till en ny sida (shuffle, deck osv) men jag kan tycka att det skulle vara mer logiskt att redirecta varje händelse till samma sida (som med pig_play). Detta går lätt att åtgärda men då kravet i uppgiften kändes vagt ville jag vara på säkra sidan.<br>
+            Då uppgiften inte krävde det sparade jag inte de korten som dragits i session utan bara i en temporär array, men detta hade varit en enkel förbättring att göra om man sedan vill utveckla programmet. 
+            Då kravet i punkt 12 sa att "när man gör card/deck/shuffle så kan kortleken återställas" gjorde jag så att shuffle alltid skapar en ny shufflad kortlek, här kan man kanske tänka att den kan ta tillbaka korten i kortleken och shuffla istället, men då allting ger samma resultat tänkte jag att det inte spelar någon roll.  
+            Tillsist skulle nog koden kunna optimeras ännu mer och ha lite mer felhantering. 
+            </p>
+            <p>
+                Jag tycker att det varit kul om än lite svårt att jobba med symfony och MVC.<br>
+                Som jag förstår är det mycket för att separera allting bättre, med modeller som hanterar datalogik, vyer som visar användares "interface" och kontroller som hanterar interaktionen mellan de två. Denna struktur gör koden mer organiserad och lättare att hålla koll på, men jag tycker ibland att det är svårt att bestämma var viss logik ska finnas i klassernas relation till varandra och vad som behövs när. Förhoppningsvis är detta något blir mer säker på desto mer man jobbar med det.
+            </p>
+            <p>TIL för detta moment är, förrutom allt nytt jag lärt mig, att fokusera på det viktiga. Nu när jag var "klar" med uppgiften satt jag alldeles för länge med layout och att få till formulär för att dynamiskt kunna välja antal kort/spelare, jag borde hellre ha tagit den tiden till att läsa på mer om saker jag är mer osäker på som interface/trait.
+            </p>
             <h2 id="kmom03">Kmom03</h2>
             <p>Rapport för kmom03.</p>
             <h2 id="kmom04">Kmom04</h2>
