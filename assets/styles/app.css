@@ -202,16 +202,26 @@ ul .dicearea li {
 .draw-form {
     padding-left: 15px;
     padding-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.draw-form input[type="submit"] {
+    width: 62px;
 }
 
 .deal-form {
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
 }
 
 .deal-form input[type="submit"] {
-    width: 60px;
+    width: 62px;
+}
+
+.card-image {
+    border-radius: 5px;
 }
