@@ -68,61 +68,52 @@ class ReportSiteJson
     #[Route("/api/deck", name: "api_deck", methods: ["GET"])]
     public function getDeck(SessionInterface $session): JsonResponse
     {
-        $deck = $session->get('deck', []);
-
-        if (empty($deck)) {
-            $deck = DeckOfCards::generateDeck();
-            $session->set('deck', $deck);
-        }
-
+        $deckOfCards = new DeckOfCards();
+        $deck = $deckOfCards->getCards();
+        $session->set('deck', $deck);
+    
         $deckArray = array_map(function ($card) {
-            $cardGraphic = new CardGraphic($card->getValue());
             return [
                 'value' => $card->getValue(),
                 'card' => $card->getForAPI(),
-                'imagepath' => $cardGraphic->getAsString()
+                'imagepath' => $card->getAsString()
             ];
         }, $deck);
-
+    
         // JSON pretty print
         $response = new JsonResponse($deckArray);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
         );
-
+    
         return $response;
     }
 
     #[Route("/api/deck/shuffle", name: "api_deck_shuffle", methods: ["GET", "POST"])]
     public function shuffleDeck(SessionInterface $session): JsonResponse
     {
-        $deck = $session->get('deck', []);
-
-        if (empty($deck)) {
-            $deck = DeckOfCards::generateDeck();
-            $session->set('deck', $deck);
-        }
-
+        $deckOfCards = new DeckOfCards();
+        $deck = $deckOfCards->getCards();
+    
         // Shuffle
         shuffle($deck);
-
+    
         $session->set('deck', $deck);
-
+    
         // JSON
         $deckArray = array_map(function ($card) {
-            $cardGraphic = new CardGraphic($card->getValue());
             return [
                 'value' => $card->getValue(),
                 'card' => $card->getForAPI(),
-                'imagepath' => $cardGraphic->getAsString()
+                'imagepath' => $card->getAsString()
             ];
         }, $deck);
-
+    
         $response = new JsonResponse($deckArray);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
         );
-
+    
         return $response;
     }
 
