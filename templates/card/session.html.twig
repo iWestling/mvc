@@ -3,40 +3,15 @@
 {% block title %}Session Contents{% endblock %}
 
 {% block main %}
-    <h1>Session Contents</h1>
-    <div class="game-container">
+   <h1>Session Contents</h1>
+   <div class="game-container">
         {{ include('card_nav.html.twig') }}
         <div class="content-column">
             {{ include('flash.html.twig') }}
-        
             <h2>Session Data:</h2>
-            <ul>
-                {% for key, value in sessionData %}
-                    <li>
-                        <strong>{{ key }}</strong>:
-                        {% if value is iterable %}
-                            <ul>
-                                {% for subKey, subValue in value %}
-                                    <li>
-                                        <strong>{{ subKey }}</strong>: 
-                                        {% if subValue is iterable %}
-                                            <ul>
-                                                {% for subSubKey, subSubValue in subValue %}
-                                                    <li>{{ subSubKey }}: {{ subSubValue }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% else %}
-                                            {{ subValue.getCardForAPI() }}
-                                        {% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            {{ value }}
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+            <pre>
+                {{ dump(sessionData) }}
+            </pre>
         </div>
-    </div>
+   </div>
 {% endblock %}
