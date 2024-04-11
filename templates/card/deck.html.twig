@@ -10,11 +10,11 @@
             {{ include('flash.html.twig') }}
 
             <p>You now have a full sorted deck:</p>
-                <ul>
-                    {% for card in deck %}
-                        <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card Image">
-                    {% endfor %}
-                </ul>
+            <ul>
+                {% for cardPath in cardPaths %}
+                    <img class="card-image" src="{{ asset(cardPath) }}" alt="Card Image">
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}

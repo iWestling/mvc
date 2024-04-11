@@ -10,8 +10,8 @@
             {{ include('flash.html.twig') }}
             <p>You now have a full shuffled deck:</p>
             <ul>
-                {% for card in deck %}
-                    <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card Image">
+                {% for cardPath in cardPaths %}
+                    <img class="card-image" src="{{ asset(cardPath) }}" alt="Card Image">
                 {% endfor %}
             </ul>
         </div>

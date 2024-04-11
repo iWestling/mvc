@@ -40,64 +40,75 @@ class CardGameController extends AbstractController
     #[Route("/card/deck", name: "card_deck", methods: ["GET"])]
     public function showDeck(SessionInterface $session): Response
     {
-        // New deck
         $deck = DeckOfCards::generateDeck();
+        $cardPaths = array_map(function ($card) {
+            $cardGraphic = new CardGraphic($card->getValue());
+            return $cardGraphic->getAsString();
+        }, $deck);
 
-        // Save deck in session
         $session->set('deck', $deck);
 
-        return $this->render('card/deck.html.twig', ['deck' => $deck]);
-    }
+        $data = [
+            'deck' => $deck,
+            'cardPaths' => $cardPaths,
+            'remainingCards' => count($deck),
+        ];
 
+        return $this->render('card/deck.html.twig', $data);
+    }
 
     #[Route("/card/deck/shuffle", name: "card_shuffle", methods: ["GET", "POST"])]
     public function shuffleDeck(SessionInterface $session): Response
     {
-        $deck = DeckOfCards::generateDeck();
-
+        $deck = $session->get('deck', DeckOfCards::generateDeck());
         shuffle($deck);
+
+        $cardPaths = array_map(function ($card) {
+            $cardGraphic = new CardGraphic($card->getValue());
+            return $cardGraphic->getAsString();
+        }, $deck);
 
         $session->set('deck', $deck);
 
-        return $this->render('card/shuffle.html.twig', ['deck' => $deck]);
-    }
+        $data = [
+            'deck' => $deck,
+            'cardPaths' => $cardPaths,
+            'remainingCards' => count($deck),
+        ];
 
-    //For when you only want to draw 1 card:
+        return $this->render('card/shuffle.html.twig', $data);
+    }
     #[Route("/card/deck/draw", name: "card_draw")]
     public function drawCard(SessionInterface $session): Response
     {
-        // Check
         if (!$session->has('deck')) {
             $this->addFlash('warning', 'No cards in deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
         }
 
         $deck = $session->get('deck', []);
-
         if (empty($deck)) {
             $this->addFlash('warning', 'No more cards left in the deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
         } else {
-            // Draw card
             $drawnCard = array_shift($deck);
             $session->set('deck', $deck);
 
-            $cardHand = new CardHand();
-            $cardHand->add($drawnCard);
+            $cardGraphic = new CardGraphic($drawnCard->getValue());
+            $drawnCardPath = $cardGraphic->getAsString();
+
+            $data = [
+                'drawnCardPaths' => [$drawnCardPath],
+                'remainingCards' => count($deck),
+            ];
+
+            return $this->render('card/draw.html.twig', $data);
         }
-
-        return $this->render('card/draw.html.twig', [
-            'drawnCards' => isset($cardHand) ? $cardHand->getHand() : [],
-            'remainingCards' => count($deck)
-        ]);
     }
-
-    //For when you select how many cards you want to draw:
     #[Route("/card/deck/draw", name: "card_draw_post", methods: ["POST"])]
     public function drawCardsPost(Request $request, SessionInterface $session): Response
     {
-        // get number of cards from form
-        $number = (int)$request->request->get('number');
+        $number = (int) $request->request->get('number');
 
         return $this->redirectToRoute('card_draw_number', ['number' => $number]);
     }
@@ -121,31 +132,36 @@ class CardGameController extends AbstractController
             return $this->redirectToRoute('card_deck');
         } else {
             $cardHand = new CardHand();
+            $drawnCards = $cardHand->drawMultipleCards($deck, $number);
 
-            // Draw X number of cards
-            for ($i = 0; $i < $number; $i++) {
-                if (!empty($deck)) {
-                    $drawnCard = array_shift($deck);
-                    $cardHand->add($drawnCard); // Add card
-                } else {
-                    break;
-                }
+            $session->set('deck', $deck);
+
+            $drawnCardPaths = [];
+            foreach ($drawnCards as $card) {
+                $cardGraphic = new CardGraphic($card->getValue());
+                $drawnCardPaths[] = $cardGraphic->getAsString();
             }
 
-            // Update deck
-            $session->set('deck', $deck);
-        }
+            $data = [
+                'drawnCards' => $drawnCardPaths,
+                'remainingCards' => count($deck),
+            ];
 
-        return $this->render('card/draw_number.html.twig', [
-            'drawnCards' => isset($cardHand) ? $cardHand->getHand() : [],
-            'remainingCards' => count($deck)
-        ]);
+            return $this->render('card/draw_number.html.twig', $data);
+        }
+    }
+    #[Route("/card/deck/deal", name: "card_deal_post", methods: ["POST"])]
+    public function dealCardsPost(Request $request, SessionInterface $session): Response
+    {
+        $players = (int)$request->request->get('players');
+        $cards = (int)$request->request->get('cards');
+
+        return $this->redirectToRoute('card_deal', ['players' => $players, 'cards' => $cards]);
     }
 
-    #[Route("/card/deck/deal/{players}/{cards}", name: "card_deal")]
-    public function dealCards(int $players, int $cards, SessionInterface $session): Response
+    #[Route("/card/deck/deal/{players}/{cards}", name: "card_deal", methods: ["GET", "POST"])]
+    public function dealCardsGet(Request $request, SessionInterface $session, int $players = 1, int $cards = 1): Response
     {
-        // Check
         if (!$session->has('deck')) {
             $this->addFlash('warning', 'No cards in deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
@@ -153,37 +169,32 @@ class CardGameController extends AbstractController
 
         $deck = $session->get('deck', []);
 
-        $playerHands = [];
-
-        // CardHand instance for each player
-        for ($i = 1; $i <= $players; $i++) {
-            $playerHands[] = new CardHand();
-        }
-
         if (empty($deck)) {
             $this->addFlash('warning', 'No more cards left in the deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
-        } else {
-            // Deal to each player
-            for ($i = 0; $i < $cards; $i++) {
-                foreach ($playerHands as $hand) {
-                    if (!empty($deck)) {
-                        $drawnCard = array_shift($deck);
-                        $hand->add($drawnCard);
-                    } else {
-                        break;
-                    }
-                }
-            }
         }
 
-        // Update deck
+        $playerHands = CardHand::dealCardsToPlayers($deck, $players, $cards);
+
         $session->set('deck', $deck);
 
-        return $this->render('card/deal.html.twig', [
-            'playerHands' => $playerHands,
-            'remainingCards' => count($deck)
-        ]);
-    }
+        $playerCardPaths = [];
 
+        foreach ($playerHands as $hand) {
+            $playerCards = [];
+            foreach ($hand->getHand() as $card) {
+                $cardGraphic = new CardGraphic($card->getValue());
+                $playerCardPath = $cardGraphic->getAsString();
+                $playerCards[] = $playerCardPath;
+            }
+            $playerCardPaths[] = $playerCards;
+        }
+
+        $data = [
+            'playerCardPaths' => $playerCardPaths,
+            'remainingCards' => count($deck),
+        ];
+
+        return $this->render('card/deal.html.twig', $data);
+    }
 }

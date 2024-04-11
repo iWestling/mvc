@@ -7,15 +7,14 @@
     <div class="game-container">
         {{ include('card_nav.html.twig') }}
         <div class="content-column">
-            {% for playerHand in playerHands %}
+            {% for playerCards in playerCardPaths %}
                 <h2>Player {{ loop.index }}</h2>
                 <ul>
-                    {% for card in playerHand.getHand() %}
-                        <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card Image">
+                    {% for cardPath in playerCards %}
+                        <img class="card-image" src="{{ asset(cardPath) }}" alt="Card Image">
                     {% endfor %}
                 </ul>
             {% endfor %}
-
             <p>Remaining Cards in the Deck: {{ remainingCards }}</p>
         </div>
     </div>

@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Card\DeckOfCards;
 use App\Card\CardHand;
+use App\Card\CardGraphic;
 
 class ReportSiteJson
 {
@@ -63,6 +64,7 @@ class ReportSiteJson
 
         return $response;
     }
+
     #[Route("/api/deck", name: "api_deck", methods: ["GET"])]
     public function getDeck(SessionInterface $session): JsonResponse
     {
@@ -74,14 +76,15 @@ class ReportSiteJson
         }
 
         $deckArray = array_map(function ($card) {
+            $cardGraphic = new CardGraphic($card->getValue());
             return [
                 'value' => $card->getValue(),
-                'card' => $card->getCardForAPI(),
-                'representation' => $card->getAsString()
+                'card' => $card->getForAPI(),
+                'imagepath' => $cardGraphic->getAsString()
             ];
         }, $deck);
 
-        // JSON pretty pring
+        // JSON pretty print
         $response = new JsonResponse($deckArray);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
@@ -107,10 +110,11 @@ class ReportSiteJson
 
         // JSON
         $deckArray = array_map(function ($card) {
+            $cardGraphic = new CardGraphic($card->getValue());
             return [
                 'value' => $card->getValue(),
-                'card' => $card->getCardForAPI(),
-                'representation' => $card->getAsString()
+                'card' => $card->getForAPI(),
+                'imagepath' => $cardGraphic->getAsString()
             ];
         }, $deck);
 
@@ -131,17 +135,18 @@ class ReportSiteJson
             return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
         }
 
-        // Draw 1 card från deck
+        // Draw 1 card from deck
         $drawnCard = array_shift($deck);
 
         $session->set('deck', $deck);
 
         // JSON structure
+        $cardGraphic = new CardGraphic($drawnCard->getValue());
         $response = [
             'drawnCard' => [
                 'value' => $drawnCard->getValue(),
-                'card' => $drawnCard->getCardForAPI(),
-                'representation' => $drawnCard->getAsString()
+                'card' => $drawnCard->getForAPI(),
+                'imagepath' => $cardGraphic->getAsString()
             ],
             'remainingCards' => count($deck)
         ];
@@ -172,17 +177,18 @@ class ReportSiteJson
         for ($i = 0; $i < $number; $i++) {
             if (!empty($deck)) {
                 $drawnCard = array_shift($deck);
+                $cardGraphic = new CardGraphic($drawnCard->getValue());
                 $drawnCards[] = [
                     'value' => $drawnCard->getValue(),
-                    'card' => $drawnCard->getCardForAPI(),
-                    'representation' => $drawnCard->getAsString()
+                    'card' => $drawnCard->getForAPI(),
+                    'imagepath' => $cardGraphic->getAsString()
                 ];
             } else {
                 break;
             }
         }
 
-        // Update deck i session
+        // Update deck in session
         $session->set('deck', $deck);
 
         $response = [
@@ -211,38 +217,26 @@ class ReportSiteJson
             return new JsonResponse(['error' => 'Invalid number of players or cards.'], Response::HTTP_BAD_REQUEST);
         }
 
-        $playerHands = [];
+        $cardHand = new CardHand();
+        $playerHands = $cardHand->dealCardsToPlayers($deck, $players, $cards);
 
-        // CardHand instance per player
-        for ($i = 1; $i <= $players; $i++) {
-            $playerHands[] = new CardHand();
-        }
-
-        // Deal cards to each player
-        for ($i = 0; $i < $cards; $i++) {
-            foreach ($playerHands as $hand) {
-                if (!empty($deck)) {
-                    $drawnCard = array_shift($deck);
-                    $hand->add($drawnCard);
-                } else {
-                    break; // stop dealing
-                }
-            }
-        }
-
-        // Update deck i session
         $session->set('deck', $deck);
 
+        $playerHandsData = [];
+        foreach ($playerHands as $index => $hand) {
+            $playerName = 'Player ' . ($index + 1);
+            $playerHandsData[$playerName] = array_map(function ($card) {
+                $cardGraphic = new CardGraphic($card->getValue());
+                return [
+                    'value' => $card->getValue(),
+                    'card' => $card->getForAPI(),
+                    'imagepath' => $cardGraphic->getAsString()
+                ];
+            }, $hand->getHand());
+        }
+
         $response = [
-            'playerHands' => array_map(function ($hand) {
-                return array_map(function ($card) {
-                    return [
-                        'value' => $card->getValue(),
-                        'card' => $card->getCardForAPI(),
-                        'representation' => $card->getAsString()
-                    ];
-                }, $hand->getHand());
-            }, $playerHands),
+            'playerHands' => $playerHandsData,
             'remainingCards' => count($deck)
         ];
 
