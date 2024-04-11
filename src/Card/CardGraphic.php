@@ -4,7 +4,7 @@ namespace App\Card;
 
 class CardGraphic extends Card
 {
-    private $representation = [
+    private $imagepath = [
         'img/carddeck/heart_ace.png',
         'img/carddeck/heart_two.png',
         'img/carddeck/heart_three.png',
@@ -59,67 +59,71 @@ class CardGraphic extends Card
         'img/carddeck/clubs_king.png'
     ];
 
-    private $apirepresentation = [
-        '[A♥]',
-        '[2♥]',
-        '[3♥]',
-        '[4♥]',
-        '[5♥]',
-        '[6♥]',
-        '[7♥]',
-        '[8♥]',
-        '[9♥]',
-        '[10♥]',
-        '[J♥]',
-        '[Q♥]',
-        '[K♥]',
-        '[A♦]',
-        '[2♦]',
-        '[3♦]',
-        '[4♦]',
-        '[5♦]',
-        '[6♦]',
-        '[7♦]',
-        '[8♦]',
-        '[9♦]',
-        '[10♦]',
-        '[J♦]',
-        '[Q♦]',
-        '[K♦]',
-        '[A♣]',
-        '[2♣]',
-        '[3♣]',
-        '[4♣]',
-        '[5♣]',
-        '[6♣]',
-        '[7♣]',
-        '[8♣]',
-        '[9♣]',
-        '[10♣]',
-        '[J♣]',
-        '[Q♣]',
-        '[K♣]',
-        '[A♠]',
-        '[2♠]',
-        '[3♠]',
-        '[4♠]',
-        '[5♠]',
-        '[6♠]',
-        '[7♠]',
-        '[8♠]',
-        '[9♠]',
-        '[10♠]',
-        '[J♠]',
-        '[Q♠]',
-        '[K♠]'
-    ];
     public function getAsString(): string
     {
-        return $this->representation[$this->getValue() - 1];
+        $value = $this->getValue() - 1; // Adjust index
+        return $this->imagepath[$value];
     }
-    public function getCardForAPI(): string
-    {
-        return $this->apirepresentation[$this->getValue() - 1];
-    }
+
+    // private $apirepresentation = [
+    //     '[A♥]',
+    //     '[2♥]',
+    //     '[3♥]',
+    //     '[4♥]',
+    //     '[5♥]',
+    //     '[6♥]',
+    //     '[7♥]',
+    //     '[8♥]',
+    //     '[9♥]',
+    //     '[10♥]',
+    //     '[J♥]',
+    //     '[Q♥]',
+    //     '[K♥]',
+    //     '[A♦]',
+    //     '[2♦]',
+    //     '[3♦]',
+    //     '[4♦]',
+    //     '[5♦]',
+    //     '[6♦]',
+    //     '[7♦]',
+    //     '[8♦]',
+    //     '[9♦]',
+    //     '[10♦]',
+    //     '[J♦]',
+    //     '[Q♦]',
+    //     '[K♦]',
+    //     '[A♣]',
+    //     '[2♣]',
+    //     '[3♣]',
+    //     '[4♣]',
+    //     '[5♣]',
+    //     '[6♣]',
+    //     '[7♣]',
+    //     '[8♣]',
+    //     '[9♣]',
+    //     '[10♣]',
+    //     '[J♣]',
+    //     '[Q♣]',
+    //     '[K♣]',
+    //     '[A♠]',
+    //     '[2♠]',
+    //     '[3♠]',
+    //     '[4♠]',
+    //     '[5♠]',
+    //     '[6♠]',
+    //     '[7♠]',
+    //     '[8♠]',
+    //     '[9♠]',
+    //     '[10♠]',
+    //     '[J♠]',
+    //     '[Q♠]',
+    //     '[K♠]'
+    // ];
+
+    // public function getCardForAPI(): string
+    // {
+    //     $value = $this->getValue() - 1; // Adjust index
+    //     return $this->apirepresentation[$value];
+    // }
 
 }

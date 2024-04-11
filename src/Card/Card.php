@@ -16,8 +16,19 @@ class Card
         return $this->value;
     }
 
-    public function getCardAsString(): string
+    public function getAsString(): string
     {
         return "[{$this->value}]";
+    }
+
+    public function getForAPI(): string
+    {
+        $suits = ['♥', '♦', '♣', '♠'];
+        $ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+        $suitIndex = (($this->value - 1) % 4);
+        $rankIndex = (($this->value - 1) / 4);
+
+        return "[{$ranks[$rankIndex]}{$suits[$suitIndex]}]";
     }
 }
