@@ -52,16 +52,16 @@
                 För denna uppgift skapade jag 4 klasser:<br>
                 - Card, som representerar ett kort med ett värde. Klassens metoder får ut värdet, en strängrepresentation samt en strängrepresentation som lämpar sig för API-svar. <br>
                 - CardGraphic, som ärver från Card och har en metod för att få ut den grafiska representationen av ett kort.<br>
-                - CardHand, som har en korthand och metoder för att lägga till kort, ta ut värden och värdet som sträng, detta en såkallad Composition-relation.<br>
-                - DeckOfCards, som genererar en kortlek med hjälp av Card-objekt<br>
+                - CardHand, som har en korthand och metoder för att lägga till kort, ta ut värden och värdet som sträng, detta i en såkallad Composition-relation.<br>
+                - DeckOfCards, som genererar en kortlek med hjälp av Card-objekt, även detta en "has a"-relation.<br>
                 Jag skapade routes för dessa i CardGameController och lade till routes för JSON-endpoints i ReportSiteJson.php.<br>
             <p>
             
             Konstruktorn initierar valuet av Card klassen, i CardGraphic används sedan $imagepath som har en array av sökvägar till bildfiler av korten i kortleken. getAsString tar ut sökvägen för filen i strängformat.
-            Kortleken genereras med DeckOfCards::generateDeck() (och shufflas med shuffle($deck)). Den sparar sedan kortleken i sessionen som skrivs ut i vyerna.<br>
+            Kortleken genereras med DeckOfCards (och shufflas med shuffle($deck)). Den sparar sedan kortleken i sessionen som skrivs ut i vyerna.<br>
             I draw-routen tar drawCard och drawNumberCards sedan ut ett eller flera kort från kortleken som sparats i sessionen och skriver ut den och hur många kort som finns kvar i kortleken.<br>
             I deal-routen tar dealCards ett specifikt antal kort och delar ut till ett specifikt antal spelare, detta renderas också i vyerna. (Här gick jag senare tillbaka och satte lite av logiken för att dra flera kort och att dela ut kort till spelare i CardHand-klassen istället för i controllers.)
-            På ett liknande sätt har jag gjort för JSON i ReturnSiteJson.php där jag istället returnerar en JSON struktur, här tar jag istället för bara kortets värde och bild ut en specialiserad sträng för värde och färg/sviter ("[A♥]") via getForAPI-metoden i Card-klassen, detta bara för att det är enklare att se vilket kort det är.<br>
+            På ett liknande sätt har jag gjort för ReturnSiteJson.php där jag istället returnerar en JSON struktur, här tar jag istället för bara kortets värde och bild ut en specialiserad sträng för värde och färg/sviter ("[A♥]") via getForAPI-metoden i Card-klassen, detta bara för att det är enklare att se vilket kort det är.<br>
             För session gjorde jag en dump(session), delete Session tar sedan bort allt i sessionen med session->clear().
             Allting skrivs ut i vyerna i twigs där jag valt att göra en separat fil för sido-kolumnen med olika valbara länkar, dvs aktioner för spelet, som då inkluderas till varje sida. 
 
