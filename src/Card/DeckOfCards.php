@@ -4,12 +4,23 @@ namespace App\Card;
 
 class DeckOfCards
 {
-    public static function generateDeck(): array
+    private $cards;
+
+    public function __construct()
     {
-        $deck = [];
+        $this->cards = [];
+        $this->generateDeck();
+    }
+
+    private function generateDeck(): void
+    {
         for ($i = 1; $i <= 52; $i++) {
-            $deck[] = new Card($i);
+            $this->cards[] = new Card($i);
         }
-        return $deck;
+    }
+
+    public function getCards(): array
+    {
+        return $this->cards;
     }
 }

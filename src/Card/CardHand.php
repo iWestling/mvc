@@ -2,13 +2,11 @@
 
 namespace App\Card;
 
-use App\Card\Card;
-
 class CardHand
 {
     private $hand = [];
 
-    public function add(Card $card): void
+    public function addCard(Card $card): void
     {
         $this->hand[] = $card;
     }
@@ -25,7 +23,7 @@ class CardHand
         for ($i = 0; $i < $number; $i++) {
             if (!empty($deck)) {
                 $drawnCard = array_shift($deck);
-                $this->add($drawnCard);
+                $this->addCard($drawnCard);
                 $drawnCards[] = $drawnCard;
             } else {
                 break;
@@ -38,14 +36,14 @@ class CardHand
     public static function dealCardsToPlayers(array &$deck, int $players, int $cards): array
     {
         $playerHands = [];
-        for ($i = 1; $i <= $players; $i++) {
+        for ($i = 0; $i < $players; $i++) {
             $playerHands[] = new self();
         }
         for ($i = 0; $i < $cards; $i++) {
             foreach ($playerHands as $hand) {
                 if (!empty($deck)) {
                     $drawnCard = array_shift($deck);
-                    $hand->add($drawnCard);
+                    $hand->addCard($drawnCard);
                 } else {
                     break;
                 }

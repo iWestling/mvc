@@ -11,7 +11,7 @@
             <h2>Klasser</h2>
             <p>
                 Card representerar ett spelkort med ett numeriskt värde.<br>
-                Klassen innehåller metoder för att få fram kortets värde, få ut en strängrepresentation av kortet samt en strängrepresentation som lämpar sig för API-svar.
+                Klassen innehåller metoder för att få fram kortets värde, få ut en strängrepresentation av kortet samt en strängrepresentation som lämpar sig mer för API-svar.
             </p>
             <p>
                 CardGraphic ärver från Card-klassen (en "is a"-relation), den returnerar en grafisk representationen baserat på kortets värde. Här använder jag en array med sökvägar till bildfiler för varje kort.
@@ -22,11 +22,10 @@
             </p>
             <p>
                 DeckOfCards genererar en kortlek med hjälp av Card-klassen. <br>
-                Metoden generateDeck() skapar fyller en kortlek med Card-objekt. Detta är likt composition men lite annorlunda då den inte "har" en annan klass, den använder istället temporärt CardGraphic för att generera en kortlek, så därför skulle jag klassa det som Dependency istället för Composition. 
+                Metoden generateDeck() skapar en kortlek med Card-objekt, även detta en composition.. 
             </p>
             <br>
             <img src="{{ asset('img/carduml.webp') }}" alt="An MVC image">
         </div>
     </div>
 {% endblock %}
-
