@@ -71,7 +71,7 @@ class ReportSiteJson
         $deckOfCards = new DeckOfCards();
         $deck = $deckOfCards->getCards();
         $session->set('deck', $deck);
-    
+
         $deckArray = array_map(function ($card) {
             return [
                 'value' => $card->getValue(),
@@ -79,13 +79,13 @@ class ReportSiteJson
                 'imagepath' => $card->getAsString()
             ];
         }, $deck);
-    
+
         // JSON pretty print
         $response = new JsonResponse($deckArray);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
         );
-    
+
         return $response;
     }
 
@@ -94,12 +94,12 @@ class ReportSiteJson
     {
         $deckOfCards = new DeckOfCards();
         $deck = $deckOfCards->getCards();
-    
+
         // Shuffle
         shuffle($deck);
-    
+
         $session->set('deck', $deck);
-    
+
         // JSON
         $deckArray = array_map(function ($card) {
             return [
@@ -108,12 +108,12 @@ class ReportSiteJson
                 'imagepath' => $card->getAsString()
             ];
         }, $deck);
-    
+
         $response = new JsonResponse($deckArray);
         $response->setEncodingOptions(
             $response->getEncodingOptions() | JSON_PRETTY_PRINT
         );
-    
+
         return $response;
     }
 
