@@ -57,10 +57,10 @@
                 Jag skapade routes för dessa i CardGameController och lade till routes för JSON-endpoints i ReportSiteJson.php.<br>
             <p>
             
-            Konstruktorn initierar valuet av Card klassen, i CardGraphic används sedan $imagepath som har en array av sökvägar till bildfiler av korten i kortleken. getAsString tar ut sökvägen för filen i strängformat.
+            Konstruktorn initierar valuet av Card klassen, i CardGraphic används sedan $imagepath som har en array av sökvägar till bildfiler av korten i kortleken. getAsString tar ut sökvägen för kortets bild i strängformat.
             Kortleken genereras med DeckOfCards (och shufflas med shuffle($deck)). Den sparar sedan kortleken i sessionen som skrivs ut i vyerna.<br>
             I draw-routen tar drawCard och drawNumberCards sedan ut ett eller flera kort från kortleken som sparats i sessionen och skriver ut den och hur många kort som finns kvar i kortleken.<br>
-            I deal-routen tar dealCards ett specifikt antal kort och delar ut till ett specifikt antal spelare, detta renderas också i vyerna. (Här gick jag senare tillbaka och satte lite av logiken för att dra flera kort och att dela ut kort till spelare i CardHand-klassen istället för i controllers.)
+            I deal-routen tar dealCards ett specifikt antal kort och delar ut till ett specifikt antal spelare, detta renderas också i vyerna. (Här gick jag senare tillbaka och satte lite av draw- och deal-logiken i CardHand-klassen istället för i controllers.)
             På ett liknande sätt har jag gjort för ReturnSiteJson.php där jag istället returnerar en JSON struktur, här tar jag istället för bara kortets värde och bild ut en specialiserad sträng för värde och färg/sviter ("[A♥]") via getForAPI-metoden i Card-klassen, detta bara för att det är enklare att se vilket kort det är.<br>
             För session gjorde jag en dump(session), delete Session tar sedan bort allt i sessionen med session->clear().
             Allting skrivs ut i vyerna i twigs där jag valt att göra en separat fil för sido-kolumnen med olika valbara länkar, dvs aktioner för spelet, som då inkluderas till varje sida. 
@@ -68,16 +68,16 @@
             </p>
             <p>Förbättringar:
             Jag fixade till koden igen lite innan deadline, bland annat gjorde jag så att DeckOfCards genereras med Card istället för CardGraphic då det kändes mer logiskt för resterande kod, samt gjorde vyerna "dummare" så att de bara använder $data från controllers. 
-            Jag var lite osäker på hur man ville att uppgiften skulle visas på sidorna, för att uppfylla kravet om sidorna gjorde jag varje aktion till en ny sida (shuffle, deck osv) men jag kan tycka att det skulle vara mer logiskt att redirecta varje händelse till samma sida (som med pig_play). Detta går lätt att åtgärda men då kravet i uppgiften kändes vagt ville jag vara på den säkra sidan att allt uppfylls.<br>
+            Jag var lite osäker på hur man ville att uppgiften skulle visas på sidorna, för att uppfylla kravet om sidorna skickas allt till nya sidor (shuffle, deck osv) men jag kan tycka att det skulle vara mer logiskt att redirecta varje händelse till samma sida (som med pig_play). Detta går lätt att åtgärda men då kravet i uppgiften kändes vagt ville jag vara på den säkra sidan att allt uppfylls.<br>
             Då uppgiften inte krävde det sparade jag inte de korten som dragits i session utan bara i en temporär array, men detta hade varit en enkel förbättring att göra om man sedan vill utveckla programmet. 
             Då kravet i punkt 12 sa att "när man gör card/deck/shuffle så kan kortleken återställas" gjorde jag så att shuffle alltid skapar en ny shufflad kortlek, här kan man kanske tänka att den kan ta tillbaka korten i kortleken och shuffla istället, men då allting ger samma resultat tolkade jag det som att det inte spelar någon roll.  
-            Tillsist skulle nog koden kunna optimeras ännu mer och ha lite mer felhantering.
+            Tillsist skulle nog koden kunna optimeras ännu mer (dela upp koden och göra den mer cohesive) och ha lite mer felhantering.
             </p>
             <p>
                 Jag tycker att det varit kul om än lite svårt att jobba med symfony och MVC.<br>
-                Som jag förstår är det mycket för att separera allting bättre, med modeller som hanterar datalogik, vyer som visar användares "interface" och kontroller som hanterar interaktionen mellan de två. Denna struktur gör koden mer organiserad och lättare att hålla koll på, men jag tycker ibland att det är svårt att bestämma var viss logik ska finnas i klassernas relation till varandra och vad som behövs när. Förhoppningsvis är detta något blir mer säker på desto mer man jobbar med det.
+                Som jag förstår är det mycket för att separera allting bättre, med modeller som hanterar datalogik, vyer som visar allt för användare och kontroller som hanterar interaktionen mellan de två. Denna struktur gör koden mer organiserad och lättare att hålla koll på, men jag tycker ibland att det är svårt att bestämma var viss logik ska finnas i klassernas relation till varandra och vad som är bäst att göra i olika situationer.  Förhoppningsvis är detta något jag blir mer säker på desto mer man jobbar med det.
             </p>
-            <p>TIL för detta moment är, förrutom allt nytt jag lärt mig, att fokusera på det viktiga. Nu när jag var "klar" med uppgiften satt jag alldeles för länge med layout och att få till formulär för att dynamiskt kunna välja antal kort/spelare, jag borde hellre ha tagit den tiden till att läsa på mer om saker jag är mer osäker på som interface/trait.
+            <p>TIL för detta moment är, förrutom allt nytt jag lärt mig, att fokusera på det viktiga. Nu när jag var "klar" med uppgiften satt jag alldeles för länge med layout och att få till formulär för att dynamiskt kunna välja antal kort/spelare, jag borde hellre ha tagit den tiden till att läsa på mer om saker jag är mer osäker på.
             </p>
             <h2 id="kmom03">Kmom03</h2>
             <p>Rapport för kmom03.</p>

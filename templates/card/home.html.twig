@@ -17,12 +17,11 @@
                 CardGraphic ärver från Card-klassen (en "is a"-relation), den returnerar en grafisk representationen baserat på kortets värde. Här använder jag en array med sökvägar till bildfiler för varje kort.
             </p>
             <p>
-                CardHand representerar en hand med kort och gör att användaren kan lägga till kort i handen, hämta kortvärden samt strängrepresentationer.<br>
-                CardHand innehåller en samling av Card-objekt i vad som kallas en Composition-relation ("has a"). Raderas CardHand förstörs därför även dess Card-objekt.
+                DeckOfCards genererar en kortlek med hjälp av Card-klassen. <br>
+                Metoden generateDeck() skapar en kortlek med Card-objekt, i vad som kallas en Composition-relation ("has a").
             </p>
             <p>
-                DeckOfCards genererar en kortlek med hjälp av Card-klassen. <br>
-                Metoden generateDeck() skapar en kortlek med Card-objekt, även detta en composition.. 
+                CardHand representerar en hand med kort och gör att användaren kan dra kort från kortleken och dela ut dem till spelare. CardHand innehåller alltså en samling av Card-objekt (addCard() som injectar Card).<br>
             </p>
             <br>
             <img src="{{ asset('img/carduml.webp') }}" alt="An MVC image">

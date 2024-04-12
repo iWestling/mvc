@@ -40,30 +40,34 @@ class CardGameController extends AbstractController
     #[Route("/card/deck", name: "card_deck", methods: ["GET"])]
     public function showDeck(SessionInterface $session): Response
     {
-        $deck = new DeckOfCards();
-        $cardPaths = array_map(function ($card) {
+        $deckOfCards = new DeckOfCards();
+        $deck = $deckOfCards->getCards();
+
+        $cardPaths = array_map(function (Card $card) {
             $cardGraphic = new CardGraphic($card->getValue());
             return $cardGraphic->getAsString();
-        }, $deck->getCards());
+        }, $deck);
 
-        $session->set('deck', $deck->getCards());
+        $session->set('deck', $deck);
 
         $data = [
-            'deck' => $deck->getCards(),
+            'deck' => $deck,
             'cardPaths' => $cardPaths,
-            'remainingCards' => count($deck->getCards()),
+            'remainingCards' => count($deck),
         ];
 
         return $this->render('card/deck.html.twig', $data);
     }
 
-    #[Route("/card/deck/shuffle", name: "card_shuffle", methods: ["GET", "POST"])]
+    #[Route("/card/deck/shuffle", name: "card_shuffle", methods: ["GET"])]
     public function shuffleDeck(SessionInterface $session): Response
     {
-        $deck = $session->get('deck', (new DeckOfCards())->getCards());
+        $deckOfCards = new DeckOfCards();
+        $deck = $deckOfCards->getCards();
+
         shuffle($deck);
 
-        $cardPaths = array_map(function ($card) {
+        $cardPaths = array_map(function (Card $card) {
             $cardGraphic = new CardGraphic($card->getValue());
             return $cardGraphic->getAsString();
         }, $deck);
@@ -79,7 +83,6 @@ class CardGameController extends AbstractController
         return $this->render('card/shuffle.html.twig', $data);
     }
 
-
     #[Route("/card/deck/draw", name: "card_draw")]
     public function drawCard(SessionInterface $session): Response
     {
@@ -88,28 +91,31 @@ class CardGameController extends AbstractController
             return $this->redirectToRoute('card_deck');
         }
 
+        /** @var Card[] $deck */
         $deck = $session->get('deck', []);
+
         if (empty($deck)) {
             $this->addFlash('warning', 'No more cards left in the deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
-        } else {
-            $drawnCard = array_shift($deck);
-            $session->set('deck', $deck);
-
-            $cardGraphic = new CardGraphic($drawnCard->getValue());
-            $drawnCardPath = $cardGraphic->getAsString();
-
-            $data = [
-                'drawnCardPaths' => [$drawnCardPath],
-                'remainingCards' => count($deck),
-            ];
-
-            return $this->render('card/draw.html.twig', $data);
         }
+
+        /** @var Card $drawnCard */
+        $drawnCard = array_shift($deck);
+        $session->set('deck', $deck);
+
+        $cardGraphic = new CardGraphic($drawnCard->getValue());
+        $drawnCardPath = $cardGraphic->getAsString();
+
+        $data = [
+            'drawnCardPaths' => [$drawnCardPath],
+            'remainingCards' => count($deck),
+        ];
+
+        return $this->render('card/draw.html.twig', $data);
     }
 
     #[Route("/card/deck/draw", name: "card_draw_post", methods: ["POST"])]
-    public function drawCardsPost(Request $request, SessionInterface $session): Response
+    public function drawCardsPost(Request $request): Response
     {
         $number = (int) $request->request->get('number');
 
@@ -128,34 +134,38 @@ class CardGameController extends AbstractController
             return $this->redirectToRoute('card_deck');
         }
 
+        /** @var Card[] $deck */
         $deck = $session->get('deck', []);
 
         if (empty($deck)) {
             $this->addFlash('warning', 'No more cards left in the deck. Resetting deck, please try again.');
             return $this->redirectToRoute('card_deck');
-        } else {
-            $cardHand = new CardHand();
-            $drawnCards = $cardHand->drawMultipleCards($deck, $number);
-
-            $session->set('deck', $deck);
-
-            $drawnCardPaths = [];
-            foreach ($drawnCards as $card) {
-                $cardGraphic = new CardGraphic($card->getValue());
-                $drawnCardPaths[] = $cardGraphic->getAsString();
-            }
-
-            $data = [
-                'drawnCards' => $drawnCardPaths,
-                'remainingCards' => count($deck),
-            ];
-
-            return $this->render('card/draw_number.html.twig', $data);
         }
+
+        $cardHand = new CardHand();
+        /** @var Card[] $drawnCards */
+        $drawnCards = $cardHand->drawMultipleCards($deck, (int)$number);
+
+        $session->set('deck', $deck);
+
+        //graphic
+        $drawnCardPaths = [];
+        foreach ($drawnCards as $card) {
+            $cardGraphic = new CardGraphic($card->getValue());
+            $drawnCardPaths[] = $cardGraphic->getAsString();
+        }
+
+        $data = [
+            'drawnCards' => $drawnCardPaths,
+            'remainingCards' => count($deck),
+        ];
+
+        return $this->render('card/draw_number.html.twig', $data);
     }
 
+
     #[Route("/card/deck/deal", name: "card_deal_post", methods: ["POST"])]
-    public function dealCardsPost(Request $request, SessionInterface $session): Response
+    public function dealCardsPost(Request $request): Response
     {
         $players = (int)$request->request->get('players');
         $cards = (int)$request->request->get('cards');
@@ -164,7 +174,7 @@ class CardGameController extends AbstractController
     }
 
     #[Route("/card/deck/deal/{players}/{cards}", name: "card_deal", methods: ["GET", "POST"])]
-    public function dealCardsGet(Request $request, SessionInterface $session, int $players = 1, int $cards = 1): Response
+    public function dealCardsGet(SessionInterface $session, int $players = 1, int $cards = 1): Response
     {
         if (!$session->has('deck')) {
             $this->addFlash('warning', 'No cards in deck. Resetting deck, please try again.');
@@ -178,12 +188,14 @@ class CardGameController extends AbstractController
             return $this->redirectToRoute('card_deck');
         }
 
-        $playerHands = CardHand::dealCardsToPlayers($deck, $players, $cards);
+        $cardHand = new CardHand();
+        $playerHands = $cardHand->dealCardsToPlayers($deck, $players, $cards);
 
         $session->set('deck', $deck);
 
         $playerCardPaths = [];
 
+        //graphic
         foreach ($playerHands as $hand) {
             $playerCards = [];
             foreach ($hand->getHand() as $card) {

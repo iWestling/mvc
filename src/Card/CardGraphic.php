@@ -4,7 +4,10 @@ namespace App\Card;
 
 class CardGraphic extends Card
 {
-    private $imagepath = [
+    /**
+     * @var string[]
+     */
+    private array $imagepath = [
         'img/carddeck/heart_ace.png',
         'img/carddeck/heart_two.png',
         'img/carddeck/heart_three.png',

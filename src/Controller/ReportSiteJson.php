@@ -73,10 +73,11 @@ class ReportSiteJson
         $session->set('deck', $deck);
 
         $deckArray = array_map(function ($card) {
+            $cardGraphic = new CardGraphic($card->getValue());
             return [
                 'value' => $card->getValue(),
                 'card' => $card->getForAPI(),
-                'imagepath' => $card->getAsString()
+                'imagepath' => $cardGraphic->getAsString()
             ];
         }, $deck);
 
@@ -94,6 +95,11 @@ class ReportSiteJson
     {
         $deckOfCards = new DeckOfCards();
         $deck = $deckOfCards->getCards();
+        $session->set('deck', $deck);
+
+        if (empty($deck)) {
+            return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
+        }
 
         // Shuffle
         shuffle($deck);
@@ -102,10 +108,11 @@ class ReportSiteJson
 
         // JSON
         $deckArray = array_map(function ($card) {
+            $cardGraphic = new CardGraphic($card->getValue());
             return [
                 'value' => $card->getValue(),
                 'card' => $card->getForAPI(),
-                'imagepath' => $card->getAsString()
+                'imagepath' => $cardGraphic->getAsString()
             ];
         }, $deck);
 
@@ -122,7 +129,7 @@ class ReportSiteJson
     {
         $deck = $session->get('deck', []);
 
-        if (empty($deck)) {
+        if (!is_array($deck) || empty($deck)) {
             return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
         }
 
@@ -151,11 +158,11 @@ class ReportSiteJson
     }
 
     #[Route("/api/deck/draw/{number}", name: "api_deck_draw_multiple", methods: ["GET", "POST"])]
-    public function drawMultipleCardsFromDeck(Request $request, SessionInterface $session, int $number): JsonResponse
+    public function drawMultipleCardsFromDeck(SessionInterface $session, int $number): JsonResponse
     {
         $deck = $session->get('deck', []);
 
-        if (empty($deck)) {
+        if (!is_array($deck) || empty($deck)) {
             return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
         }
 
@@ -166,17 +173,16 @@ class ReportSiteJson
         // Draw x cards
         $drawnCards = [];
         for ($i = 0; $i < $number; $i++) {
-            if (!empty($deck)) {
-                $drawnCard = array_shift($deck);
-                $cardGraphic = new CardGraphic($drawnCard->getValue());
-                $drawnCards[] = [
-                    'value' => $drawnCard->getValue(),
-                    'card' => $drawnCard->getForAPI(),
-                    'imagepath' => $cardGraphic->getAsString()
-                ];
-            } else {
+            if (empty($deck)) {
                 break;
             }
+            $drawnCard = array_shift($deck);
+            $cardGraphic = new CardGraphic($drawnCard->getValue());
+            $drawnCards[] = [
+                'value' => $drawnCard->getValue(),
+                'card' => $drawnCard->getForAPI(),
+                'imagepath' => $cardGraphic->getAsString()
+            ];
         }
 
         // Update deck in session
@@ -200,7 +206,7 @@ class ReportSiteJson
     {
         $deck = $session->get('deck', []);
 
-        if (empty($deck)) {
+        if (!is_array($deck) || empty($deck)) {
             return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
         }
 

@@ -115,7 +115,12 @@ class DiceGameController extends AbstractController
     public function play(
         SessionInterface $session
     ): Response {
+        /** @var DiceHand|null $dicehand */
         $dicehand = $session->get("pig_dicehand");
+
+        if (!$dicehand instanceof DiceHand) {
+            // Fix later
+        }
 
         $data = [
             "pigDices" => $session->get("pig_dices"),
@@ -131,7 +136,13 @@ class DiceGameController extends AbstractController
     public function roll(
         SessionInterface $session
     ): Response {
+        /** @var DiceHand|null $hand */
         $hand = $session->get("pig_dicehand");
+
+        if (!$hand instanceof DiceHand) {
+            // Fix later
+        }
+
         $hand->roll();
 
         $roundTotal = $session->get("pig_round");
