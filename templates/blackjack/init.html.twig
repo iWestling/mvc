@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Place Your Bet{% endblock %}
+
+{% block main %}
+    <h1>Place Your Bet</h1>
+    <p>How much money do you want to bet for this round?</p>
+    <form method="post" action="{{ path('game_init_post') }}">
+        <input type="number" name="playerbet" min="1" max="100">
+        <input type="submit" name="do_it" value="Start playing">
+    </form>
+{% endblock %}

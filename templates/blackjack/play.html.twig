@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blackjack{% endblock %}
+
+{% block main %}
+    <h1>Blackjack Game</h1>
+
+    {% if resultMessage %}
+        <h1>{{ resultMessage }}</h1>
+    {% endif %}
+
+    <div>
+        <h2>Dealer</h2>
+        <p>Hand:</p>
+        <ul>
+            {% for cardIndex, cardImage in dealerHand %}
+                {% if cardIndex == 1 %}
+                    <img class="card-image" src="{{ asset(dealerUnturned) }}" alt="Card">
+                {% else %}
+                    <img class="card-image" src="{{ asset(cardImage) }}" alt="Card">
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <p>Dealer Total (Low): {{ dealerTotalLow }}</p>
+        <p>Dealer Total (High): {{ dealerTotalHigh }}</p>
+    </div>
+
+    <div>
+        <h2>Player</h2>
+        <p>Hand:</p>
+        <ul>
+            {% for cardImage in playerHand %}
+                <img class="card-image" src="{{ asset(cardImage) }}" alt="Card">
+            {% endfor %}
+        </ul>
+        <p>Player Total (Low): {{ playerTotalLow }}</p>
+        <p>Player Total (High): {{ playerTotalHigh }}</p>
+    </div>
+
+    <div>
+        <h2>Current Bet: {{ playerBet }}</h2>
+    </div>
+
+    <div>
+        <h2>Bank</h2>
+        <p>Player Money: {{ playerMoney }}</p>
+        <p>Dealer Money: {{ dealerMoney }}</p>
+    </div>
+
+    {{ include('flash.html.twig') }}
+
+    <form method="post" action="">
+        <p>
+            <input type="submit" name="hit" value="Hit"
+                onClick="this.form.action='{{ path('game_player_stand') }}';"
+            >
+            <input type="submit" name="stand" value="Stand"
+                onClick="this.form.action='{{ path('game_player_hit') }}';"
+            >
+            <input type="submit" name="restart" value="Restart"
+                onClick="this.form.action='{{ path('game') }}';this.form.method='get';"
+            >
+        </p>
+    </form>
+
+{% endblock %}
