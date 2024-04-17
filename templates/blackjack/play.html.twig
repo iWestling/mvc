@@ -5,62 +5,120 @@
 {% block main %}
     <h1>Blackjack Game</h1>
 
-    {% if resultMessage %}
-        <h1>{{ resultMessage }}</h1>
-    {% endif %}
+    <div class="blackjack-container">
+        <div class="square square-1">
+            {% if resultMessage %}
+                <h2>{{ resultMessage }}</h2>
+            {% endif %}
+        </div>
 
-    <div>
-        <h2>Dealer</h2>
-        <p>Hand:</p>
-        <ul>
-            {% for cardIndex, cardImage in dealerHand %}
-                {% if cardIndex == 1 %}
-                    <img class="card-image" src="{{ asset(dealerUnturned) }}" alt="Card">
-                {% else %}
-                    <img class="card-image" src="{{ asset(cardImage) }}" alt="Card">
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <p>Dealer Total (Low): {{ dealerTotalLow }}</p>
-        <p>Dealer Total (High): {{ dealerTotalHigh }}</p>
+        <div class="square square-2">
+            <div class="blackjack-players">
+                <div>
+                    <h2>Dealer</h2>
+                    <p>Hand:</p>
+                    <ul>
+                        {% for cardIndex, cardImage in dealerHand %}
+                            {% if cardIndex == 1 %}
+                                <img class="card-image" src="{{ asset(dealerUnturned) }}" alt="Card">
+                            {% else %}
+                                <img class="card-image" src="{{ asset(cardImage) }}" alt="Card">
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <p>Dealer Total (Low): {{ dealerTotalLow }}</p>
+                    <p>Dealer Total (High): {{ dealerTotalHigh }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="square square-3">
+            <div>
+                <h2>Current Bet: {{ playerBet }}</h2>
+                <br>
+                <p>Player Money: {{ playerMoney }}</p>
+                <p>Dealer Money: {{ dealerMoney }}</p>
+            </div>
+        </div>
+
+        <div class="square square-4">
+            <div class="blackjack-log">
+                <p>{{ gameLog | nl2br }}</p>
+            </div>
+        </div>
+
+        <div class="square square-5">
+            <div class="blackjack-players">
+                <div>
+                    <h2>Player</h2>
+                    <p>Hand:</p>
+                    <ul>
+                        {% for cardImage in playerHand %}
+                            <img class="card-image" src="{{ asset(cardImage) }}" alt="Card">
+                        {% endfor %}
+                    </ul>
+                    <p>Player Total (Low): {{ playerTotalLow }}</p>
+                    <p>Player Total (High): {{ playerTotalHigh }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="square square-6">
+            <div class="blackjack-controls">
+                {{ include('flash.html.twig') }}
+                <br>
+                <form method="post" action="">
+                <br>
+                    <p>
+                        <input type="submit" name="hit" value="Hit"
+                            onClick="this.form.action='{{ path('game_player_hit') }}';"
+                        >
+                        <input type="submit" name="stand" value="Stand"
+                            onClick="this.form.action='{{ path('game_player_stand') }}';"
+                        >
+                    </p>
+                        <br>
+                    <p>
+                        <input type="submit" name="newround" value="New Round"
+                            onClick="this.form.action='{{ path('game_init') }}';this.form.method='get';"
+                        >
+                        <input type="submit" name="quit" value="Quit"
+                            onClick="this.form.action='{{ path('game') }}';this.form.method='get';"
+                        >
+                    </p>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div>
-        <h2>Player</h2>
-        <p>Hand:</p>
-        <ul>
-            {% for cardImage in playerHand %}
-                <img class="card-image" src="{{ asset(cardImage) }}" alt="Card">
-            {% endfor %}
-        </ul>
-        <p>Player Total (Low): {{ playerTotalLow }}</p>
-        <p>Player Total (High): {{ playerTotalHigh }}</p>
-    </div>
+    <script>
+        window.onload = function() {
+            var blackjackLog = document.querySelector('.blackjack-log');
+            blackjackLog.scrollTop = blackjackLog.scrollHeight;
+        };
+    </script>
 
-    <div>
-        <h2>Current Bet: {{ playerBet }}</h2>
-    </div>
+    <script>
+        function checkDealerAction() {
+            // Check if the current route is not game_end_result
+            var currentRoute = "{{ app.request.attributes.get('_route') }}";
+            if  (currentRoute !== "game_end_result") {
+                if (currentRoute == "game_player_stand" || currentRoute == "game_dealer_hit") {
+                    var dealerTotalHigh = {{ dealerTotalHigh }};
+                    if (dealerTotalHigh <= 16) {
+                        setTimeout(function() {
+                            window.location.href = "{{ path('game_dealer_hit') }}";
+                        }, 3000);
+                    } else {
+                        window.location.href = "{{ path('game_end_result') }}";
+                    }
+                }
+            }
+        }
 
-    <div>
-        <h2>Bank</h2>
-        <p>Player Money: {{ playerMoney }}</p>
-        <p>Dealer Money: {{ dealerMoney }}</p>
-    </div>
-
-    {{ include('flash.html.twig') }}
-
-    <form method="post" action="">
-        <p>
-            <input type="submit" name="hit" value="Hit"
-                onClick="this.form.action='{{ path('game_player_stand') }}';"
-            >
-            <input type="submit" name="stand" value="Stand"
-                onClick="this.form.action='{{ path('game_player_hit') }}';"
-            >
-            <input type="submit" name="restart" value="Restart"
-                onClick="this.form.action='{{ path('game') }}';this.form.method='get';"
-            >
-        </p>
-    </form>
+        setTimeout(function() {
+            checkDealerAction();
+        }, 3000);
+    </script>
 
 {% endblock %}
