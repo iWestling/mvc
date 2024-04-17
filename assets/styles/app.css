@@ -223,5 +223,175 @@ ul .dicearea li {
 }
 
 .card-image {
+    position: relative; /* Set the position to relative */
     border-radius: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7); /* Added 'px' units */
+}
+.card-image + .card-image {
+    position: relative; /* Set the position to relative */
+    left: -35px; /* Adjust the top position to make it overlap slightly */
+    z-index: 1; /* Set a higher z-index to make it appear on top */
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7); /* Added 'px' units */
+}
+
+.card-image + .card-image + .card-image {
+    position: relative; /* Set the position to relative */
+    left: -70px; /* Adjust the top position to make it overlap slightly */
+    z-index: 1; /* Set a higher z-index to make it appear on top */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Added 'px' units */
+}
+
+.card-image + .card-image + .card-image + .card-image {
+    position: relative; /* Set the position to relative */
+    left: -105px; /* Adjust the top position to make it overlap slightly */
+    z-index: 1; /* Set a higher z-index to make it appear on top */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Added 'px' units */
+}
+
+.card-image + .card-image + .card-image + .card-image + .card-image {
+    position: relative; /* Set the position to relative */
+    left: -140px; /* Adjust the top position to make it overlap slightly */
+    z-index: 1; /* Set a higher z-index to make it appear on top */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Added 'px' units */
+}
+
+/* .blackjack-container {
+    display: flex;
+    border: 10px solid #3a2414;
+}
+
+.blackjack-log {
+    background-color: #0a3c24;
+    border: 3px dotted #68d145;
+    color: #fff;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.blackjack-table {
+    display: flex;
+    background-color: #0a3c24;
+    padding: 20px;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.blackjack-players {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.blackjack-controls {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+} */
+
+.blackjack-container {
+    display: grid;
+    background-color: #0a3c24;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    border: 10px solid #3a2414;
+    min-height: 720px;
+}
+
+.square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.square-1 {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.square-2 {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.square-3 {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: center;
+}
+
+.square-4 {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.square-5 {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.square-6 {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.blackjack-log {
+    background-color: rgba(16, 45, 17, 0.5);
+    border: 3px dotted #276730;
+    color: #fff;
+    padding: 15px;
+    overflow-y: auto;
+    height: 300px;
+    margin: 8px;
+}
+
+.blackjack-players {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.blackjack-controls {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.blackjack-controls form {
+    margin-bottom: 10px;
+}
+
+.blackjack-controls p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.blackjack-controls input[type="submit"] {
+    padding: 10px 18px;
+    font-size: 12px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bolder;
+    transition: background-color 0.3s;
+}
+
+.blackjack-controls input[name="hit"] {
+    background-color: rgb(231, 231, 181); /* Set background color for Hit button */
+}
+
+.blackjack-controls input[name="stand"] {
+    background-color: rgb(226, 182, 182); /* Set background color for Stand button */
+}
+
+.blackjack-controls input[name="hit"],
+.blackjack-controls input[name="stand"] {
+    border-radius: 20px; /* Make Hit and Stand buttons more rounded */
+    padding: 13px 25px;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.blackjack-controls input[type="submit"]:hover {
+    filter: brightness(70%);
 }
