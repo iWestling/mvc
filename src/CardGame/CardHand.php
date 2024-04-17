@@ -55,7 +55,7 @@ class CardHand
         $sumLow = 0; // Total score considering A as 1
         $sumHigh = 0; // Total score considering A as 11
     
-        // Only calculate the value of the first card
+        // Only calculate the value of first card
         if (!empty($this->cards)) {
             $firstCardValue = $this->cards[0]->getValue();
     
@@ -66,7 +66,7 @@ class CardHand
             } elseif ($firstCardValue >= 2 && $firstCardValue <= 10) {
                 $sumLow += $firstCardValue;
                 $sumHigh += $firstCardValue;
-            } else { // Face cards
+            } else {
                 $sumLow += 10;
                 $sumHigh += 10;
             }
