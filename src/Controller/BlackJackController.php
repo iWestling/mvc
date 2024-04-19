@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\CardGame\Card;
 use App\CardGame\CardGraphic;
 use App\CardGame\DeckOfCards;
 use App\CardGame\CardHand;
@@ -18,16 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BlackJackController extends AbstractController
 {
-
     #[Route("/game", name: "game", methods: ['GET'])]
     public function game(
         SessionInterface $session
     ): Response {
 
-        $session->set('playerMoney', 100);
-        $session->set('dealerMoney', 100);
-        $gameLog = "Started new game.\nMoney set to 100 for player and dealer\n";
-        $session->set('gameLog', $gameLog);
+        $session->set('playerMoney', (int) 100);
+        $session->set('dealerMoney', (int) 100);
         return $this->render('blackjack/home.html.twig');
     }
 
@@ -41,7 +37,7 @@ class BlackJackController extends AbstractController
         $data = [
             'playerMoney' => $playerMoney,
             'dealerMoney' => $dealerMoney,
-        ];  
+        ];
 
         return $this->render('blackjack/init.html.twig', $data);
     }
@@ -51,8 +47,8 @@ class BlackJackController extends AbstractController
         Request $request,
         SessionInterface $session
     ): Response {
-    
-        $playerBet = $request->request->get('playerbet');
+
+        $playerBet = (int) $request->request->get('playerbet');
         $deck = new DeckOfCards();
         $shuffledDeck = $deck->getDeck();
         shuffle($shuffledDeck);
@@ -60,32 +56,54 @@ class BlackJackController extends AbstractController
         $playerHand = new CardHand();
         $dealerHand = new CardHand();
 
-        $playerCard1 = array_shift($shuffledDeck);
-        $playerCard2 = array_shift($shuffledDeck);
-        $playerHand->addCard($playerCard1);
-        $playerHand->addCard($playerCard2);
+        // Deal cards to player
+        $playerDealSuccess = true;
+        for ($i = 0; $i < 2; $i++) {
+            $card = array_shift($shuffledDeck);
+            if (!($card instanceof CardGraphic)) {
+                $playerDealSuccess = false;
+                break;
+            }
+            $playerHand->addCard($card);
+        }
+        if (!$playerDealSuccess) {
+            $this->addFlash('error', 'Failed to deal card to player.');
+            return $this->redirectToRoute('game_init');
+        }
 
-        $dealerCard1 = array_shift($shuffledDeck);
-        $dealerCard2 = array_shift($shuffledDeck);
-        $dealerHand->addCard($dealerCard1);
-        $dealerHand->addCard($dealerCard2);
+        // Deal cards to dealer
+        $dealerDealSuccess = true;
+        for ($i = 0; $i < 2; $i++) {
+            $card = array_shift($shuffledDeck);
+            if (!($card instanceof CardGraphic)) {
+                $dealerDealSuccess = false;
+                break;
+            }
+            $dealerHand->addCard($card);
+        }
+
+        if (!$dealerDealSuccess) {
+            $this->addFlash('error', 'Failed to deal card to dealer.');
+            return $this->redirectToRoute('game_init');
+        }
 
         $session->set('playerHand', $playerHand);
         $session->set('dealerHand', $dealerHand);
-
         $session->set('deck', $shuffledDeck);
         $session->set('playerBet', $playerBet);
 
-        $playerCard1Value = $playerCard1->getCardName();
-        $playerCard1Suit = $playerCard1->getSuit();
-        $playerCard2Value = $playerCard2->getCardName();
-        $playerCard2Suit = $playerCard2->getSuit();
-        $dealerCard1Value = $dealerCard1->getCardName();
-        $dealerCard1Suit = $dealerCard1->getSuit();
+        // Log game details
         $gameLog = $session->get('gameLog');
-        $gameLog .= "\nStarted new round\nRegistered Bet as {$playerBet}\n";
-        $gameLog .= "Dealt cards to player: {$playerCard1Value} of {$playerCard1Suit}, {$playerCard2Value} of {$playerCard2Suit}\n";
-        $gameLog .= "Dealt cards to dealer: {$dealerCard1Value} of {$dealerCard1Suit}, [Hidden Card]\n";
+        $playerCards = array_map(fn ($card) => "{$card->getCardName()} of {$card->getSuit()}", $playerHand->getCards());
+        $dealerCards = array_map(function ($card, $index) {
+            if ($index === 1) {
+                return '[Hidden Card]';
+            }
+            return "{$card->getCardName()} of {$card->getSuit()}";
+        }, $dealerHand->getCards(), array_keys($dealerHand->getCards()));
+        $gameLog .= "\n\nStarted new round\nRegistered Bet as {$playerBet}\n";
+        $gameLog .= "Dealt cards to player: " . implode(', ', $playerCards) . "\n";
+        $gameLog .= "Dealt cards to dealer: " . implode(', ', $dealerCards) . "\n";
         $session->set('gameLog', $gameLog);
 
         return $this->redirectToRoute('game_play');
@@ -93,7 +111,6 @@ class BlackJackController extends AbstractController
 
     #[Route("/game/play", name: "game_play", methods: ['GET'])]
     public function play(
-        Request $request,
         SessionInterface $session
     ): Response {
 
@@ -108,12 +125,14 @@ class BlackJackController extends AbstractController
             return $this->redirectToRoute('game_init');
         }
 
-        $playerMoney = $playerMoney-$playerBet;
-        $dealerMoney = $dealerMoney-$playerBet;
+        $playerMoney = $playerMoney - $playerBet;
+        $dealerMoney = $dealerMoney - $playerBet;
         $session->set('playerMoney', $playerMoney);
         $session->set('dealerMoney', $dealerMoney);
 
+        /** @var CardHand $playerHand */
         $playerHand = $session->get('playerHand');
+        /** @var CardHand $dealerHand */
         $dealerHand = $session->get('dealerHand');
 
         // Prepare unturned card for dealer
@@ -130,14 +149,15 @@ class BlackJackController extends AbstractController
 
         $gameLog = $session->get('gameLog');
 
-        $blackjackOrBust = GameResultCheck::blackjackOrBust($playerTotals, $dealerTotals);
-        if (!empty($blackjackOrBust)){
+        $gameResultCheck = new GameResultCheck();
+        $blackjackOrBust = $gameResultCheck->blackjackOrBust($playerTotals, $dealerTotals);
+        if (!empty($blackjackOrBust)) {
             return $this->redirectToRoute('game_end_result');
         }
 
         $data = [
-            'playerHand' => array_map(fn($card) => $card->getAsString(), $playerHand->getCards()),
-            'dealerHand' => array_map(fn($card) => $card->getAsString(), $dealerHand->getCards()),
+            'playerHand' => array_map(fn ($card) => $card->getAsString(), $playerHand->getCards()),
+            'dealerHand' => array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards()),
             'playerMoney' => $playerMoney,
             'playerBet' => $playerBet,
             'dealerMoney' => $dealerMoney,
@@ -148,23 +168,24 @@ class BlackJackController extends AbstractController
             'dealerTotalHigh' => $dealerTotalHigh,
             'resultMessage' => $blackjackOrBust,
             'gameLog' => $gameLog,
-        ];        
-        
+        ];
+
         return $this->render('blackjack/play.html.twig', $data);
     }
 
     #[Route("/game/stand", name: "game_player_stand", methods: ['GET', 'POST'])]
     public function stand(
-        Request $request,
         SessionInterface $session
     ): Response {
         $playerBet = $session->get('playerBet');
         $playerMoney = $session->get('playerMoney');
         $dealerMoney = $session->get('dealerMoney');
+        /** @var CardHand $playerHand */
         $playerHand = $session->get('playerHand');
+        /** @var CardHand $dealerHand */
         $dealerHand = $session->get('dealerHand');
         $gameLog = $session->get('gameLog');
-    
+
         // Update the dealer's unturned card to the real card image path
         $dealerHandCards = $dealerHand->getCards();
         $dealerHandCards[1] = new CardGraphic($dealerHandCards[1]->getValue(), $dealerHandCards[1]->getSuit());
@@ -176,19 +197,20 @@ class BlackJackController extends AbstractController
         $dealerCard2Suit = $dealerHandCards[1]->getSuit();
 
         $gameLog .= "Player stands.\nTurned over dealers second card: {$dealerCard2Value} of {$dealerCard2Suit}\n";
-        
+
         $session->set('gameLog', $gameLog);
 
-        $blackjackOrBust = GameResultCheck::blackjackOrBust($playerTotals, $dealerTotals);
-        if (!empty($blackjackOrBust)){
+        $gameResultCheck = new GameResultCheck();
+        $blackjackOrBust = $gameResultCheck->blackjackOrBust($playerTotals, $dealerTotals);
+        if (!empty($blackjackOrBust)) {
             return $this->redirectToRoute('game_end_result');
         }
 
         $session->set('dealerHand', $dealerHand);
-    
+
         $data = [
-            'playerHand' => array_map(fn($card) => $card->getAsString(), $playerHand->getCards()),
-            'dealerHand' => array_map(fn($card) => $card->getAsString(), $dealerHand->getCards()),
+            'playerHand' => array_map(fn ($card) => $card->getAsString(), $playerHand->getCards()),
+            'dealerHand' => array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards()),
             'playerMoney' => $playerMoney,
             'playerBet' => $playerBet,
             'dealerMoney' => $dealerMoney,
@@ -200,25 +222,46 @@ class BlackJackController extends AbstractController
             'resultMessage' => $blackjackOrBust,
             'gameLog' => $gameLog,
         ];
-    
+
         return $this->render('blackjack/play.html.twig', $data);
     }
-    
-    
+
+
     #[Route("/game/hit", name: "game_player_hit", methods: ['GET', 'POST'])]
     public function hit(
-        Request $request,
         SessionInterface $session
     ): Response {
         $playerBet = $session->get('playerBet');
         $playerMoney = $session->get('playerMoney');
         $dealerMoney = $session->get('dealerMoney');
+        /** @var CardHand $playerHand */
         $playerHand = $session->get('playerHand');
+        if (!$playerHand instanceof CardHand) {
+            // Handle the case where playerHand is not a CardHand instance
+            $this->addFlash('error', 'Player hand not found or invalid.');
+            return $this->redirectToRoute('game'); // Redirect to game initialization
+        }
+        /** @var CardHand $dealerHand */
         $dealerHand = $session->get('dealerHand');
+        if (!$dealerHand instanceof CardHand) {
+            // Handle the case where dealerHand is not a CardHand instance
+            $this->addFlash('error', 'Dealer hand not found or invalid.');
+            return $this->redirectToRoute('game'); // Redirect to game initialization
+        }
+
         $gameLog = $session->get('gameLog');
 
         $deck = $session->get('deck');
+        if (!is_array($deck)) {
+            $this->addFlash('error', 'Deck is not properly initialized.');
+            return $this->redirectToRoute('game');
+        }
         $drawnCard = array_shift($deck);
+        if (!$drawnCard instanceof CardGraphic) {
+            // Handle the case where a non-CardGraphic object is drawn from the deck
+            $this->addFlash('error', 'Failed to draw a card from the deck.');
+            return $this->redirectToRoute('game'); // Redirect to game initialization
+        }
         $playerHand->addCard($drawnCard);
         $session->set('deck', $deck);
         $session->set('playerHand', $playerHand);
@@ -233,14 +276,15 @@ class BlackJackController extends AbstractController
         $gameLog .= "Player drew another card: {$drawnCardValue} of {$drawnCardSuit}\n";
         $session->set('gameLog', $gameLog);
 
-        $blackjackOrBust = GameResultCheck::blackjackOrBust($playerTotals, $dealerTotals);
-        if (!empty($blackjackOrBust)){
+        $gameResultCheck = new GameResultCheck();
+        $blackjackOrBust = $gameResultCheck->blackjackOrBust($playerTotals, $dealerTotals);
+        if (!empty($blackjackOrBust)) {
             return $this->redirectToRoute('game_end_result');
         }
 
         $data = [
-            'playerHand' => array_map(fn($card) => $card->getAsString(), $playerHand->getCards()),
-            'dealerHand' => array_map(fn($card) => $card->getAsString(), $dealerHand->getCards()),
+            'playerHand' => array_map(fn ($card) => $card->getAsString(), $playerHand->getCards()),
+            'dealerHand' => array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards()),
             'playerMoney' => $playerMoney,
             'playerBet' => $playerBet,
             'dealerMoney' => $dealerMoney,
@@ -257,25 +301,39 @@ class BlackJackController extends AbstractController
     }
 
     #[Route("/game/dealer-hit", name: "game_dealer_hit", methods: ['GET'])]
-    public function dealerHit(Request $request, SessionInterface $session): Response {
+    public function dealerHit(SessionInterface $session): Response
+    {
+        /** @var int $playerBet */
         $playerBet = $session->get('playerBet');
+        /** @var int $playerMoney */
         $playerMoney = $session->get('playerMoney');
+        /** @var int $dealerMoney */
         $dealerMoney = $session->get('dealerMoney');
+        /** @var CardHand $playerHand */
         $playerHand = $session->get('playerHand');
+        /** @var CardHand $dealerHand */
         $dealerHand = $session->get('dealerHand');
         $gameLog = $session->get('gameLog');
-        $deck = $session->get('deck');
 
+        $deck = $session->get('deck');
+        if (!is_array($deck)) {
+            $this->addFlash('error', 'Deck is not properly initialized.');
+            return $this->redirectToRoute('game');
+        }
         //get turned cards value
         $dealerHandCards = $dealerHand->getCards();
         $dealerHandCards[1] = new CardGraphic($dealerHandCards[1]->getValue(), $dealerHandCards[1]->getSuit());
 
         $drawnCard = array_shift($deck);
+        if (!$drawnCard instanceof CardGraphic) {
+            $this->addFlash('error', 'Failed to draw a card from the deck.');
+            return $this->redirectToRoute('game');
+        }
         $dealerHand->addCard($drawnCard);
         $drawnCardValue = $drawnCard->getCardName();
         $drawnCardSuit = $drawnCard->getSuit();
         $gameLog .= "Dealer drew another card: {$drawnCardValue} of {$drawnCardSuit}\n";
-    
+
 
         $session->set('deck', $deck);
         $session->set('dealerHand', $dealerHand);
@@ -284,18 +342,15 @@ class BlackJackController extends AbstractController
         $dealerTotals = $dealerHand->calculateTotal();
         $playerTotals = $playerHand->calculateTotal();
 
-        $blackjackOrBust = GameResultCheck::blackjackOrBust($playerTotals, $dealerTotals);
-        if (!empty($blackjackOrBust)){
-            return $this->redirectToRoute('game_end_result');
-        }
-
-        if (empty($blackjackOrBust) && $dealerTotals['low'] > 16) {
+        $gameResultCheck = new GameResultCheck();
+        $blackjackOrBust = $gameResultCheck->blackjackOrBust($playerTotals, $dealerTotals);
+        if (!empty($blackjackOrBust) || $dealerTotals['low'] > 16) {
             return $this->redirectToRoute('game_end_result');
         }
 
         $data = [
-            'playerHand' => array_map(fn($card) => $card->getAsString(), $playerHand->getCards()),
-            'dealerHand' => array_map(fn($card) => $card->getAsString(), $dealerHand->getCards()),
+            'playerHand' => array_map(fn ($card) => $card->getAsString(), $playerHand->getCards()),
+            'dealerHand' => array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards()),
             'playerMoney' => $playerMoney,
             'playerBet' => $playerBet,
             'dealerMoney' => $dealerMoney,
@@ -312,15 +367,22 @@ class BlackJackController extends AbstractController
     }
 
     #[Route("/game/end-result", name: "game_end_result", methods: ['GET'])]
-    public function endResult(Request $request, SessionInterface $session): Response {
-
+    public function endResult(SessionInterface $session): Response
+    {
         $playerBet = $session->get('playerBet');
         $playerMoney = $session->get('playerMoney');
         $dealerMoney = $session->get('dealerMoney');
+
+        /** @var CardHand $playerHand */
         $playerHand = $session->get('playerHand');
+        /** @var CardHand $dealerHand */
         $dealerHand = $session->get('dealerHand');
         $gameLog = $session->get('gameLog');
-    
+
+        if (!is_string($gameLog)) {
+            $gameLog = '';
+        }
+
         $dealerTotals = $dealerHand->calculateTotal();
         $playerTotals = $playerHand->calculateTotal();
 
@@ -328,25 +390,39 @@ class BlackJackController extends AbstractController
         $dealerHandCards[1] = new CardGraphic($dealerHandCards[1]->getValue(), $dealerHandCards[1]->getSuit());
 
         // Check the final outcome of the game
-        $blackjackOrBust = GameResultCheck::blackjackOrBust($playerTotals, $dealerTotals);
-        if (!empty($blackjackOrBust)){
+        $gameResultCheck = new GameResultCheck();
+        $blackjackOrBust = $gameResultCheck->blackjackOrBust($playerTotals, $dealerTotals);
+        if (!empty($blackjackOrBust)) {
             $gameLog .= $blackjackOrBust;
         }
-        if (empty($blackjackOrBust)){
-            $highestScore = GameResultCheck::highestScore($playerTotals, $dealerTotals);
+        if (empty($blackjackOrBust)) {
+            $highestScore = $gameResultCheck->highestScore($playerTotals, $dealerTotals);
             $gameLog .= $highestScore;
         }
         $session->set('gameLog', $gameLog);
 
         $gameLogLines = explode("\n", $gameLog);
-        $gameResult = end($gameLogLines); // Get the last line of the gameLog
-        list($playerMoney, $dealerMoney) = MoneyHandling::handleMoney($gameResult, $playerBet, $playerMoney, $dealerMoney);
+        $gameResult = end($gameLogLines) ?: '';
+
+        $moneyHandler = new MoneyHandling();
+        $playerBet = filter_var($playerBet, FILTER_VALIDATE_INT);
+        $playerMoney = filter_var($playerMoney, FILTER_VALIDATE_INT);
+        $dealerMoney = filter_var($dealerMoney, FILTER_VALIDATE_INT);
+        // Check if the values are valid integers
+        if ($playerBet !== false && $playerMoney !== false && $dealerMoney !== false) {
+            list($playerMoney, $dealerMoney) = $moneyHandler->handleMoney(
+                (string)$gameResult,
+                $playerBet,
+                $playerMoney,
+                $dealerMoney
+            );
+        }
         $session->set('playerMoney', $playerMoney);
         $session->set('dealerMoney', $dealerMoney);
 
         $data = [
-            'playerHand' => array_map(fn($card) => $card->getAsString(), $playerHand->getCards()),
-            'dealerHand' => array_map(fn($card) => $card->getAsString(), $dealerHand->getCards()),
+            'playerHand' => array_map(fn ($card) => $card->getAsString(), $playerHand->getCards()),
+            'dealerHand' => array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards()),
             'playerMoney' => $playerMoney,
             'playerBet' => $playerBet,
             'dealerMoney' => $dealerMoney,
@@ -361,5 +437,4 @@ class BlackJackController extends AbstractController
 
         return $this->render('blackjack/play.html.twig', $data);
     }
-
 }
