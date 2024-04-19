@@ -108,7 +108,7 @@
                     if (dealerTotalHigh <= 16) {
                         setTimeout(function() {
                             window.location.href = "{{ path('game_dealer_hit') }}";
-                        }, 3000);
+                        }, 700);
                     } else {
                         window.location.href = "{{ path('game_end_result') }}";
                     }
@@ -118,7 +118,7 @@
 
         setTimeout(function() {
             checkDealerAction();
-        }, 3000);
+        }, 700);
     </script>
 
 {% endblock %}
