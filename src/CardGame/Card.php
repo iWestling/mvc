@@ -13,7 +13,8 @@ class Card
         $this->suit = $suit;
     }
 
-    public function getValue(): int {
+    public function getValue(): int
+    {
         return $this->value;
     }
 
@@ -33,7 +34,8 @@ class Card
         }
     }
 
-    public function getSuit(): string {
+    public function getSuit(): string
+    {
         return $this->suit;
     }
 

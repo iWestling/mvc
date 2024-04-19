@@ -4,6 +4,9 @@ namespace App\CardGame;
 
 class DeckOfCards
 {
+    /**
+     * @var CardGraphic[]
+     */
     private array $deck;
 
     public function __construct()
@@ -22,8 +25,10 @@ class DeckOfCards
             }
         }
     }
-    
 
+    /**
+     * @return CardGraphic[]
+     */
     public function getDeck(): array
     {
         return $this->deck;

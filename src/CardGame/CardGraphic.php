@@ -4,7 +4,6 @@ namespace App\CardGame;
 
 class CardGraphic extends Card
 {
-
     private string $imagePath;
 
     private string $unturned = 'img/carddeck/unturned.png';
@@ -14,7 +13,7 @@ class CardGraphic extends Card
         parent::__construct($value, $suit);
         $this->setImagePath($value, $suit);
     }
-    
+
     private function setImagePath(int $value, string $suit): void
     {
         $valueName = $this->getValueName($value);
