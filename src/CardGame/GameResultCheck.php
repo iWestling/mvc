@@ -29,29 +29,23 @@ class GameResultCheck
      */
     public function blackjackOrBust(array $playerTotals, array $dealerTotals): string
     {
-        $conditions = [
-            ['check' => 'Bust', 'result' => 'Bust! Dealer wins!', 'player' => true, 'dealer' => true],
-            ['check' => 'Blackjack', 'result' => 'You win!', 'player' => true, 'dealer' => false],
-            ['check' => 'Blackjack', 'result' => 'Dealer wins!', 'player' => false, 'dealer' => true],
-            ['check' => 'Blackjack', 'result' => 'It\'s a tie!', 'player' => true, 'dealer' => true],
-            ['check' => 'Blackjack', 'result' => 'Dealer busts! You win!', 'player' => true, 'dealer' => false],
-            ['check' => 'Blackjack', 'result' => 'You bust! Dealer wins!', 'player' => false, 'dealer' => true],
-            ['check' => 'Blackjack', 'result' => 'It\'s a tie!', 'player' => true, 'dealer' => true],
-            ['check' => '', 'result' => '', 'player' => false, 'dealer' => false],
-        ];
-
-        foreach ($conditions as $condition) {
-            if ($this->checkCondition($condition['check'], $playerTotals) && $this->checkCondition($condition['check'], $dealerTotals)) {
-                return $condition['result'];
-            } elseif ($this->checkCondition($condition['check'], $playerTotals) && !$this->checkCondition($condition['check'], $dealerTotals)) {
-                return $condition['result'];
-            } elseif (!$this->checkCondition($condition['check'], $playerTotals) && $this->checkCondition($condition['check'], $dealerTotals)) {
-                return $condition['result'];
-            }
+        if ($this->checkBust($playerTotals) && $this->checkBust($dealerTotals)) {
+            return 'It\'s a tie!';
+        } elseif ($this->checkBust($playerTotals)) {
+            return 'Bust! Dealer wins!';
+        } elseif ($this->checkBust($dealerTotals)) {
+            return 'Dealer busts! You win!';
+        } elseif ($this->checkBlackjack($playerTotals) && $this->checkBlackjack($dealerTotals)) {
+            return 'It\'s a tie!';
+        } elseif ($this->checkBlackjack($playerTotals)) {
+            return 'You win!';
+        } elseif ($this->checkBlackjack($dealerTotals)) {
+            return 'Dealer wins!';
         }
-
+    
         return '';
     }
+    
 
     /**
      * @param array{high: int, low: int} $totals
