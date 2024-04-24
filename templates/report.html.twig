@@ -79,8 +79,27 @@
             </p>
             <p>TIL för detta moment är, förrutom allt nytt jag lärt mig, att fokusera på det viktiga. Nu när jag var "klar" med uppgiften satt jag alldeles för länge med layout och att få till formulär för att dynamiskt kunna välja antal kort/spelare, jag borde hellre ha tagit den tiden till att läsa på mer om saker jag är mer osäker på.
             </p>
+
             <h2 id="kmom03">Kmom03</h2>
             <p>Rapport för kmom03.</p>
+            <p>Det har varit kul och lärorikt att modellera ett kortspel med flödesdiagram och psuedokod. Jag har sällan skrivit ned kompletta flödesdiagram tidigare men har ofta försökt tänkta i de banorna när jag programmerat då det hjälper till med problemlösning och ger en bättre överblick av projekt, så det kändes logiskt och gick ganska bra. <br> Jag har aldrig skrivit pseudo-kod tidigare och är lite osäker på vad för sorts pseudo-kod som är bäst, men jag tycker det gick ganska bra och hjälpte till med strukturen till applikationen.
+
+            <p>För uppgiften gjorde jag ett blackjack spel (en variant av 21). BlackJackController hanterar spelets flöde; först startas ett spel där spelaren och banken/dealern har 100 i pengar. En ny kortlek blandas, spelaren lägger ett bet utifrån ett formulär och korten blandas. Sedan utförs händelser utifrån spelarkortens värden och spelarens aktioner (hit, stand).</p>
+
+            I klassen GameResultChecking finns metoder med case och if-satser som kollar om värden ger blackjack, bust eller att bedöma det högsta värdet. Eftersom ace kan vara både 1 och 11 skriver jag ut både en "low" och en "high" score som värden kollas utifrån. I klassen MoneyHandling hanteras ändringar av spelarens respektive dealerns pengar baserat på spelets resultat.<br>
+
+            Jag skapade även en "gamelog" som skriver ut vad som händer i spelet, detta både för att göra det enklare för mig under utvecklandet av spelet och för att det är enklare för spelaren att se vad som händer.<br>
+            Jag höll mina vyer/templates "dumma", med kod som endast hämtas ut från $data i controllers. För att få lite bättre användarvänlighet strukturerade jag upp stylingen i ett css-grid, gjorde lite if-satser som disablar vissa knappar/aktioner utifrån spelresultat samt skapade en liten delay av dealerns kortutdelning med hjälp av js och setTimeout som jag tycker höjde spelupplevelsen. 
+            </p>
+
+            <p>Jag är någorlunda nöjd med spelet då allting fungerar som det ska och jag är nöjd över att jag efter lite trixande lyckades få till det så att 0 problem kommenteras när jag kör composer lint. <br>Jag är dock missnöjd över att jag inte hann göra de sista valfria uppgifterna då familjeproblem uppstod under andra veckan, men jag hade påbörjat arbetet med en smart bank och förhoppningsvis ska jag kunna implementera något liknande till framtida uppgifter om det behövs. 
+            För övrig förbättringspotential kan jag tänka mig att man borde göra controllers ännu mer skinny och lägga in mer av koden i models - dock är koden fortfarande såpass skinny att det inte känns helt nödvändigt ännu.<br>
+
+            Hittils går det bra att koda i ett ramverk som Symfony, det gör det lättare att hantera routes, sessioner och att rendera templates. Jag tyckte överlag att det kändes krångligt i början men nu under kmom03 känns det verkligen som att allting "satt" sig.</p>
+
+            <p>TIL för detta moment är att cleara cachen oftare! Jag slog huvudet blodig mot problem 2 gånger under uppgiften men dessa problem löstes automatiskt när jag kom på att cleara den.  
+            </p>
+
             <h2 id="kmom04">Kmom04</h2>
             <p>Rapport för kmom04.</p>
             <h2 id="kmom05">Kmom05</h2>

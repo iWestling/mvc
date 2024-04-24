@@ -1,0 +1,96 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Blackjack{% endblock %}
+
+{% block main %}
+    <h1>Blackjack</h1>
+        <div class="content-column">
+            <h2>Blackjack Documentation</h2>
+            <div class="flowchart-container">
+                <p>Flowchart:</p>
+                    <a href="{{ asset('img/flowchart.webp') }}">
+                    <img src="{{ asset('img/flowchart.webp') }}" alt="Flowchart of the game">
+                </a>
+            </div>
+            <p>Pseudo-code:</p>
+            <code>
+            <div class="pseudo-code">  
+            Start Game:
+                Initialize Game & Bank
+                Player and Dealer start with 100 money each
+
+            Player places bet:
+                Tell player to place bet
+                Validate bet input
+
+            Start Round:
+                Initialize Round
+                Deal Cards
+
+            Check Cards:
+                If Player's total > 21:
+                    If player has Ace:
+                        Change value of Ace from 11 to 1
+                        If total value > 21:
+                            Player busts
+                    Else:
+                        Continue
+                Else if Player's total = 21:
+                    Check Dealer's unturned card
+                    If Dealer's total = 21:
+                        Tie (push)
+                    Else:
+                        Player wins
+
+            Players Turn:
+                Loop until player stands, wins or busts:
+                    Prompt player to choose "Hit" or "Stand"
+                    If player chooses "Hit":
+                        Deal 1 card to player
+                        Check Cards
+                    If player chooses "Stand":
+                        Exit loop
+
+            Dealers Turn:
+                Reveal Dealer's unturned card
+                Check Cards
+                Repeat until dealer stands or busts:
+                    If dealer's total < 17:
+                        Deal 1 card to dealer
+                    Else if dealer's total > 21:
+                        Change value of Ace from 11 to 1
+                        If total value > 21:
+                            Dealer busts
+                        Else:
+                            Continue
+
+            Determine Winner:
+                If Player's total > 21:
+                    Dealer wins
+                Else if Dealer's total > 21:
+                    Player wins
+                Else if Player's total > Dealer's total:
+                    Player wins
+                Else if Dealer's total > Player's total:
+                    Dealer wins
+                Else:
+                    Tie (push)
+
+            End Game:
+                Display winner and respective hands
+                Allow player to start a new game or quit
+            </div>
+            </code>
+            <br>
+            <p>Klasser som behövs:
+            Sedan tidigare har jag implementerat Card, CardGraphic, CardHand och DeckOfCards för att hantera kortlek och för att spelare ska kunna ha kort på händerna.<br>
+            Sedan kommer vi behöva någon form av GameHandling-klass (som hanterar spel-händelser), GameResult-klass (som hanterar uträkningar och resultat), samt MoneyHandling-klass (som hanterar pengar, dvs betting/bank).
+            </p>
+            <form action="{{ path('game') }}">
+                <button type="submit" class="btn btn-primary">Back to game</button>
+            </form>
+            <br>
+        </div>
+{% endblock %}
+
+
