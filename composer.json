@@ -98,7 +98,9 @@
         "lint": [
             "@phpmd",
             "@phpstan"
-        ]
+        ],
+        "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit"
+
     },
     "conflict": {
         "symfony/symfony": "*"
