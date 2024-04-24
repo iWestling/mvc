@@ -48,6 +48,17 @@ p {
     display: flex;
     padding-bottom: 20px;
     padding-right: 30px;
+    min-height: 500px;
+}
+
+.bjgame-container {
+    display: flex;
+    text-align: center;
+    padding-bottom: 20px;
+    padding-right: 30px;
+    background-color: #0a3c24;
+    border: 10px solid #3a2414;
+    min-height: 500px;
 }
 
 .lucky-container {
@@ -255,39 +266,6 @@ ul .dicearea li {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Added 'px' units */
 }
 
-/* .blackjack-container {
-    display: flex;
-    border: 10px solid #3a2414;
-}
-
-.blackjack-log {
-    background-color: #0a3c24;
-    border: 3px dotted #68d145;
-    color: #fff;
-    padding: 15px;
-    overflow-y: auto;
-}
-
-.blackjack-table {
-    display: flex;
-    background-color: #0a3c24;
-    padding: 20px;
-    flex: 1;
-    justify-content: space-between;
-}
-
-.blackjack-players {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-}
-
-.blackjack-controls {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-} */
-
 .blackjack-container {
     display: grid;
     background-color: #0a3c24;
@@ -394,4 +372,27 @@ ul .dicearea li {
 
 .blackjack-controls input[type="submit"]:hover {
     filter: brightness(70%);
+}
+
+.betting {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.pseudo-code {
+    white-space: pre-wrap;
+    background-color: #f4f4f4; 
+    color: #000;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+}
+
+.flowchart-container img {
+    max-width: 1100px;
 }
