@@ -4,7 +4,7 @@
 
 {% block main %}
     <h1>Blackjack</h1>
-    <div class="game-container">
+    <div class="bjgame-container">
         <div class="content-column">
             <h2>Blackjack</h2>
             <p>Rules:
@@ -20,9 +20,13 @@
             <br>
             <p>Card values: 1-10 at face value, Jack, Queen and King is 10, Ace is either 1 or 11.
             </p>
-            <p>Start game:
-            </p>
-            <a href="{{ path('game_init') }}" class="btn btn-primary">Start Playing</a>
+            <form action="{{ path('game_init') }}">
+                <button type="submit" class="btn btn-primary">Start Playing</button>
+            </form>
+            <br>
+            <form action="{{ path('game_doc') }}">
+                <button type="submit" class="btn btn-primary">Read Documentation</button>
+            </form>
         </div>
     </div>
 {% endblock %}

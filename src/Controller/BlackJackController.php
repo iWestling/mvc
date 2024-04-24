@@ -22,6 +22,7 @@ class BlackJackController extends AbstractController
         SessionInterface $session
     ): Response {
 
+        $session->clear();
         $session->set('playerMoney', (int) 100);
         $session->set('dealerMoney', (int) 100);
         return $this->render('blackjack/home.html.twig');
@@ -92,20 +93,6 @@ class BlackJackController extends AbstractController
         $session->set('deck', $shuffledDeck);
         $session->set('playerBet', $playerBet);
 
-        // Log game details
-        $gameLog = $session->get('gameLog');
-        $playerCards = array_map(fn ($card) => "{$card->getCardName()} of {$card->getSuit()}", $playerHand->getCards());
-        $dealerCards = array_map(function ($card, $index) {
-            if ($index === 1) {
-                return '[Hidden Card]';
-            }
-            return "{$card->getCardName()} of {$card->getSuit()}";
-        }, $dealerHand->getCards(), array_keys($dealerHand->getCards()));
-        $gameLog .= "\n\nStarted new round\nRegistered Bet as {$playerBet}\n";
-        $gameLog .= "Dealt cards to player: " . implode(', ', $playerCards) . "\n";
-        $gameLog .= "Dealt cards to dealer: " . implode(', ', $dealerCards) . "\n";
-        $session->set('gameLog', $gameLog);
-
         return $this->redirectToRoute('game_play');
     }
 
@@ -148,6 +135,21 @@ class BlackJackController extends AbstractController
         $dealerTotalHigh = $dealerTotals['high'];
 
         $gameLog = $session->get('gameLog');
+        $playerCards = array_map(fn ($card) => "{$card->getCardName()} of {$card->getSuit()}", $playerHand->getCards());
+        $dealerCards = array_map(function ($card, $index) {
+            if ($index === 1) {
+                return '[Hidden Card]';
+            }
+            return "{$card->getCardName()} of {$card->getSuit()}";
+        }, $dealerHand->getCards(), array_keys($dealerHand->getCards()));
+        $playerBet = $session->get('playerBet');
+        if (isset($playerBet) && is_int($playerBet)) {
+            $betAsString = strval($playerBet);
+            $gameLog .= "\n\nStarted new round\nRegistered Bet as {$betAsString}\n";
+        }
+        $gameLog .= "Dealt cards to player: " . implode(', ', $playerCards) . "\n";
+        $gameLog .= "Dealt cards to dealer: " . implode(', ', $dealerCards) . "\n";
+        $session->set('gameLog', $gameLog);
 
         $gameResultCheck = new GameResultCheck();
         $blackjackOrBust = $gameResultCheck->blackjackOrBust($playerTotals, $dealerTotals);
@@ -344,7 +346,10 @@ class BlackJackController extends AbstractController
 
         $gameResultCheck = new GameResultCheck();
         $blackjackOrBust = $gameResultCheck->blackjackOrBust($playerTotals, $dealerTotals);
-        if (!empty($blackjackOrBust) || $dealerTotals['low'] > 16) {
+        if (!empty($blackjackOrBust)) {
+            return $this->redirectToRoute('game_end_result');
+        }
+        if ($dealerTotals['low'] > 16) {
             return $this->redirectToRoute('game_end_result');
         }
 
@@ -431,10 +436,17 @@ class BlackJackController extends AbstractController
             'playerTotalHigh' => $playerHand->calculateTotal()['high'],
             'dealerTotalLow' => $dealerTotals['low'],
             'dealerTotalHigh' => $dealerTotals['high'],
-            'resultMessage' => $blackjackOrBust,
+            'resultMessage' => $gameResult,
             'gameLog' => $gameLog,
         ];
 
         return $this->render('blackjack/play.html.twig', $data);
+    }
+
+    #[Route("/game/doc", name: "game_doc", methods: ['GET'])]
+    public function doc(
+    ): Response {
+
+        return $this->render('blackjack/doc.html.twig');
     }
 }

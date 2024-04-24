@@ -71,15 +71,18 @@
                 <br>
                     <p>
                         <input type="submit" name="hit" value="Hit"
+                            {% if resultMessage %}disabled{% endif %}
                             onClick="this.form.action='{{ path('game_player_hit') }}';"
                         >
                         <input type="submit" name="stand" value="Stand"
+                            {% if resultMessage %}disabled{% endif %}
                             onClick="this.form.action='{{ path('game_player_stand') }}';"
                         >
                     </p>
                         <br>
                     <p>
                         <input type="submit" name="newround" value="New Round"
+                            {% if playerMoney == 0 or dealerMoney == 0 %}disabled{% endif %}
                             onClick="this.form.action='{{ path('game_init') }}';this.form.method='get';"
                         >
                         <input type="submit" name="quit" value="Quit"

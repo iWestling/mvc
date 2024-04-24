@@ -28,7 +28,7 @@ class CardGameController extends AbstractController
     {
         $session->clear();
         $this->addFlash('notice', 'Session data has been deleted.');
-        return $this->redirectToRoute('card_start');
+        return $this->redirectToRoute('session_show');
     }
 
     #[Route("/card", name: "card_start")]
