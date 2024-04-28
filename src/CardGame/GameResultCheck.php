@@ -17,7 +17,7 @@ class GameResultCheck
      * @param array{high: int, low: int} $totals
      * @return bool
      */
-    private function checkBust(array $totals): bool
+    public function checkBust(array $totals): bool
     {
         return $totals['high'] > 21 && $totals['low'] > 21;
     }
@@ -42,10 +42,10 @@ class GameResultCheck
         } elseif ($this->checkBlackjack($dealerTotals)) {
             return 'Dealer wins!';
         }
-    
+
         return '';
     }
-    
+
 
     /**
      * @param array{high: int, low: int} $totals
@@ -74,11 +74,7 @@ class GameResultCheck
         $playerHighest = ($playerTotals['high'] <= 21) ? $playerTotals['high'] : $playerTotals['low'];
         $dealerHighest = ($dealerTotals['high'] <= 21) ? $dealerTotals['high'] : $dealerTotals['low'];
 
-        if ($playerHighest > 21) {
-            return 'Dealer wins!';
-        }
-
-        if ($dealerHighest > 21 || $playerHighest > $dealerHighest) {
+        if ($playerHighest > $dealerHighest) {
             return 'You win!';
         }
 
@@ -86,6 +82,7 @@ class GameResultCheck
             return 'Dealer wins!';
         }
 
-        return 'It\'s a tie!';
+        return "It's a tie!";
     }
+
 }
