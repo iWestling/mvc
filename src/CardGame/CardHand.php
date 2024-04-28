@@ -38,26 +38,37 @@ class CardHand
 
         foreach ($this->cards as $card) {
             $value = $card->getValue();
-            if ($value >= 2 && $value <= 10) {
-                $sumLow += $value;
-                $sumHigh += $value;
-            } elseif ($value >= 11 && $value <= 13) {
-                $sumLow += 10;
-                $sumHigh += 10;
-            } elseif ($value === 1) {
+            if ($this->isAce($value)) {
                 $sumLow += 1;
                 $sumHigh += 11;
                 $aceCount++;
             }
+            $sumLow += min($value, 10); // Non-ace cards are valued at their face value, capped at 10
+            $sumHigh += min($value, 10);
         }
 
-        // Adjust high score if needed
-        while ($aceCount > 0 && $sumHigh + 10 <= 21) {
-            $sumHigh += 10;
-            $aceCount--;
-        }
+        $sumHigh = $this->adjustHighScore($sumHigh, $aceCount);
 
         return ['low' => $sumLow, 'high' => $sumHigh];
+    }
+
+    /**
+     * Check if a card value represents an ace.
+     */
+    private function isAce(int $value): bool
+    {
+        return $value === 1;
+    }
+    /**
+     * Adjust the high score if needed.
+     */
+    private function adjustHighScore(int $sumHigh, int $aceCount): int
+    {
+        while ($aceCount > 0 && $sumHigh > 21) {
+            $sumHigh -= 10; // Subtract 10 from high score for each Ace to adjust the score downwards
+            $aceCount--;
+        }
+        return $sumHigh;
     }
 
     /**
