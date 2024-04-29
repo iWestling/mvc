@@ -38,21 +38,34 @@ class BlackJackJson
         }
 
         $dealerUnturned = $dealerHand->getCards()[0]->getUnturned();
-
+        $playerTotalLow = 0;
+        $playerTotalHigh = 0;
+        $dealerTotalLow = 0;
+        $dealerTotalHigh = 0;
         // Calculate total score for player and dealer
-        $playerTotals = $playerHand ? $playerHand->calculateTotal() : ['low' => 0, 'high' => 0];
-        $playerTotalLow = $playerTotals['low'];
-        $playerTotalHigh = $playerTotals['high'];
+        if ($playerHand !== null) {
+            $playerTotals = $playerHand->calculateTotal();
+            $playerTotalLow = $playerTotals['low'];
+            $playerTotalHigh = $playerTotals['high'];
+        }
 
-        $dealerTotals = $dealerHand ? $dealerHand->calculateTotalDealer() : ['low' => 0, 'high' => 0];
-        $dealerTotalLow = $dealerTotals['low'];
-        $dealerTotalHigh = $dealerTotals['high'];
+        if ($dealerHand !== null) {
+            $dealerTotals = $dealerHand->calculateTotalDealer();
+            $dealerTotalLow = $dealerTotals['low'];
+            $dealerTotalHigh = $dealerTotals['high'];
+        }
+
+        $dealerHandResponse = [];
+
+        if ($dealerHand !== null) {
+            $dealerHandResponse = array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards());
+        }
 
         $gameLog = $session->get('gameLog');
 
         $response = [
             'playerHand' => $playerHand ? array_map(fn ($card) => $card->getAsString(), $playerHand->getCards()) : [],
-            'dealerHand' => $dealerHand ? array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards()) : [],
+            'dealerHand' => $dealerHandResponse,
             'playerMoney' => $playerMoney,
             'playerBet' => $playerBet,
             'dealerMoney' => $dealerMoney,
