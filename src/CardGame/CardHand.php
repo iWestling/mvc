@@ -2,25 +2,38 @@
 
 namespace App\CardGame;
 
+/**
+ * Represents a hand of cards
+ */
 class CardHand
 {
     /**
-     * @var CardGraphic[]
+     * @var CardGraphic[] The cards in the hand
      */
     private array $cards;
 
+    /**
+     * Constructs a new CardHand instance
+     */
     public function __construct()
     {
         $this->cards = [];
     }
 
+    /**
+     * Adds a card to the hand
+     *
+     * @param CardGraphic $card The card to add
+     */
     public function addCard(CardGraphic $card): void
     {
         $this->cards[] = $card;
     }
 
     /**
-     * @return CardGraphic[]
+     * Gets the cards in hand
+     *
+     * @return CardGraphic[] The cards in the hand
      */
     public function getCards(): array
     {
@@ -28,7 +41,9 @@ class CardHand
     }
 
     /**
-     * @return array{low: int, high: int}
+     * Calculates the total value of the hand
+     *
+     * @return array{low: int, high: int} Total value of the hand
      */
     public function calculateTotal(): array
     {
@@ -38,41 +53,34 @@ class CardHand
 
         foreach ($this->cards as $card) {
             $value = $card->getValue();
-            if ($this->isAce($value)) {
-                $sumLow += 1;
-                $sumHigh += 11;
-                $aceCount++;
-            }
-            $sumLow += min($value, 10); // Non-ace cards are valued at their face value, capped at 10
+            $aceCount += $this->isAce($value) ? 1 : 0;
+            $sumLow += $this->isAce($value) ? 1 : min($value, 10);
             $sumHigh += min($value, 10);
         }
 
-        $sumHigh = $this->adjustHighScore($sumHigh, $aceCount);
+        // If there are aces and the high score doesn't exceed 11, adjust high score
+        while ($aceCount > 0 && $sumHigh <= 11) {
+            $sumHigh += 10;
+            $aceCount--;
+        }
 
         return ['low' => $sumLow, 'high' => $sumHigh];
     }
 
+
     /**
-     * Check if a card value represents an ace.
+     * Check if a card value represents an ace
      */
     private function isAce(int $value): bool
     {
         return $value === 1;
     }
-    /**
-     * Adjust the high score if needed.
-     */
-    private function adjustHighScore(int $sumHigh, int $aceCount): int
-    {
-        while ($aceCount > 0 && $sumHigh > 21) {
-            $sumHigh -= 10; // Subtract 10 from high score for each Ace to adjust the score downwards
-            $aceCount--;
-        }
-        return $sumHigh;
-    }
+
 
     /**
-     * @return array{low: int, high: int}
+     * Calculates the total value of the dealer's hand
+     *
+     * @return array{low: int, high: int} The total value of the dealer's hand
      */
     public function calculateTotalDealer(): array
     {
