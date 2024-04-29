@@ -130,11 +130,12 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/GameResultCheck.php"><a href="files/src-cardgame-gameresultcheck.html"><abbr title="src/CardGame/GameResultCheck.php">GameResultCheck.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">5</span>
+    <span class="phpdocumentor-element-found-in__line">8</span>
 
     </aside>
 
-        
+            <p class="phpdocumentor-summary">Methods for checking game results</p>
+
 
 
 
@@ -166,30 +167,35 @@
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Determines the result of the game based on the player and dealer totals</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-CardGame-GameResultCheck.html#method_checkBlackjack">checkBlackjack()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Checks if total score indicates blackjack</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-CardGame-GameResultCheck.html#method_checkBust">checkBust()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Checks if total score indicates bust</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-CardGame-GameResultCheck.html#method_checkCondition">checkCondition()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
+<dd>Checks if total score meets the specified condition</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-CardGame-GameResultCheck.html#method_highestScore">highestScore()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
+<dd>Determines the winner based on the highest score between player and dealer</dd>
 
     </dl>
 
@@ -220,11 +226,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/GameResultCheck.php"><a href="files/src-cardgame-gameresultcheck.html"><abbr title="src/CardGame/GameResultCheck.php">GameResultCheck.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Determines the result of the game based on the player and dealer totals</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">blackjackOrBust</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$playerTotals</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dealerTotals</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -239,14 +246,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Player's total score.</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$dealerTotals</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Dealer's total score.</p>
+</section>
+
             </dd>
             </dl>
 
@@ -255,6 +266,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Result of the game</p>
+</section>
+
             </section>
 
 </article>
@@ -272,11 +287,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/GameResultCheck.php"><a href="files/src-cardgame-gameresultcheck.html"><abbr title="src/CardGame/GameResultCheck.php">GameResultCheck.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">11</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks if total score indicates blackjack</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">checkBlackjack</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$totals</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -291,7 +307,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The total score to check</p>
+</section>
+
             </dd>
             </dl>
 
@@ -300,6 +318,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True if total score indicates blackjack, otherwise false</p>
+</section>
+
             </section>
 
 </article>
@@ -317,11 +339,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/GameResultCheck.php"><a href="files/src-cardgame-gameresultcheck.html"><abbr title="src/CardGame/GameResultCheck.php">GameResultCheck.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks if total score indicates bust</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">checkBust</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$totals</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -336,7 +359,9 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>Total score to check</p>
+</section>
+
             </dd>
             </dl>
 
@@ -345,6 +370,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True if total score indicates bust, otherwise false</p>
+</section>
+
             </section>
 
 </article>
@@ -362,11 +391,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/GameResultCheck.php"><a href="files/src-cardgame-gameresultcheck.html"><abbr title="src/CardGame/GameResultCheck.php">GameResultCheck.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">66</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Checks if total score meets the specified condition</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">checkCondition</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$condition</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$totals</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
@@ -381,14 +411,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The condition to check (Bust or blackjack)</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$totals</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>The total score to check</p>
+</section>
+
             </dd>
             </dl>
 
@@ -397,6 +431,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True if total score meets the condition, otherwise false</p>
+</section>
+
             </section>
 
 </article>
@@ -414,11 +452,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/GameResultCheck.php"><a href="files/src-cardgame-gameresultcheck.html"><abbr title="src/CardGame/GameResultCheck.php">GameResultCheck.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Determines the winner based on the highest score between player and dealer</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">highestScore</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$playerTotals</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dealerTotals</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
@@ -433,14 +472,18 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>player's total score</p>
+</section>
+
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$dealerTotals</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array{high: int, low: int}</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                
+                    <section class="phpdocumentor-description"><p>dealer's total score</p>
+</section>
+
             </dd>
             </dl>
 
@@ -449,6 +492,10 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>The result of the comparison</p>
+</section>
+
             </section>
 
 </article>

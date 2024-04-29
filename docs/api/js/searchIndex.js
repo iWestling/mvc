@@ -103,27 +103,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\CardGame\\Card",
             "name": "Card",
-            "summary": "",
+            "summary": "Represents\u0020a\u0020playing\u0020card,\u0020has\u0020value\u0020and\u0020suit",
             "url": "classes/App-CardGame-Card.html"
         },                {
             "fqsen": "\\App\\CardGame\\Card\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Creates\u0020a\u0020new\u0020Card\u0020instance\u0020with\u0020the\u0020given\u0020value\u0020and\u0020suit",
             "url": "classes/App-CardGame-Card.html#method___construct"
         },                {
             "fqsen": "\\App\\CardGame\\Card\u003A\u003AgetValue\u0028\u0029",
             "name": "getValue",
-            "summary": "",
+            "summary": "Gets\u0020the\u0020value\u0020of\u0020the\u0020card",
             "url": "classes/App-CardGame-Card.html#method_getValue"
         },                {
             "fqsen": "\\App\\CardGame\\Card\u003A\u003AgetCardName\u0028\u0029",
             "name": "getCardName",
-            "summary": "",
+            "summary": "Gets\u0020the\u0020name\u0020of\u0020the\u0020card",
             "url": "classes/App-CardGame-Card.html#method_getCardName"
         },                {
             "fqsen": "\\App\\CardGame\\Card\u003A\u003AgetSuit\u0028\u0029",
             "name": "getSuit",
-            "summary": "",
+            "summary": "Gets\u0020the\u0020suit\u0020of\u0020the\u0020card",
             "url": "classes/App-CardGame-Card.html#method_getSuit"
         },                {
             "fqsen": "\\App\\CardGame\\Card\u003A\u003A\u0024value",
@@ -138,12 +138,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\CardGame\\CardGraphic",
             "name": "CardGraphic",
-            "summary": "",
+            "summary": "Represents\u0020a\u0020graphical\u0020playing\u0020card\u0020with\u0020an\u0020image\u0020path",
             "url": "classes/App-CardGame-CardGraphic.html"
         },                {
             "fqsen": "\\App\\CardGame\\CardGraphic\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Creates\u0020a\u0020new\u0020CardGraphic\u0020instance\u0020with\u0020the\u0020given\u0020value\u0020and\u0020suit",
             "url": "classes/App-CardGame-CardGraphic.html#method___construct"
         },                {
             "fqsen": "\\App\\CardGame\\CardGraphic\u003A\u003AsetImagePath\u0028\u0029",
@@ -178,32 +178,37 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\CardGame\\CardHand",
             "name": "CardHand",
-            "summary": "",
+            "summary": "Represents\u0020a\u0020hand\u0020of\u0020cards",
             "url": "classes/App-CardGame-CardHand.html"
         },                {
             "fqsen": "\\App\\CardGame\\CardHand\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Constructs\u0020a\u0020new\u0020CardHand\u0020instance",
             "url": "classes/App-CardGame-CardHand.html#method___construct"
         },                {
             "fqsen": "\\App\\CardGame\\CardHand\u003A\u003AaddCard\u0028\u0029",
             "name": "addCard",
-            "summary": "",
+            "summary": "Adds\u0020a\u0020card\u0020to\u0020the\u0020hand",
             "url": "classes/App-CardGame-CardHand.html#method_addCard"
         },                {
             "fqsen": "\\App\\CardGame\\CardHand\u003A\u003AgetCards\u0028\u0029",
             "name": "getCards",
-            "summary": "",
+            "summary": "Gets\u0020the\u0020cards\u0020in\u0020hand",
             "url": "classes/App-CardGame-CardHand.html#method_getCards"
         },                {
             "fqsen": "\\App\\CardGame\\CardHand\u003A\u003AcalculateTotal\u0028\u0029",
             "name": "calculateTotal",
-            "summary": "",
+            "summary": "Calculates\u0020the\u0020total\u0020value\u0020of\u0020the\u0020hand",
             "url": "classes/App-CardGame-CardHand.html#method_calculateTotal"
+        },                {
+            "fqsen": "\\App\\CardGame\\CardHand\u003A\u003AisAce\u0028\u0029",
+            "name": "isAce",
+            "summary": "Check\u0020if\u0020a\u0020card\u0020value\u0020represents\u0020an\u0020ace",
+            "url": "classes/App-CardGame-CardHand.html#method_isAce"
         },                {
             "fqsen": "\\App\\CardGame\\CardHand\u003A\u003AcalculateTotalDealer\u0028\u0029",
             "name": "calculateTotalDealer",
-            "summary": "",
+            "summary": "Calculates\u0020the\u0020total\u0020value\u0020of\u0020the\u0020dealer\u0027s\u0020hand",
             "url": "classes/App-CardGame-CardHand.html#method_calculateTotalDealer"
         },                {
             "fqsen": "\\App\\CardGame\\CardHand\u003A\u003A\u0024cards",
@@ -213,22 +218,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\CardGame\\DeckOfCards",
             "name": "DeckOfCards",
-            "summary": "",
+            "summary": "Represents\u0020a\u0020deck\u0020of\u0020cards\u0020containing\u0020CardGraphic\u0020instances",
             "url": "classes/App-CardGame-DeckOfCards.html"
         },                {
             "fqsen": "\\App\\CardGame\\DeckOfCards\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "Constructs\u0020a\u0020new\u0020DeckOfCards\u0020instance\u0020and\u0020generates\u0020the\u0020deck\u0020of\u0020cards",
             "url": "classes/App-CardGame-DeckOfCards.html#method___construct"
         },                {
             "fqsen": "\\App\\CardGame\\DeckOfCards\u003A\u003AgenerateDeck\u0028\u0029",
             "name": "generateDeck",
-            "summary": "",
+            "summary": "Generates\u0020the\u0020deck\u0020of\u0020cards",
             "url": "classes/App-CardGame-DeckOfCards.html#method_generateDeck"
         },                {
             "fqsen": "\\App\\CardGame\\DeckOfCards\u003A\u003AgetDeck\u0028\u0029",
             "name": "getDeck",
-            "summary": "",
+            "summary": "Gets\u0020the\u0020deck\u0020of\u0020cards",
             "url": "classes/App-CardGame-DeckOfCards.html#method_getDeck"
         },                {
             "fqsen": "\\App\\CardGame\\DeckOfCards\u003A\u003A\u0024deck",
@@ -238,42 +243,42 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck",
             "name": "GameResultCheck",
-            "summary": "",
+            "summary": "Methods\u0020for\u0020checking\u0020game\u0020results",
             "url": "classes/App-CardGame-GameResultCheck.html"
         },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck\u003A\u003AcheckBlackjack\u0028\u0029",
             "name": "checkBlackjack",
-            "summary": "",
+            "summary": "Checks\u0020if\u0020total\u0020score\u0020indicates\u0020blackjack",
             "url": "classes/App-CardGame-GameResultCheck.html#method_checkBlackjack"
         },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck\u003A\u003AcheckBust\u0028\u0029",
             "name": "checkBust",
-            "summary": "",
+            "summary": "Checks\u0020if\u0020total\u0020score\u0020indicates\u0020bust",
             "url": "classes/App-CardGame-GameResultCheck.html#method_checkBust"
         },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck\u003A\u003AblackjackOrBust\u0028\u0029",
             "name": "blackjackOrBust",
-            "summary": "",
+            "summary": "Determines\u0020the\u0020result\u0020of\u0020the\u0020game\u0020based\u0020on\u0020the\u0020player\u0020and\u0020dealer\u0020totals",
             "url": "classes/App-CardGame-GameResultCheck.html#method_blackjackOrBust"
         },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck\u003A\u003AcheckCondition\u0028\u0029",
             "name": "checkCondition",
-            "summary": "",
+            "summary": "Checks\u0020if\u0020total\u0020score\u0020meets\u0020the\u0020specified\u0020condition",
             "url": "classes/App-CardGame-GameResultCheck.html#method_checkCondition"
         },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck\u003A\u003AhighestScore\u0028\u0029",
             "name": "highestScore",
-            "summary": "",
+            "summary": "Determines\u0020the\u0020winner\u0020based\u0020on\u0020the\u0020highest\u0020score\u0020between\u0020player\u0020and\u0020dealer",
             "url": "classes/App-CardGame-GameResultCheck.html#method_highestScore"
         },                {
             "fqsen": "\\App\\CardGame\\MoneyHandling",
             "name": "MoneyHandling",
-            "summary": "",
+            "summary": "Methods\u0020for\u0020handling\u0020the\u0020money\u0020in\u0020the\u0020game",
             "url": "classes/App-CardGame-MoneyHandling.html"
         },                {
             "fqsen": "\\App\\CardGame\\MoneyHandling\u003A\u003AhandleMoney\u0028\u0029",
             "name": "handleMoney",
-            "summary": "",
+            "summary": "Changes\u0020the\u0020money\u0020based\u0020on\u0020game\u0020result",
             "url": "classes/App-CardGame-MoneyHandling.html#method_handleMoney"
         },                {
             "fqsen": "\\App\\Controller\\BlackJackController",
