@@ -2,14 +2,19 @@
 
 namespace App\CardGame;
 
+/**
+ * Methods for handling the money in the game
+ */
 class MoneyHandling
 {
     /**
-     * @param string $gameResult
-     * @param int $playerBet
-     * @param int $playerMoney
-     * @param int $dealerMoney
-     * @return array{int, int}
+     * Changes the money based on game result
+     *
+     * @param string $gameResult Result of the game
+     * @param int $playerBet Player's bet amount.
+     * @param int $playerMoney Player's current money.
+     * @param int $dealerMoney Dealer's current money.
+     * @return array{int, int} The updated player and dealer money.
      */
     public function handleMoney(string $gameResult, int $playerBet, int $playerMoney, int $dealerMoney): array
     {

@@ -2,11 +2,16 @@
 
 namespace App\CardGame;
 
+/**
+ * Methods for checking game results
+ */
 class GameResultCheck
 {
     /**
-     * @param array{high: int, low: int} $totals
-     * @return bool
+     * Checks if total score indicates blackjack
+     *
+     * @param array{high: int, low: int} $totals The total score to check
+     * @return bool True if total score indicates blackjack, otherwise false
      */
     public function checkBlackjack(array $totals): bool
     {
@@ -14,8 +19,10 @@ class GameResultCheck
     }
 
     /**
-     * @param array{high: int, low: int} $totals
-     * @return bool
+     * Checks if total score indicates bust
+     *
+     * @param array{high: int, low: int} $totals Total score to check
+     * @return bool True if total score indicates bust, otherwise false
      */
     public function checkBust(array $totals): bool
     {
@@ -23,9 +30,11 @@ class GameResultCheck
     }
 
     /**
-     * @param array{high: int, low: int} $playerTotals
-     * @param array{high: int, low: int} $dealerTotals
-     * @return string
+     * Determines the result of the game based on the player and dealer totals
+     *
+     * @param array{high: int, low: int} $playerTotals Player's total score.
+     * @param array{high: int, low: int} $dealerTotals Dealer's total score.
+     * @return string Result of the game
      */
     public function blackjackOrBust(array $playerTotals, array $dealerTotals): string
     {
@@ -48,8 +57,11 @@ class GameResultCheck
 
 
     /**
-     * @param array{high: int, low: int} $totals
-     * @return bool
+     * Checks if total score meets the specified condition
+     *
+     * @param string $condition The condition to check (Bust or blackjack)
+     * @param array{high: int, low: int} $totals The total score to check
+     * @return bool True if total score meets the condition, otherwise false
      */
     public function checkCondition(string $condition, array $totals): bool
     {
@@ -65,9 +77,11 @@ class GameResultCheck
 
 
     /**
-     * @param array{high: int, low: int} $playerTotals
-     * @param array{high: int, low: int} $dealerTotals
-     * @return string
+     * Determines the winner based on the highest score between player and dealer
+     *
+     * @param array{high: int, low: int} $playerTotals player's total score
+     * @param array{high: int, low: int} $dealerTotals dealer's total score
+     * @return string The result of the comparison
      */
     public function highestScore(array $playerTotals, array $dealerTotals): string
     {

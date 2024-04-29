@@ -2,12 +2,27 @@
 
 namespace App\CardGame;
 
+/**
+ * Represents a graphical playing card with an image path
+ */
 class CardGraphic extends Card
 {
+    /**
+    * @var string The image path of the card
+    */
     private string $imagePath;
 
+    /**
+     * @var string The image path of an unturned card
+     */
     private string $unturned = 'img/carddeck/unturned.png';
 
+    /**
+     * Creates a new CardGraphic instance with the given value and suit
+     *
+     * @param int $value The value of the card
+     * @param string $suit The suit of the card
+     */
     public function __construct(int $value, string $suit)
     {
         parent::__construct($value, $suit);

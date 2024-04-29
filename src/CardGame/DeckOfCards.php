@@ -2,19 +2,27 @@
 
 namespace App\CardGame;
 
+/**
+ * Represents a deck of cards containing CardGraphic instances
+ */
 class DeckOfCards
 {
     /**
-     * @var CardGraphic[]
+     * @var CardGraphic[] The deck of cards.
      */
     private array $deck;
 
-    public function __construct()
+    /**
+     * Constructs a new DeckOfCards instance and generates the deck of cards
+     */    public function __construct()
     {
         $this->deck = [];
         $this->generateDeck();
     }
 
+    /**
+     * Generates the deck of cards
+     */
     private function generateDeck(): void
     {
         $suits = ['hearts', 'diamonds', 'spades', 'clubs'];
@@ -27,7 +35,9 @@ class DeckOfCards
     }
 
     /**
-     * @return CardGraphic[]
+     * Gets the deck of cards
+     *
+     * @return CardGraphic[] deck of cards
      */
     public function getDeck(): array
     {
