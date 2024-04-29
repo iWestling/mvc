@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class GameResultCheckTest extends TestCase
 {
-    public function testCheckBlackjack()
+    public function testCheckBlackjack(): void
     {
         $gameResultCheck = new GameResultCheck();
 
@@ -31,7 +31,7 @@ class GameResultCheckTest extends TestCase
         $this->assertFalse($gameResultCheck->checkBlackjack($totalsBelow21));
     }
 
-    public function testCheckBust()
+    public function testCheckBust(): void
     {
         $gameResultCheck = new GameResultCheck();
 
@@ -56,7 +56,7 @@ class GameResultCheckTest extends TestCase
         $this->assertFalse($gameResultCheck->checkBust($oneTotalEqual21));
     }
 
-    public function testBlackjackOrBust()
+    public function testBlackjackOrBust(): void
     {
         $gameResultCheck = new GameResultCheck();
 
@@ -96,7 +96,7 @@ class GameResultCheckTest extends TestCase
         $this->assertEquals('Dealer wins!', $gameResultCheck->blackjackOrBust($playerTotalsNotBJ, $dealerTotalsBJ));
     }
 
-    public function testHighestScore()
+    public function testHighestScore(): void
     {
         $gameResultCheck = new GameResultCheck();
 
@@ -131,7 +131,7 @@ class GameResultCheckTest extends TestCase
         $this->assertEquals('Dealer wins!', $gameResultCheck->highestScore($playerBust, $dealerNotBust));
     }
 
-    public function testCheckCondition()
+    public function testCheckCondition(): void
     {
         $gameResultCheck = new GameResultCheck();
 

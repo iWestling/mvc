@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class MoneyHandlingTest extends TestCase
 {
-    public function testHandleMoneyPlayerWins()
+    public function testHandleMoneyPlayerWins(): void
     {
         $moneyHandler = new MoneyHandling();
         $gameResult = 'You win!';
@@ -20,7 +20,7 @@ class MoneyHandlingTest extends TestCase
         $this->assertEquals(50, $newDealerMoney); // Dealer's money should remain the same
     }
 
-    public function testHandleMoneyDealerWins()
+    public function testHandleMoneyDealerWins(): void
     {
         $moneyHandler = new MoneyHandling();
         $gameResult = 'Dealer wins!';
@@ -34,7 +34,7 @@ class MoneyHandlingTest extends TestCase
         $this->assertEquals(70, $newDealerMoney); // Dealer's money should increase by 2 times the bet
     }
 
-    public function testHandleMoneyTie()
+    public function testHandleMoneyTie(): void
     {
         $moneyHandler = new MoneyHandling();
         $gameResult = 'It\'s a tie!';
@@ -48,7 +48,7 @@ class MoneyHandlingTest extends TestCase
         $this->assertEquals(60, $newDealerMoney); // Dealer's money should increase by the bet
     }
 
-    public function testHandleMoneyNoChange()
+    public function testHandleMoneyNoChange(): void
     {
         $moneyHandler = new MoneyHandling();
         $gameResult = 'Some other result';

@@ -6,13 +6,13 @@ use PHPUnit\Framework\TestCase;
 
 class CardTest extends TestCase
 {
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $card = new Card(5, 'hearts');
         $this->assertEquals(5, $card->getValue());
     }
 
-    public function testGetCardName()
+    public function testGetCardName(): void
     {
         $card1 = new Card(1, 'hearts');
         $card2 = new Card(11, 'diamonds');
@@ -24,12 +24,12 @@ class CardTest extends TestCase
         $this->assertEquals('king', $card4->getCardName());
     }
 
-    public function testGetSuit()
+    public function testGetSuit(): void
     {
         $card = new Card(5, 'hearts');
         $this->assertEquals('hearts', $card->getSuit());
     }
-    public function testGetCardNameDefault()
+    public function testGetCardNameDefault(): void
     {
         $card = new Card(7, 'diamonds');
         $this->assertEquals('7', $card->getCardName());
