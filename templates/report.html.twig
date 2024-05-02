@@ -102,6 +102,18 @@
 
             <h2 id="kmom04">Kmom04</h2>
             <p>Rapport för kmom04.</p>
+
+            <p>Att skriva kod som testar annan kod med PHPUnit har varit kul och lärorikt. Jag insåg snabbt hur värdefullt det är då jag genom detta upptäckte ett litet logiskt fel i koden jag hade skrivit.</p>
+            <p>Det gick bra att systematiskt gå igenom och "verifiera" att koden beter sig som förväntat under olika scenarion, det svåraste var kanske mer att veta vilka scenarion som kan uppstå och därför behövs testas. PHPUnit verkar rent generellt vara ett bra test-ramverk med god dokumentation som hjälper en att göra omfattande tester så min upplevelse med detta har hittills bara varit positiv.</p>
+            <p>Jag tyckte från början att det kändes lite överkurs att skriva dockblock-kommentarer på klasserna men förstår även där varför det är nyttigt då jag (eller någon annan) ska kunna komma tillbaka till koden i framtiden och enkelt kunna förstå vad den gör.</p>
+
+            <p>Jag lyckades uppnå 100% kodtäckning för mina CardGame-klasser och blev mycket nöjd, hade jag haft mer tid tillhanda hade jag fortsatt testa mer av min controller men jag fick nöja mig med klasserna tillsvidare. Koden jag skrev till klasserna har redan till en början varit ganska modulär och därmed fungerat bra att testa men jag gissar att delar av controllers skulle kunna förbättras och göras mer testbar.</p>
+            Som nämnt tidigare upptäckte jag genom testerna ett lite logiskt fel i en av metoderna i min "GameResultCheck"-klass där jag inte på ett bra sätt hade hanterat situationer där man har flera ess/aces (dvs där man kan göra om flera aces till 1 istället för 11 för att hålla sig under 21), så detta fick jag skriva om lite grann där jag initiellt räknar aces som 1 men använder en while-loop som kollar igenom antalet aces samt värdet på den högre totalen och ändrande värdet från 1 till 11 om möjligt.</p>
+
+            <p>Kod är enklare att testa när den är välstrukturerad och modulär med mindre dependencies så jag tycker absolut att detta kan identifiera "snygg och ren kod" - Det ser helt enkelt till att koden är mer lättförståelig och lättanvänd.
+
+            <p>TIL för detta moment är egentligen allt som har med testning att göra då jag inte gjort något liknande tidigare. Jag har lärt mig både hur och varför man gör enhetstestningar, hur det hjälper mig att se till att koden fungerar som förväntat och hur det upprätthåller kvalitén på koden. <br>Jag har även reflekterat lite över hur TDD programmering skulle fungera och kommer nog testa på detta i framtiden då jag ser mycket fördelar med hur detta håller koden enkel och "clean", hur man redan från början får det mer klargjort vad som behöver implementeras, hur man direkt får feedback vid fel och liknande.</p>
+
             <h2 id="kmom05">Kmom05</h2>
             <p>Rapport för kmom05.</p>
             <h2 id="kmom06">Kmom06</h2>
