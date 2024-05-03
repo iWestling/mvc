@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block main %}
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+    <p><strong>Description:</strong> {{ book.description }}</p>
+    {% if book.bookimage %}
+        <img src="{{ book.bookimage }}" alt="{{ book.title }} Image Preview">
+    {% endif %}
+    <br><br>
+    <a href="{{ path('book_show_all') }}">Back to All Books</a>
+    <a href="{{ path('book_update', {'id': book.id}) }}">Update</a>
+    <a href="{{ path('book_delete_by_id', {'id': book.id}) }}" onclick="return confirm('Are you sure you want to delete this book?')">Delete</a>
+{% endblock %}

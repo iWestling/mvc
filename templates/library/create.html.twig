@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LibraryController!{% endblock %}
+
+{% block main %}
+    <h1>Create a New Book</h1>
+    <div class="content-column">
+        <form method="post" action="{{ path('book_create') }}">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title"><br>
+
+            <label for="author">Author:</label><br>
+            <input type="text" id="author" name="author"><br>
+
+            <label for="isbn">ISBN:</label><br>
+            <input type="text" id="isbn" name="isbn"><br>
+
+            <label for="image">Image URL:</label><br>
+            <input type="text" id="image" name="image"><br>
+
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description"></textarea><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock %}

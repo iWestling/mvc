@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Book: {{ book.title }}{% endblock %}
+
+{% block main %}
+    <h1>Update Book: {{ book.title }}</h1>
+    <div class="content-column">
+        <form method="post" action="{{ path('book_update', {'id': book.id}) }}">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title" value="{{ book.title }}"><br>
+
+            <label for="author">Author:</label><br>
+            <input type="text" id="author" name="author" value="{{ book.author }}"><br>
+
+            <label for="isbn">ISBN:</label><br>
+            <input type="text" id="isbn" name="isbn" value="{{ book.isbn }}"><br>
+
+            <label for="image">Image URL:</label><br>
+            <input type="text" id="image" name="image" value="{{ book.bookimage }}"><br>
+
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description">{{ book.description }}</textarea><br>
+
+            <input type="submit" value="Save Changes">
+        </form>
+    </div>
+{% endblock %}
