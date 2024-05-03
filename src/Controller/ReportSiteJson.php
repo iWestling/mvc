@@ -13,6 +13,12 @@ use App\Card\DeckOfCards;
 use App\Card\CardHand;
 use App\Card\CardGraphic;
 
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Library;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\LibraryRepository;
+
 class ReportSiteJson
 {
     #[Route("/api/lucky", name: "api_lucky_number")]
@@ -244,54 +250,4 @@ class ReportSiteJson
 
         return $response;
     }
-    // #[Route("/api/game", name: "api_game", methods: ['GET'])]
-    // public function play(
-    //     SessionInterface $session
-    // ): Response {
-
-    //     $playerBet = $session->get('playerBet');
-    //     $playerMoney = $session->get('playerMoney');
-    //     $dealerMoney = $session->get('dealerMoney');
-
-    //     /** @var CardHand $playerHand */
-    //     $playerHand = $session->get('playerHand');
-    //     /** @var CardHand $dealerHand */
-    //     $dealerHand = $session->get('dealerHand');
-
-    //     // Prepare unturned card for dealer
-    //     $dealerUnturned = $dealerHand->getCards()[0]->getUnturned();
-
-    //     // Calculate total score for player and dealer
-    //     $playerTotals = $playerHand->calculateTotal();
-    //     $playerTotalLow = $playerTotals['low'];
-    //     $playerTotalHigh = $playerTotals['high'];
-
-    //     $dealerTotals = $dealerHand->calculateTotalDealer();
-    //     $dealerTotalLow =
-    //     $dealerTotalHigh = $dealerTotals['high'];
-
-    //     $gameLog = $session->get('gameLog');
-
-    //     $response = [
-    //         'playerHand' => array_map(fn ($card) => $card->getAsString(), $playerHand->getCards()),
-    //         'dealerHand' => array_map(fn ($card) => $card->getAsString(), $dealerHand->getCards()),
-    //         'playerMoney' => $playerMoney,
-    //         'playerBet' => $playerBet,
-    //         'dealerMoney' => $dealerMoney,
-    //         'dealerUnturned' => $dealerUnturned,
-    //         'playerTotalLow' => $playerTotalLow,
-    //         'playerTotalHigh' => $playerTotalHigh,
-    //         'dealerTotalLow' => $dealerTotalLow,
-    //         'dealerTotalHigh' => $dealerTotalHigh,
-    //         'gameLog' => $gameLog,
-    //     ];
-
-    //     $response = new JsonResponse($response);
-    //     $response->setEncodingOptions(
-    //         $response->getEncodingOptions() | JSON_PRETTY_PRINT
-    //     );
-
-    //     return $response;
-    // }
-
 }
