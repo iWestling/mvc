@@ -396,3 +396,68 @@ ul .dicearea li {
 .flowchart-container img {
     max-width: 1100px;
 }
+
+.library {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color:#000;
+  }
+  
+  .library td, .library th {
+    padding: 8px;
+    color:#000;
+  }
+  
+  .library tr:nth-child(even){background-color: #e8e8e8;}
+  .library tr:nth-child(odd){background-color: #ced5d1;}
+  
+  .library th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #a4c796;
+    color: #000;
+}
+
+/* Primary button */
+.btn-primary {
+    background-color: #008e0c;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #005b08;
+}
+
+/* Warning button */
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+}
+
+.btn-warning:hover {
+    background-color: #a87e00;
+}
+
+/* Danger button */
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+}
+
+.btn-danger:hover {
+    background-color: #87131f;
+}
