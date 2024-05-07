@@ -116,6 +116,18 @@
 
             <h2 id="kmom05">Kmom05</h2>
             <p>Rapport för kmom05.</p>
+            
+            <p>Det gick bra att arbeta igenom övningen med Symfony och Doctrine, den visade allting steg för steg så allting kändes enkelt. <br>Det enda som kändes lite klurigt inför uppgiften senare var att veta på förhand vilka field types som skulle behövas och om de skulle vara nullable - jag fick ändra detta senare men det gick bra att bara köra migration igen.
+
+            <p>Att bygga applikationen gick bra, jag tillämpade bara delarna från övningen till den nya uppgiften med library, create, show all, delete etc och gjorde användargränsnittet enkelt och tydligt för att underlätta navigerandet.<br>
+            För den optionella delen om att resetta databasen gjorde jag bara en snabb lösning där jag kör deleteAll på library repository och sedan sätter in orginal-datat, men detta är enbart en snabbfix som inte återställer autoincrement IDet.</p>
+
+            <p>Att arbeta med ORM i CRUD-operationer gick bra, det var självklart lite klurigt när man vant sig vid att jobba direkt via SQL statements, men jag förstår fördelarna med att jobba via objektorienterade principer: Koden blir enkelare att förstå och underhålla, samt minskar behovet av att t.ex. behöva skriva repetitiv SQL-kod. Det gör även att koden blir "database-agnostic", dvs att man kan jobba i och byta mellan olika databaser utan att behöva ändra mycket av koden, samt att det reducerar risken för SQL-injections. <br>Att kunna arbeta med data från databaser som objekt bibehåller övriga OOP-principer och gör att man kan fokusera mer själva applikationen istället för databas-management, dvs att programmeraren inte behöver kunna särskilt mycket om SQL eller hur relationsdatabaser fungerar.<br>
+            Jag tänker mig att ORM även blir extra föredelaktigt vid mer komplexa datamodeller och det vi gör just nu är kanske inte tillräckligt stora program för att riktigt se alla fördelar och eventuella nackdelar - om jag får gissa kan jag tänka mig att det eventuellt skulle bli svårare att använda ORM i situationer där större och mer komplexa SQL queries krävs.</p>
+
+            <p>Överlag är min uppfattning om ORM positiv i och med de tidigare nämnda fördelarna.</p>
+            <p>TIL för detta moment var egentligen allting med ORM att göra då jag inte arbetat med detta tidigare. Jag hade även lite problem när jag körde composer lint där den inte gillade att jag hade långa namn för migration versionerna, men då detta inte kändes viktigt satte jag dessa att exkluderas i phpmd.</p>
+            
             <h2 id="kmom06">Kmom06</h2>
             <p>Rapport för kmom06.</p>
             <h2 id="kmom07">Kmom07</h2> 

@@ -1,20 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LibraryController!{% endblock %}
+{% block title %}Library{% endblock %}
 
 {% block main %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
+    <p>Select what you would like to do:</p>
     <ul>
-        <li>Your controller at <code>/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Controller/LibraryController.php</code></li>
-        <li>Your template at <code>/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/templates/library/index.html.twig</code></li>
+        <a href="{{ path('book_show_all') }}" class="btn btn-primary">See All Books</a>
+        <a href="{{ path('book_create') }}" class="btn btn-primary">Add New Book</a>
+        <a href="{{ path('library_reset') }}" class="btn btn-primary">Reset Library</a>
+        
     </ul>
 </div>
 {% endblock %}
+    

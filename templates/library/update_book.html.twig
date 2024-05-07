@@ -5,7 +5,7 @@
 {% block main %}
     <h1>Update Book: {{ book.title }}</h1>
     <div class="content-column">
-        <form method="post" action="{{ path('book_update', {'id': book.id}) }}">
+        <form method="post" action="{{ path('book_update', {'bookid': book.id}) }}">
             <label for="title">Title:</label><br>
             <input type="text" id="title" name="title" value="{{ book.title }}"><br>
 
