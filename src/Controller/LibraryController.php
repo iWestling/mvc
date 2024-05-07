@@ -14,7 +14,7 @@ use App\Repository\LibraryRepository;
 
 class LibraryController extends AbstractController
 {
-    #[Route('/library', name: 'app_library')]
+    #[Route('/library', name: 'library')]
     public function index(): Response
     {
         return $this->render('library/index.html.twig', [
@@ -22,70 +22,83 @@ class LibraryController extends AbstractController
         ]);
     }
 
-    #[Route('/library/create', name: 'book_create', methods: ['GET', 'POST'])]
+    #[Route('/library/book/create', name: 'book_create')]
     public function createBook(Request $request, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
 
         if ($request->isMethod('POST')) {
-            // Retrieve form data from the request
             $title = $request->request->get('title');
             $author = $request->request->get('author');
             $isbn = $request->request->get('isbn');
             $image = $request->request->get('image');
             $description = $request->request->get('description');
 
-            // Basic validation: check if required fields are not empty
             if (!$title || !$author || !$isbn) {
-                // Handle validation error, maybe return a response with an error message
-                // For example:
-                // return new Response('Please fill in all required fields', 400);
+                return new Response('Please fill in all required fields', 400);
             }
 
-            // Create a new Library entity and set its properties
+            // Create a new Library entity and set properties
             $book = new Library();
             $book->setTitle((string) $title);
             $book->setAuthor((string) $author);
             $book->setIsbn((string) $isbn);
-            $book->setBookimage($image !== null ? (string) $image : null); // Typecast and handle null for nullable field
-            $book->setDescription($description !== null ? (string) $description : null); // Typecast and handle null for nullable field
+            $book->setBookimage($image !== null ? (string) $image : null);
+            $book->setDescription($description !== null ? (string) $description : null);
 
-            // Persist the entity to the database
             $entityManager->persist($book);
             $entityManager->flush();
 
-            // Redirect to the page displaying the details of the newly created book
             return $this->redirectToRoute('book_by_id', ['bookid' => $book->getId()]);
         }
 
-        // Render the form
         return $this->render('library/create.html.twig');
     }
 
-    #[Route('/library/show', name: 'book_show_all')]
-    public function showAllBooks(
-        LibraryRepository $libraryRepository
-    ): Response {
+    #[Route('/library/books', name: 'book_show_all')]
+    public function showAllBooks(LibraryRepository $libraryRepository): Response
+    {
         $books = $libraryRepository->findAll();
+        $bookData = [];
+
+        foreach ($books as $book) {
+            $bookData[] = [
+                'title' => $book->getTitle(),
+                'author' => $book->getAuthor(),
+                'isbn' => $book->getIsbn(),
+                'id' => $book->getId(),
+            ];
+        }
 
         return $this->render('library/show_all_books.html.twig', [
-            'books' => $books,
+            'books' => $bookData,
         ]);
     }
 
-    #[Route('/library/show/{id}', name: 'book_by_id')]
-    public function showBookById(
-        LibraryRepository $libraryRepository,
-        int $bookid
-    ): Response {
+    #[Route('/library/book/{bookid}', name: 'book_by_id')]
+    public function showBookById(LibraryRepository $libraryRepository, int $bookid): Response
+    {
         $book = $libraryRepository->find($bookid);
 
+        if (!$book) {
+            throw $this->createNotFoundException('The book does not exist');
+        }
+
+        $bookData = [
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'isbn' => $book->getIsbn(),
+            'description' => $book->getDescription(),
+            'bookimage' => $book->getBookimage(),
+            'id' => $book->getId(),
+        ];
+
         return $this->render('library/show_book.html.twig', [
-            'book' => $book,
+            'book' => $bookData,
         ]);
     }
 
-    #[Route('/library/delete/{id}', name: 'book_delete_by_id')]
+    #[Route('/library/book/delete/{bookid}', name: 'book_delete_by_id')]
     public function deleteBookById(
         ManagerRegistry $doctrine,
         int $bookid
@@ -105,7 +118,7 @@ class LibraryController extends AbstractController
         return $this->redirectToRoute('book_show_all');
     }
 
-    #[Route('/book/update/{id}', name: 'book_update')]
+    #[Route('/library/book/update/{bookid}', name: 'book_update')]
     public function updateBook(Request $request, ManagerRegistry $doctrine, int $bookid): Response
     {
         $entityManager = $doctrine->getManager();
@@ -118,35 +131,29 @@ class LibraryController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
-            // Retrieve form data from the request
             $title = $request->request->get('title');
             $author = $request->request->get('author');
             $isbn = $request->request->get('isbn');
             $image = $request->request->get('image');
             $description = $request->request->get('description');
 
-            // Basic validation: check if required fields are not empty
             if (!$title || !$author || !$isbn) {
-                // Handle validation error, maybe return a response with an error message
-                // For example:
-                // return new Response('Please fill in all required fields', 400);
+                return new Response('Please fill in all required fields', 400);
             }
 
             // Update the book entity with new data
             $book->setTitle((string) $title);
             $book->setAuthor((string) $author);
             $book->setIsbn((string) $isbn);
-            $book->setBookimage($image !== null ? (string) $image : null); // Typecast and handle null for nullable field
-            $book->setDescription($description !== null ? (string) $description : null); // Typecast and handle null for nullable field
+            $book->setBookimage($image !== null ? (string) $image : null);
+            $book->setDescription($description !== null ? (string) $description : null);
 
-            // Persist the updated entity to the database
             $entityManager->flush();
 
             // Redirect to the book detail page
             return $this->redirectToRoute('book_by_id', ['bookid' => $book->getId()]);
         }
 
-        // Render the update book form
         return $this->render('library/update_book.html.twig', [
             'book' => $book,
         ]);
@@ -155,10 +162,9 @@ class LibraryController extends AbstractController
     #[Route('/api/library/books', name: 'api_library_books')]
     public function getAllBooks(LibraryRepository $libraryRepository): JsonResponse
     {
-        // Fetch all books from the repository
+        // Fetch all books
         $books = $libraryRepository->findAll();
 
-        // Convert books array to associative array for JSON response
         $bookData = [];
         foreach ($books as $book) {
             $bookData[] = [
@@ -170,7 +176,6 @@ class LibraryController extends AbstractController
             ];
         }
 
-        // Return JSON response with pretty print
         $response = new JsonResponse($bookData);
         $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
@@ -180,17 +185,14 @@ class LibraryController extends AbstractController
     #[Route('/api/library/book/{isbn}', name: 'api_library_book')]
     public function getBookByIsbn(string $isbn, LibraryRepository $libraryRepository): JsonResponse
     {
-        // Fetch book from the repository by ISBN
+        // Fetch book by ISBN
         $book = $libraryRepository->findOneBy(['isbn' => $isbn]);
-    
-        // Check if the book was found
+
         if (!$book) {
-            // Return a JSON response indicating that the book was not found
             $response = new JsonResponse(['error' => 'Book not found'], Response::HTTP_NOT_FOUND);
             return $response;
         }
-    
-        // Convert book object to associative array for JSON response
+
         $bookData = [
             'title' => $book->getTitle(),
             'author' => $book->getAuthor(),
@@ -198,12 +200,38 @@ class LibraryController extends AbstractController
             'bookimage' => $book->getBookimage(),
             'description' => $book->getDescription(),
         ];
-    
-        // Return JSON response with pretty print
+
         $response = new JsonResponse($bookData);
         $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
-    
+
         return $response;
     }
-    
+
+    #[Route('/library/reset', name: 'library_reset')]
+    public function resetDatabase(LibraryRepository $libraryRepository): Response
+    {
+        // Load original data
+        $originalData = [
+            ['The Three-Body Problem', 'Liu Cixin', '978-7-536-69293-0', 'the_three_body_problem.jpg', 'The first novel in the Remembrance of Earth\'s Past trilogy'],
+            ['The Dark Forest', 'Liu Cixin', '978-1784971595', 'the_dark_forest.jpg', 'The sequel to The Three-Body Problem in the trilogy Remembrance of Earth\'s Past.'],
+            ['Death\'s End', 'Liu Cixin', '978-0765377104', 'deaths_end.jpg', 'It\'s the third novel in the trilogy titled Remembrance of Earth\'s Past.'],
+            ['Test', 'jh3', '32535', 'test.jpg', 'test']
+        ];
+
+        // Clear existing data
+        $libraryRepository->deleteAll();
+
+        // Insert original data
+        foreach ($originalData as $data) {
+            $book = new Library();
+            $book->setTitle($data[0]);
+            $book->setAuthor($data[1]);
+            $book->setIsbn($data[2]);
+            $book->setBookimage($data[3]);
+            $book->setDescription($data[4]);
+            $libraryRepository->save($book);
+        }
+
+        return $this->redirectToRoute('book_show_all');
+    }
 }

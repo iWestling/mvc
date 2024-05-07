@@ -16,6 +16,20 @@ class LibraryRepository extends ServiceEntityRepository
         parent::__construct($registry, Library::class);
     }
 
+    public function deleteAll(): void
+    {
+        $data = $this->getEntityManager();
+        $query = $data->createQuery('DELETE FROM App\Entity\Library');
+        $query->execute();
+    }
+
+    public function save(Library $library): void
+    {
+        $data = $this->getEntityManager();
+        $data->persist($library);
+        $data->flush();
+    }
+
     //    /**
     //     * @return Library[] Returns an array of Library objects
     //     */
