@@ -1,7 +1,8 @@
 <?php
 
-namespace App\CardGame;
+namespace App\Tests\CardGame;
 
+use App\CardGame\CardGraphic;
 use PHPUnit\Framework\TestCase;
 
 class CardGraphicTest extends TestCase

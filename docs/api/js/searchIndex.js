@@ -211,6 +211,11 @@ Search.appendIndex(
             "summary": "Calculates\u0020the\u0020total\u0020value\u0020of\u0020the\u0020dealer\u0027s\u0020hand",
             "url": "classes/App-CardGame-CardHand.html#method_calculateTotalDealer"
         },                {
+            "fqsen": "\\App\\CardGame\\CardHand\u003A\u003AdealCards\u0028\u0029",
+            "name": "dealCards",
+            "summary": "Deals\u0020cards\u0020to\u0020the\u0020hand",
+            "url": "classes/App-CardGame-CardHand.html#method_dealCards"
+        },                {
             "fqsen": "\\App\\CardGame\\CardHand\u003A\u003A\u0024cards",
             "name": "cards",
             "summary": "",
@@ -240,6 +245,31 @@ Search.appendIndex(
             "name": "deck",
             "summary": "",
             "url": "classes/App-CardGame-DeckOfCards.html#property_deck"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameDataService",
+            "name": "GameDataService",
+            "summary": "",
+            "url": "classes/App-CardGame-GameDataService.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameDataService\u003A\u003AgetGameData\u0028\u0029",
+            "name": "getGameData",
+            "summary": "",
+            "url": "classes/App-CardGame-GameDataService.html#method_getGameData"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameLogger",
+            "name": "GameLogger",
+            "summary": "",
+            "url": "classes/App-CardGame-GameLogger.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameLogger\u003A\u003AlogGameStart\u0028\u0029",
+            "name": "logGameStart",
+            "summary": "",
+            "url": "classes/App-CardGame-GameLogger.html#method_logGameStart"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameLogger\u003A\u003AupdateGameLog\u0028\u0029",
+            "name": "updateGameLog",
+            "summary": "",
+            "url": "classes/App-CardGame-GameLogger.html#method_updateGameLog"
         },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck",
             "name": "GameResultCheck",
@@ -271,6 +301,31 @@ Search.appendIndex(
             "summary": "Determines\u0020the\u0020winner\u0020based\u0020on\u0020the\u0020highest\u0020score\u0020between\u0020player\u0020and\u0020dealer",
             "url": "classes/App-CardGame-GameResultCheck.html#method_highestScore"
         },                {
+            "fqsen": "\\App\\CardGame\\GameService",
+            "name": "GameService",
+            "summary": "",
+            "url": "classes/App-CardGame-GameService.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameService\u003A\u003AinitializeGame\u0028\u0029",
+            "name": "initializeGame",
+            "summary": "",
+            "url": "classes/App-CardGame-GameService.html#method_initializeGame"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameService\u003A\u003AinitGame\u0028\u0029",
+            "name": "initGame",
+            "summary": "",
+            "url": "classes/App-CardGame-GameService.html#method_initGame"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameService\u003A\u003AadjustMoneyForBet\u0028\u0029",
+            "name": "adjustMoneyForBet",
+            "summary": "",
+            "url": "classes/App-CardGame-GameService.html#method_adjustMoneyForBet"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameService\u003A\u003AisValidBet\u0028\u0029",
+            "name": "isValidBet",
+            "summary": "",
+            "url": "classes/App-CardGame-GameService.html#method_isValidBet"
+        },                {
             "fqsen": "\\App\\CardGame\\MoneyHandling",
             "name": "MoneyHandling",
             "summary": "Methods\u0020for\u0020handling\u0020the\u0020money\u0020in\u0020the\u0020game",
@@ -285,6 +340,11 @@ Search.appendIndex(
             "name": "BlackJackController",
             "summary": "",
             "url": "classes/App-Controller-BlackJackController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\BlackJackController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-BlackJackController.html#method___construct"
         },                {
             "fqsen": "\\App\\Controller\\BlackJackController\u003A\u003Agame\u0028\u0029",
             "name": "game",
@@ -330,6 +390,21 @@ Search.appendIndex(
             "name": "doc",
             "summary": "",
             "url": "classes/App-Controller-BlackJackController.html#method_doc"
+        },                {
+            "fqsen": "\\App\\Controller\\BlackJackController\u003A\u003A\u0024gameService",
+            "name": "gameService",
+            "summary": "",
+            "url": "classes/App-Controller-BlackJackController.html#property_gameService"
+        },                {
+            "fqsen": "\\App\\Controller\\BlackJackController\u003A\u003A\u0024gameLogger",
+            "name": "gameLogger",
+            "summary": "",
+            "url": "classes/App-Controller-BlackJackController.html#property_gameLogger"
+        },                {
+            "fqsen": "\\App\\Controller\\BlackJackController\u003A\u003A\u0024gameDataService",
+            "name": "gameDataService",
+            "summary": "",
+            "url": "classes/App-Controller-BlackJackController.html#property_gameDataService"
         },                {
             "fqsen": "\\App\\Controller\\BlackJackJson",
             "name": "BlackJackJson",
@@ -401,6 +476,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-LibraryController.html"
         },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#method___construct"
+        },                {
             "fqsen": "\\App\\Controller\\LibraryController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
             "summary": "",
@@ -445,6 +525,16 @@ Search.appendIndex(
             "name": "resetDatabase",
             "summary": "",
             "url": "classes/App-Controller-LibraryController.html#method_resetDatabase"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003A\u0024apiService",
+            "name": "apiService",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#property_apiService"
+        },                {
+            "fqsen": "\\App\\Controller\\LibraryController\u003A\u003A\u0024databaseResetService",
+            "name": "databaseResetService",
+            "summary": "",
+            "url": "classes/App-Controller-LibraryController.html#property_databaseResetService"
         },                {
             "fqsen": "\\App\\Controller\\LuckyController",
             "name": "LuckyController",
@@ -525,6 +615,11 @@ Search.appendIndex(
             "name": "report",
             "summary": "",
             "url": "classes/App-Controller-ReportSite.html#method_report"
+        },                {
+            "fqsen": "\\App\\Controller\\ReportSite\u003A\u003Ametrics\u0028\u0029",
+            "name": "metrics",
+            "summary": "",
+            "url": "classes/App-Controller-ReportSite.html#method_metrics"
         },                {
             "fqsen": "\\App\\Controller\\ReportSite\u003A\u003AapiHome\u0028\u0029",
             "name": "apiHome",
@@ -756,6 +851,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Repository-LibraryRepository.html#method_save"
         },                {
+            "fqsen": "\\App\\Repository\\LibraryRepository\u003A\u003Aremove\u0028\u0029",
+            "name": "remove",
+            "summary": "",
+            "url": "classes/App-Repository-LibraryRepository.html#method_remove"
+        },                {
             "fqsen": "\\App\\Repository\\ProductRepository",
             "name": "ProductRepository",
             "summary": "",
@@ -765,6 +865,51 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/App-Repository-ProductRepository.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\ApiService",
+            "name": "ApiService",
+            "summary": "",
+            "url": "classes/App-Service-ApiService.html"
+        },                {
+            "fqsen": "\\App\\Service\\ApiService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-ApiService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\ApiService\u003A\u003AgetAllBooks\u0028\u0029",
+            "name": "getAllBooks",
+            "summary": "",
+            "url": "classes/App-Service-ApiService.html#method_getAllBooks"
+        },                {
+            "fqsen": "\\App\\Service\\ApiService\u003A\u003AgetBookByIsbn\u0028\u0029",
+            "name": "getBookByIsbn",
+            "summary": "",
+            "url": "classes/App-Service-ApiService.html#method_getBookByIsbn"
+        },                {
+            "fqsen": "\\App\\Service\\ApiService\u003A\u003A\u0024libraryRepository",
+            "name": "libraryRepository",
+            "summary": "",
+            "url": "classes/App-Service-ApiService.html#property_libraryRepository"
+        },                {
+            "fqsen": "\\App\\Service\\DatabaseResetService",
+            "name": "DatabaseResetService",
+            "summary": "",
+            "url": "classes/App-Service-DatabaseResetService.html"
+        },                {
+            "fqsen": "\\App\\Service\\DatabaseResetService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-DatabaseResetService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\DatabaseResetService\u003A\u003AresetDatabase\u0028\u0029",
+            "name": "resetDatabase",
+            "summary": "",
+            "url": "classes/App-Service-DatabaseResetService.html#method_resetDatabase"
+        },                {
+            "fqsen": "\\App\\Service\\DatabaseResetService\u003A\u003A\u0024libraryRepository",
+            "name": "libraryRepository",
+            "summary": "",
+            "url": "classes/App-Service-DatabaseResetService.html#property_libraryRepository"
         },                {
             "fqsen": "\\",
             "name": "\\",
@@ -805,5 +950,10 @@ Search.appendIndex(
             "name": "Repository",
             "summary": "",
             "url": "namespaces/app-repository.html"
+        },                {
+            "fqsen": "\\App\\Service",
+            "name": "Service",
+            "summary": "",
+            "url": "namespaces/app-service.html"
         }            ]
 );

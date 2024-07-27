@@ -84,6 +84,10 @@
                 <a href="namespaces/app-repository.html" class="">Repository</a>
                 
             </li>
+                    <li>
+                <a href="namespaces/app-service.html" class="">Service</a>
+                
+            </li>
             </ul>
 
                         </section>
@@ -210,6 +214,13 @@
                                 &nbsp;: array{low: int, high: int}    </span>
 </dt>
 <dd>Calculates the total value of the dealer&#039;s hand</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/App-CardGame-CardHand.html#method_dealCards">dealCards()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Deals cards to the hand</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-CardGame-CardHand.html#method_getCards">getCards()</a>
@@ -412,7 +423,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/CardHand.php"><a href="files/src-cardgame-cardhand.html"><abbr title="src/CardGame/CardHand.php">CardHand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
     </aside>
 
@@ -433,6 +444,67 @@
         <span class="phpdocumentor-signature__response_type">array{low: int, high: int}</span>
                     &mdash;
                 <section class="phpdocumentor-description"><p>The total value of the dealer's hand</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_dealCards">
+        dealCards()
+        <a href="classes/App-CardGame-CardHand.html#method_dealCards" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/CardHand.php"><a href="files/src-cardgame-cardhand.html"><abbr title="src/CardGame/CardHand.php">CardHand.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">121</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Deals cards to the hand</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">dealCards</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/App-CardGame-CardGraphic.html"><abbr title="\App\CardGame\CardGraphic">CardGraphic</abbr></a>&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$shuffledDeck</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$count</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$shuffledDeck</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, <a href="classes/App-CardGame-CardGraphic.html"><abbr title="\App\CardGame\CardGraphic">CardGraphic</abbr></a>&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The deck to deal from</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$count</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The number of cards to deal</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True if all cards were dealt successfully, false otherwise</p>
 </section>
 
             </section>
@@ -492,7 +564,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CardGame/CardHand.php"><a href="files/src-cardgame-cardhand.html"><abbr title="src/CardGame/CardHand.php">CardHand.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -648,6 +720,7 @@
                                             <li><a href="classes/App-CardGame-CardHand.html#method_addCard">addCard()</a></li>
                                             <li><a href="classes/App-CardGame-CardHand.html#method_calculateTotal">calculateTotal()</a></li>
                                             <li><a href="classes/App-CardGame-CardHand.html#method_calculateTotalDealer">calculateTotalDealer()</a></li>
+                                            <li><a href="classes/App-CardGame-CardHand.html#method_dealCards">dealCards()</a></li>
                                             <li><a href="classes/App-CardGame-CardHand.html#method_getCards">getCards()</a></li>
                                             <li><a href="classes/App-CardGame-CardHand.html#method_isAce">isAce()</a></li>
                                     </ul>

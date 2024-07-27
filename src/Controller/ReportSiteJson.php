@@ -4,22 +4,15 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use App\Card\DeckOfCards;
 use App\Card\CardHand;
 use App\Card\CardGraphic;
-
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Library;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Repository\LibraryRepository;
 
-class ReportSiteJson
+class ReportSiteJson extends AbstractController
 {
     #[Route("/api/lucky", name: "api_lucky_number")]
     public function jsonNumber(): Response
@@ -31,11 +24,8 @@ class ReportSiteJson
             'lucky-message' => 'Hi there!',
         ];
 
-        // prettyprint
         $response = new JsonResponse($data);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
         return $response;
     }
 
@@ -64,9 +54,7 @@ class ReportSiteJson
         ];
 
         $response = new JsonResponse($data);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
         return $response;
     }
@@ -87,11 +75,8 @@ class ReportSiteJson
             ];
         }, $deck);
 
-        // JSON pretty print
         $response = new JsonResponse($deckArray);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
         return $response;
     }
@@ -107,12 +92,9 @@ class ReportSiteJson
             return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
         }
 
-        // Shuffle
         shuffle($deck);
-
         $session->set('deck', $deck);
 
-        // JSON
         $deckArray = array_map(function ($card) {
             $cardGraphic = new CardGraphic($card->getValue());
             return [
@@ -123,9 +105,7 @@ class ReportSiteJson
         }, $deck);
 
         $response = new JsonResponse($deckArray);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
         return $response;
     }
@@ -139,12 +119,9 @@ class ReportSiteJson
             return new JsonResponse(['error' => 'No cards in the deck. Please shuffle the deck.'], Response::HTTP_BAD_REQUEST);
         }
 
-        // Draw 1 card from deck
         $drawnCard = array_shift($deck);
-
         $session->set('deck', $deck);
 
-        // JSON structure
         $cardGraphic = new CardGraphic($drawnCard->getValue());
         $response = [
             'drawnCard' => [
@@ -156,9 +133,7 @@ class ReportSiteJson
         ];
 
         $response = new JsonResponse($response);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
         return $response;
     }
@@ -176,7 +151,6 @@ class ReportSiteJson
             return new JsonResponse(['error' => 'Invalid number of cards to draw.'], Response::HTTP_BAD_REQUEST);
         }
 
-        // Draw x cards
         $drawnCards = [];
         for ($i = 0; $i < $number; $i++) {
             if (empty($deck)) {
@@ -191,7 +165,6 @@ class ReportSiteJson
             ];
         }
 
-        // Update deck in session
         $session->set('deck', $deck);
 
         $response = [
@@ -200,9 +173,7 @@ class ReportSiteJson
         ];
 
         $response = new JsonResponse($response);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
         return $response;
     }
@@ -244,9 +215,7 @@ class ReportSiteJson
         ];
 
         $response = new JsonResponse($response);
-        $response->setEncodingOptions(
-            $response->getEncodingOptions() | JSON_PRETTY_PRINT
-        );
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
 
         return $response;
     }

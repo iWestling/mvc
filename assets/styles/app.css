@@ -461,3 +461,7 @@ ul .dicearea li {
 .btn-danger:hover {
     background-color: #87131f;
 }
+
+.metrics-image {
+    max-width: 650px;
+}

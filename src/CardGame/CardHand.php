@@ -67,7 +67,6 @@ class CardHand
         return ['low' => $sumLow, 'high' => $sumHigh];
     }
 
-
     /**
      * Check if a card value represents an ace
      */
@@ -75,7 +74,6 @@ class CardHand
     {
         return $value === 1;
     }
-
 
     /**
      * Calculates the total value of the dealer's hand
@@ -113,4 +111,24 @@ class CardHand
         return ['low' => $sumLow, 'high' => $sumHigh];
     }
 
+    /**
+     * Deals cards to the hand
+     *
+     * @param CardGraphic[] $shuffledDeck The deck to deal from
+     * @param int $count The number of cards to deal
+     * @return bool True if all cards were dealt successfully, false otherwise
+     */
+    public function dealCards(array &$shuffledDeck, int $count): bool
+    {
+        $dealSuccess = true;
+        for ($i = 0; $i < $count; $i++) {
+            $card = array_shift($shuffledDeck);
+            if (!($card instanceof CardGraphic)) {
+                $dealSuccess = false;
+                break;
+            }
+            $this->addCard($card);
+        }
+        return $dealSuccess;
+    }
 }

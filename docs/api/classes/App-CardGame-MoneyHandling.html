@@ -84,6 +84,10 @@
                 <a href="namespaces/app-repository.html" class="">Repository</a>
                 
             </li>
+                    <li>
+                <a href="namespaces/app-service.html" class="">Service</a>
+                
+            </li>
             </ul>
 
                         </section>
@@ -173,7 +177,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/App-CardGame-MoneyHandling.html#method_handleMoney">handleMoney()</a>
     <span>
-                                &nbsp;: array{: int, : int}    </span>
+                                &nbsp;: array&lt;string|int, int&gt;    </span>
 </dt>
 <dd>Changes the money based on game result</dd>
 
@@ -214,7 +218,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">handleMoney</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gameResult</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$playerBet</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$playerMoney</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dealerMoney</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array{: int, : int}</span></code>
+                    <span class="phpdocumentor-signature__name">handleMoney</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$gameResult</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$playerBet</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$playerMoney</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$dealerMoney</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, int&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -263,9 +267,9 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array{: int, : int}</span>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, int&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>The updated player and dealer money.</p>
+                <section class="phpdocumentor-description"><p>The updated player and dealer money as an array with two integers.</p>
 </section>
 
             </section>

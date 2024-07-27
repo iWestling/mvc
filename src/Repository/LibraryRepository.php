@@ -30,6 +30,14 @@ class LibraryRepository extends ServiceEntityRepository
         $data->flush();
     }
 
+    public function remove(Library $book): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->remove($book);
+        $entityManager->flush();
+    }
+
+
     //    /**
     //     * @return Library[] Returns an array of Library objects
     //     */

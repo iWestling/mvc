@@ -14,25 +14,25 @@ class MoneyHandling
      * @param int $playerBet Player's bet amount.
      * @param int $playerMoney Player's current money.
      * @param int $dealerMoney Dealer's current money.
-     * @return array{int, int} The updated player and dealer money.
+     * @return int[] The updated player and dealer money as an array with two integers.
      */
     public function handleMoney(string $gameResult, int $playerBet, int $playerMoney, int $dealerMoney): array
     {
         switch ($gameResult) {
             case 'Dealer busts! You win!':
             case 'You win!':
-                $playerMoney += $playerBet * 2;
-                return [(int) $playerMoney, (int) $dealerMoney];
+                $playerMoney += (int)($playerBet * 2);
+                return [$playerMoney, $dealerMoney];
             case 'Bust! Dealer wins!':
             case 'Dealer wins!':
-                $dealerMoney += $playerBet * 2;
-                return [(int) $playerMoney, (int) $dealerMoney];
+                $dealerMoney += (int)($playerBet * 2);
+                return [$playerMoney, $dealerMoney];
             case 'It\'s a tie!':
-                $dealerMoney += $playerBet;
-                $playerMoney += $playerBet;
-                return [(int) $playerMoney, (int) $dealerMoney];
+                $dealerMoney += (int)$playerBet;
+                $playerMoney += (int)$playerBet;
+                return [$playerMoney, $dealerMoney];
             default:
-                return [(int) $playerMoney, (int) $dealerMoney];
+                return [$playerMoney, $dealerMoney];
         }
     }
 }

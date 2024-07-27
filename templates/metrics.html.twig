@@ -1,0 +1,118 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Metrics analys{% endblock %}
+
+{% block main %}
+    <h1>Metrics analys</h1>
+    <h3>Introduktion</h3>
+    <p>
+    <ul>Code Style - Detta hänvisar till kodens läsbarhet och struktur, som t.ex. namnkonventioner och kommentarer. Allting som gör koden enklare att förstå och underhålla.</ul>
+    <ul>Coverage - Code Coverage mäter hur mycket kod som täcks av tester, vilket minskar risken för buggar.</ul>
+    <ul>Complexity - Detta handlar om kodens komplexitet, som antalet conditional statements, loopar och längden på metoder. Kod med hög komplexitet gör koden svårare att förstå och felsöka.</ul>
+    <ul>Cohesion - Cohesion kollar hur klasser/moduler och deras uppgifter är relaterade till varandra. Hög cohesion innebär att en klass har ett enda väldefinierat syfte vilket gör koden bättre och lättare att förstå. Man ska försöka hålla sig till Single Responisibility Principle där man organiserar koden i små klasser fokuserade på en uppgift.</ul>
+    <ul>Coupling - Detta hänvisar till dependency mellan klasser/moduler. Hög/tät coupling innebär att om man ändrar en klass måste man ändra andra, vilket gör koden svårare att modifiera. Här försöker man därför använda dependency injection och skriva klasserna med low coupling så att de blir mer självständiga och flexibla att använda.</ul>
+    <ul>CRAP - CRAP står för Change Risk Anti-Patterns och mäter risken för en kodändring utifrån Code Complexity och Coverage. Höga CRAP-värden indikerar alltså att en ändring av koden har större risk att skapa buggar eller andra problem.</ul>
+    <ul>Code Smell - Detta handlar om kod som indikerar på potentiella design- eller implementeringsproblem, som t.ex. repetitiv kod eller långa metoder.</ul>
+    </p>
+
+    <h3>Phpmetrics</h3>
+    <p>Jag har kört min kod i PhpMetrics Static analyzer och fått detta resultat:<br>
+    9 Class Violations:<br>
+    LibraryController har en Blob / God object som visas som error. BlackJackController, CardGameController och ReportSiteJson får även "Probably bugged" varnings och Card, CardGame och Entity får varningar enligt Stable Abstractions Principle.<br>
+    Unit Testing visar framförallt på att BlackJackController har hög Cyclomatic complexitet (31) med 2.03 bugs bekräknat, men även LibraryController ger värdet 20 med estimated 0.75 bugs. Ingen av dessa controllers har unit testing.<br>
+    Size & Volume visar att BlackJackController har högst Volume och LLOC. Högst Intelligent content har ReportSite och högst CLOC har CardHand.<br>
+    För Complexity & defects visar även här att BlackJackController har högst WMC och Class cycl och därmed anses har mest Bugs, Defects och Difficulty. LibraryController har högst Relative system complexity och structural complexity medan Entity\Library har högst Relative data complexity.<br>
+    Klassen CardGame\GameResultCheck har högst Max method cycl. på 9.<br>
+
+    För Coupling har CardGame\CardGraphic högst Afferent coupling med 3 medan BlackjackController har högst Efferent coupling med 9. Flera Controllers har 1 i Instability.<br>
+    </p>
+    <a href="{{ asset('img/1.jpg') }}">
+        <img src="{{ asset('img/1.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <a href="{{ asset('img/2.jpg') }}">
+        <img src="{{ asset('img/2.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <br>
+    <a href="{{ asset('img/3.jpg') }}">
+        <img src="{{ asset('img/3.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <a href="{{ asset('img/4.jpg') }}">
+        <img src="{{ asset('img/4.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <br>
+    <a href="{{ asset('img/5.jpg') }}">
+        <img src="{{ asset('img/5.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <a href="{{ asset('img/6.jpg') }}">
+        <img src="{{ asset('img/6.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <br>
+    <br>
+    <h3>Scrutinizer</h3>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main" alt="Quality Score"></a>
+    [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/iWestling/mvc/?branch=main)
+
+    <a href="{{ asset('img/7.jpg') }}">
+        <img src="{{ asset('img/7.jpg') }}" class="metrics-image" alt="A Scrutinizer image">
+    </a>
+    <br>
+    <a href="{{ asset('img/8.jpg') }}">
+        <img src="{{ asset('img/8.jpg') }}" class="metrics-image" alt="A Scrutinizer image">
+    </a>
+    <br>
+    <a href="{{ asset('img/9.jpg') }}">
+        <img src="{{ asset('img/9.jpg') }}" class="metrics-image" alt="A Scrutinizer image">
+    </a>
+    <a href="{{ asset('img/91.jpg') }}">
+        <img src="{{ asset('img/91.jpg') }}" class="metrics-image" alt="A Scrutinizer image">
+    </a>
+    <br>
+    <a href="{{ asset('img/912.jpg') }}">
+        <img src="{{ asset('img/912.jpg') }}" class="metrics-image" alt="A Scrutinizer image">
+    </a>
+    <br>
+    <br>
+    Scrutinizer-analys:
+
+    Code Coverage: Den totala kodtäckningen är låg på 15,4 %, med 160 av 1 041 linjer täckta. Betydande delar av kodbasen saknar tester, särskilt i kritiska klasser som BlackJackController och LibraryController.
+
+    Minst testade klasser och funktioner: Flera klasser, inklusive Card, DeckOfCards, Product och ProductController, har 0 % testtäckning. Nyckeloperationer i BlackJackController och LibraryController är också helt otestade.
+
+    Kodkvalitetsproblem: Flera filer, som BlackjackController.php och MoneyHandling.php, innehåller buggar. BlackJackController och LibraryController har höga CRAP-poäng, vilket indikerar hög komplexitet och potential för buggar.
+
+    Totalt betyg: Kodbasen har ett Scrutinizer-betyg på 9,68 (mycket bra), men den låga testtäckningen och identifierade buggar visar områden som behöver förbättras.
+
+    <br>
+    Överlag kan man alltså utröna att de största problemen med min kod är:
+    1. Låg Code Coverage: Overall code coverage är bara 15,4%. Detta ökar risk för buggar och andra problem med koden.
+
+    2. Issues:
+    Flera filer har issues så som i.e. MoneyHandling, BlackjackController.
+    
+    3. Complexity:
+    Koden har på många ställen hög complexity och CRAP score. Om man minskar/delar upp medoter bör detta göra koden mer hanterbar.
+
+    <h3>Förbättringar</h3>
+    <p>
+    Baserat på resultaten från PhpMetrics och Scrutinizer finns det helt klart flera områden där förbättringar kan göras för att förbättra kodkvaliteten. 
+    Det jag framförallt tänker förbättra är detta:
+    <br>
+    1. Fixa issues. Detta säger sig självt, jag ska försöka fixa vissa issues som uppstått och åtgärda de specifika problem som lyfts fram i analysresultaten. Däribland Blob/God Object, buggar och andra varningar belyser potentiella designfel, eventuellt att det bryter mot SOLID-principer (eller har såkallade anti-patterns som Blob/God Object.)
+    Att åtgärda designproblem förbättrar cohesion och minskar coupling, vilket leder till en mer underhållbar och scalable kodbas. 
+    <br>
+    Förbättringsplan: Granska och dela upp klasser som uppvisar designproblem, såsom Blob/God Object i LibraryController och BlackJackController. Dela upp dessa klasser i mindre, mer sammanhängande komponenter enligt SOLID principer. Se till att klasserna följer Stable Abstractions Principle för att upprätthålla en balans mellan stabilitet och flexibilitet. Dessa förbättringar kommer mest troligt utöver detta även förbättra mätvärden för coverage och complexity.
+    <br><br>
+    2. Öka coverage. Min nuvarande kodtäckning är endast 15,37%, en låg täckningsprocent indikerar att många delar av koden är oprövade, vilket betyder att det kan finnas oupptäckta buggar och andra problem med koden. 
+    Ökad testning kommer förbättra coverage och potentiellt minska CRAP-score i t.ex. BlackJackController::endResult(), BlackJackController::play() och LibraryController::updateBook(), genom att se till att de testas noggrant. Låg kodtäckning kan även indikera code smell, så som oprövade metoder eller klasser.
+    <br>
+    Förbättringsplan: Jag kommer skriva ytterligare enhetstester för att täcka kritiska operationer och öka coverage, främst fokusera på mer kritiska funktionerna och testa edge cases.
+    <br><br>
+    3. Minska complexity. Mätvärden med hög komplexitet så som Cyclomatic Complexity, Weighted Methods per Class (WMC), Relative System Complexity, Structural Complexity, Max Method Cycles etc indikerar att klasser och metoder är svårare att förstå, underhålla och testa. Genom att minska komplexiteten förbättras kodens läsbarhet och gör den lättare att underhålla, vilket påverkar den övergripande kodkvaliteten positivt. Detta kan även sänka CRAP-score genom att minska sannolikheten för defekter och buggar och genom att förenkla komplexa metoder och klasser kan man även förbättra code-style. 
+    <br>
+    Förbättringsplan: Dela upp komplexa klasser och metoder för att förenkla deras logik och minska cyklomatisk komplexitet. Bryt ner stora metoder i mindre och eventuellt tillämpa designmönster för att förbättra kodstrukturen och underhållbarheten. 
+    <br>
+    </p>
+
+
+
+{% endblock %}

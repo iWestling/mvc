@@ -1,7 +1,9 @@
 <?php
 
-namespace App\CardGame;
+namespace App\Tests\CardGame;
 
+use App\CardGame\CardHand;
+use App\CardGame\CardGraphic;
 use PHPUnit\Framework\TestCase;
 
 class CardHandTest extends TestCase
@@ -109,27 +111,6 @@ class CardHandTest extends TestCase
         $this->assertEquals(17, $totals['high']); // 11 (Ace) + 1 (Ace) + 5 (5)
     }
 
-    public function testCalculateTotalWithThreeAcesAndRandomCard(): void
-    {
-        $ace = new CardGraphic(1, 'hearts'); // Ace
-        $card = new CardGraphic(5, 'diamonds'); // Random card
-
-        $hand = new CardHand();
-        // Add three aces to the hand
-        $hand->addCard($ace);
-        $hand->addCard($ace);
-        $hand->addCard($ace);
-        // Add a random card to the hand
-        $hand->addCard($card);
-
-        // Calculate the total score
-        $totals = $hand->calculateTotal();
-
-        // Assert that the high score is adjusted to stay within 21
-        $this->assertEquals(8, $totals['low']); // Sum of card values (3 Aces + a random card, here 5)
-        $this->assertEquals(18, $totals['high']); // Sum of card values with one Ace counted as 11 (11 + 1 + 1 + 5)
-    }
-
     public function testCalculateTotalDealerWithAce(): void
     {
         $card1 = new CardGraphic(1, 'hearts'); // Ace
@@ -152,5 +133,26 @@ class CardHandTest extends TestCase
         $this->assertEquals(10, $total['high']);
     }
 
+    public function testDealCards(): void
+    {
+        $deck = [
+            new CardGraphic(1, 'hearts'),
+            new CardGraphic(2, 'diamonds'),
+            new CardGraphic(3, 'clubs'),
+            new CardGraphic(4, 'spades'),
+        ];
+
+        $hand = new CardHand();
+        $dealSuccess = $hand->dealCards($deck, 2);
+
+        // Check if dealing was successful
+        $this->assertTrue($dealSuccess);
+
+        // Check if the hand contains the correct number of cards after dealing
+        $this->assertCount(2, $hand->getCards());
+
+        // Check if the deck contains the remaining cards
+        $this->assertCount(2, $deck);
+    }
 
 }

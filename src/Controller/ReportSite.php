@@ -41,6 +41,12 @@ class ReportSite extends AbstractController
         return $this->render('report.html.twig');
     }
 
+    #[Route("/metrics", name: "metrics")]
+    public function metrics(): Response
+    {
+        return $this->render('metrics.html.twig');
+    }
+
     #[Route("/api", name: "api")]
     public function apiHome(): Response
     {
