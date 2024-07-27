@@ -296,19 +296,19 @@ class BlackJackControllerTest extends WebTestCase
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render', 'redirectToRoute', 'addFlash'])
             ->getMock();
-    
+
         $session = $this->createMock(SessionInterface::class);
         $playerHand = $this->createMock(CardHand::class);
         $dealerHand = $this->createMock(CardHand::class);
         $deck = [$this->createMock(CardGraphic::class)];
         $card1 = $this->createMock(CardGraphic::class);
         $card2 = $this->createMock(CardGraphic::class);
-    
+
         $playerHand->expects($this->once())->method('addCard')->with($card1);
         $playerHand->method('calculateTotal')->willReturn(['low' => 10, 'high' => 20]);
         $dealerHand->method('calculateTotalDealer')->willReturn(['low' => 5, 'high' => 15]);
         $dealerHand->method('getCards')->willReturn([$card1, $card2]);
-    
+
         $session->method('get')
             ->willReturnMap([
                 ['playerBet', null, 50],
@@ -318,46 +318,46 @@ class BlackJackControllerTest extends WebTestCase
                 ['dealerHand', null, $dealerHand],
                 ['deck', null, $deck],
             ]);
-    
+
         $controller->expects($this->once())
             ->method('render')
             ->with('blackjack/play.html.twig', $this->isType('array'))
             ->willReturn(new Response());
-    
+
         $controller->expects($this->never())
             ->method('redirectToRoute');
-    
+
         $controller->expects($this->never())
             ->method('addFlash');
-    
+
         $container = $this->createMock(ContainerInterface::class);
         $controller->setContainer($container);
-    
+
         $response = $controller->hit($session);
-    
+
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
     }
-    
-    
+
+
     public function testDealerHit(): void
     {
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render', 'redirectToRoute', 'addFlash'])
             ->getMock();
-    
+
         $session = $this->createMock(SessionInterface::class);
         $playerHand = $this->createMock(CardHand::class);
         $dealerHand = $this->createMock(CardHand::class);
         $deck = [$this->createMock(CardGraphic::class)];
         $card = $this->createMock(CardGraphic::class);
-    
+
         $dealerHand->method('getCards')->willReturn([$card, $card]);
         $dealerHand->expects($this->once())->method('addCard')->with($card);
         $playerHand->method('calculateTotal')->willReturn(['low' => 10, 'high' => 20]);
         $dealerHand->method('calculateTotal')->willReturn(['low' => 5, 'high' => 15]);
-    
+
         $session->method('get')
             ->willReturnMap([
                 ['playerBet', null, 50],
@@ -367,26 +367,26 @@ class BlackJackControllerTest extends WebTestCase
                 ['dealerHand', null, $dealerHand],
                 ['deck', null, $deck],
             ]);
-    
+
         $controller->expects($this->once())
             ->method('render')
             ->with('blackjack/play.html.twig', $this->isType('array'))
             ->willReturn(new Response());
-    
+
         $controller->expects($this->never())
             ->method('redirectToRoute');
-    
+
         $controller->expects($this->never())
             ->method('addFlash');
-    
+
         $container = $this->createMock(ContainerInterface::class);
         $controller->setContainer($container);
-    
+
         $response = $controller->dealerHit($session);
-    
+
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
-    }    
+    }
 
     public function testEndResult(): void
     {
