@@ -3,156 +3,80 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Controller\ReportSiteJson;
+use App\Card\CardHand;
+use App\Card\CardGraphic;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class ReportSiteJsonTest extends WebTestCase
 {
-    private Session $session;
+    /**
+     * @var MockObject&SessionInterface
+     */
+    private $sessionMock;
+
+    /**
+     * @var ReportSiteJson
+     */
+    private $controller;
 
     protected function setUp(): void
     {
-        $this->session = new Session(new MockArraySessionStorage());
-        $this->session->start();
+        $this->sessionMock = $this->createMock(SessionInterface::class);
+        $this->controller = new ReportSiteJson();
     }
 
     public function testJsonNumber(): void
     {
-        $controller = new ReportSiteJson();
-        $response = $controller->jsonNumber();
-
+        $response = $this->controller->jsonNumber();
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $content = $response->getContent();
-        $this->assertIsString($content);
+        $data = json_decode($response->getContent(), true);
 
-        $data = json_decode($content, true);
-        $this->assertIsArray($data);
         $this->assertArrayHasKey('lucky-number', $data);
         $this->assertArrayHasKey('lucky-message', $data);
+        $this->assertEquals('Hi there!', $data['lucky-message']);
     }
 
     public function testJsonQuote(): void
     {
-        $controller = new ReportSiteJson();
-        $response = $controller->jsonQuote();
-
+        $response = $this->controller->jsonQuote();
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $content = $response->getContent();
-        $this->assertIsString($content);
+        $data = json_decode($response->getContent(), true);
 
-        $data = json_decode($content, true);
-        $this->assertIsArray($data);
         $this->assertArrayHasKey('quote', $data);
         $this->assertArrayHasKey('date', $data);
         $this->assertArrayHasKey('timestamp', $data);
     }
 
-    // public function testGetDeck(): void
-    // {
-    //     $controller = new ReportSiteJson();
-    //     $response = $controller->getDeck($this->session);
+    public function testDrawCardFromEmptyDeck(): void
+    {
+        $this->sessionMock->expects($this->once())
+            ->method('get')
+            ->with('deck', [])
+            ->willReturn([]);
 
-    //     $this->assertInstanceOf(JsonResponse::class, $response);
-    //     $content = $response->getContent();
-    //     $this->assertIsString($content);
+        $response = $this->controller->drawCardFromDeck($this->sessionMock);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $data = json_decode($response->getContent(), true);
 
-    //     $data = json_decode($content, true);
-    //     $this->assertIsArray($data);
-    //     $this->assertNotEmpty($data);
-    //     $this->assertArrayHasKey('value', $data[0]);
-    //     $this->assertArrayHasKey('card', $data[0]);
-    //     $this->assertArrayHasKey('imagepath', $data[0]);
+        $this->assertArrayHasKey('error', $data);
+        $this->assertEquals('No cards in the deck. Please shuffle the deck.', $data['error']);
+    }
 
-    //     $deck = $this->session->get('deck');
-    //     $this->assertIsArray($deck);
-    //     $this->assertEquals(count($data), count($deck));
-    // }
+    public function testDrawMultipleCardsFromEmptyDeck(): void
+    {
+        $this->sessionMock->expects($this->once())
+            ->method('get')
+            ->with('deck', [])
+            ->willReturn([]);
 
-    // public function testShuffleDeck(): void
-    // {
-    //     $controller = new ReportSiteJson();
-    //     $response = $controller->shuffleDeck($this->session);
+        $response = $this->controller->drawMultipleCardsFromDeck($this->sessionMock, 5);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $data = json_decode($response->getContent(), true);
 
-    //     $this->assertInstanceOf(JsonResponse::class, $response);
-    //     $content = $response->getContent();
-    //     $this->assertIsString($content);
-
-    //     $data = json_decode($content, true);
-    //     $this->assertIsArray($data);
-    //     $this->assertNotEmpty($data);
-    //     $this->assertArrayHasKey('value', $data[0]);
-    //     $this->assertArrayHasKey('card', $data[0]);
-    //     $this->assertArrayHasKey('imagepath', $data[0]);
-
-    //     $deck = $this->session->get('deck');
-    //     $this->assertIsArray($deck);
-    //     $this->assertEquals(count($data), count($deck));
-    // }
-
-    // public function testDrawCardFromDeck(): void
-    // {
-    //     $controller = new ReportSiteJson();
-    //     $controller->getDeck($this->session); // Initialize the deck in session
-    //     $response = $controller->drawCardFromDeck($this->session);
-
-    //     $this->assertInstanceOf(JsonResponse::class, $response);
-    //     $content = $response->getContent();
-    //     $this->assertIsString($content);
-
-    //     $data = json_decode($content, true);
-    //     $this->assertIsArray($data);
-    //     $this->assertArrayHasKey('drawnCard', $data);
-    //     $this->assertArrayHasKey('value', $data['drawnCard']);
-    //     $this->assertArrayHasKey('card', $data['drawnCard']);
-    //     $this->assertArrayHasKey('imagepath', $data['drawnCard']);
-    //     $this->assertArrayHasKey('remainingCards', $data);
-
-    //     $deck = $this->session->get('deck');
-    //     $this->assertIsArray($deck);
-    //     $this->assertEquals(51, count($deck));
-    // }
-
-    // public function testDrawMultipleCardsFromDeck(): void
-    // {
-    //     $controller = new ReportSiteJson();
-    //     $controller->getDeck($this->session); // Initialize the deck in session
-    //     $response = $controller->drawMultipleCardsFromDeck($this->session, 3);
-
-    //     $this->assertInstanceOf(JsonResponse::class, $response);
-    //     $content = $response->getContent();
-    //     $this->assertIsString($content);
-
-    //     $data = json_decode($content, true);
-    //     $this->assertIsArray($data);
-    //     $this->assertArrayHasKey('drawnCards', $data);
-    //     $this->assertCount(3, $data['drawnCards']);
-    //     $this->assertArrayHasKey('remainingCards', $data);
-
-    //     $deck = $this->session->get('deck');
-    //     $this->assertIsArray($deck);
-    //     $this->assertEquals(49, count($deck));
-    // }
-
-    // public function testDealCardsToPlayers(): void
-    // {
-    //     $controller = new ReportSiteJson();
-    //     $controller->getDeck($this->session); // Initialize the deck in session
-    //     $response = $controller->dealCardsToPlayers(3, 5, $this->session);
-
-    //     $this->assertInstanceOf(JsonResponse::class, $response);
-    //     $content = $response->getContent();
-    //     $this->assertIsString($content);
-
-    //     $data = json_decode($content, true);
-    //     $this->assertIsArray($data);
-    //     $this->assertArrayHasKey('playerHands', $data);
-    //     $this->assertCount(3, $data['playerHands']);
-    //     $this->assertArrayHasKey('remainingCards', $data);
-
-    //     $deck = $this->session->get('deck');
-    //     $this->assertIsArray($deck);
-    //     $this->assertEquals(52 - (3 * 5), count($deck));
-    // }
+        $this->assertArrayHasKey('error', $data);
+        $this->assertEquals('No cards in the deck. Please shuffle the deck.', $data['error']);
+    }
 }

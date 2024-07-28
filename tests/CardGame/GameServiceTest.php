@@ -51,16 +51,16 @@ class GameServiceTest extends TestCase
                 ['playerMoney', null, 100],
                 ['dealerMoney', null, 100],
             ]);
-
+    
         $this->session->expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
                 ['playerMoney', 90],
                 ['dealerMoney', 90]
             );
-
+    
         $this->gameService->adjustMoneyForBet($this->session);
-    }
+    }    
 
     public function testIsValidBet(): void
     {

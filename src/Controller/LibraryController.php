@@ -12,7 +12,6 @@ use App\Entity\Library;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\LibraryRepository;
 
-use App\Service\BookService;
 use App\Service\ApiService;
 use App\Service\DatabaseResetService;
 
