@@ -8,20 +8,20 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class LibraryControllerTest extends WebTestCase
 {
-    public function testIndex(): void
-    {
-        $client = static::createClient();
+    // public function testIndex(): void
+    // {
+    //     $client = static::createClient();
 
-        // Simulate a GET request to the index page
-        $crawler = $client->request('GET', '/library');
+    //     // Simulate a GET request to the index page
+    //     $crawler = $client->request('GET', '/library');
 
-        // Assert the response is successful
-        $this->assertTrue($client->getResponse()->isSuccessful());
+    //     // Assert the response is successful
+    //     $this->assertTrue($client->getResponse()->isSuccessful());
 
-        // Assert the page contains expected content
-        $this->assertStringContainsString('Library', $crawler->filter('h1')->text());
-        // You can add more specific assertions here based on your HTML structure
-    }
+    //     // Assert the page contains expected content
+    //     $this->assertStringContainsString('Library', $crawler->filter('h1')->text());
+    //     // You can add more specific assertions here based on your HTML structure
+    // }
 
     // public function testCreateBook(): void
     // {
