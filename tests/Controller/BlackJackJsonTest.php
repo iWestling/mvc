@@ -35,7 +35,8 @@ class BlackJackJsonTest extends WebTestCase
 
     public function testPlayWithoutGameStarted(): void
     {
-        $this->sessionMock->method('get')
+        $this->sessionMock->expects($this->any())
+            ->method('get')
             ->willReturnMap([
                 ['playerBet', null, 50],
                 ['playerMoney', null, 100],
@@ -64,7 +65,8 @@ class BlackJackJsonTest extends WebTestCase
         $dealerCard = $this->createCardGraphicMock('7 of Clubs', 7, 'Clubs', 'card_back.png');
         $dealerHand = $this->createCardHandMock([$dealerCard], ['low' => 7, 'high' => 7]);
 
-        $this->sessionMock->method('get')
+        $this->sessionMock->expects($this->any())
+            ->method('get')
             ->willReturnMap([
                 ['playerBet', null, 50],
                 ['playerMoney', null, 100],

@@ -3,6 +3,8 @@ imports:
 
 filter:
     excluded_paths: [vendor/*, test/*]
+    exclude:
+      - .php-cs-fixer.dist.php
 
 build:
     image: default-bionic
