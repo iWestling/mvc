@@ -2,8 +2,10 @@ imports:
     - php
 
 filter:
-    excluded_paths: [vendor/*, test/*]
-      - .php-cs-fixer.dist.php
+    excluded_paths: 
+        - vendor/*
+        - test/*
+        - .php-cs-fixer.dist.php
 
 build:
     image: default-bionic
