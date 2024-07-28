@@ -8,6 +8,11 @@ use App\CardGame\CardGraphic;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+/**
+ * @method mixed get(string $name, mixed $default = null)
+ * @method void method(string $name)
+ * @method void willReturnMap(array $map)
+ */
 class GameDataServiceTest extends TestCase
 {
     /**

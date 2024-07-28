@@ -7,6 +7,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @method mixed get(string $name, mixed $default = null)
+ * @method void method(string $name)
+ * @method void willReturnMap(array $map)
+ */
 class GameServiceTest extends TestCase
 {
     /** @var MockObject&SessionInterface */
@@ -86,4 +91,3 @@ class GameServiceTest extends TestCase
         $this->assertFalse($this->gameService->isValidBet($this->session));
     }
 }
-
