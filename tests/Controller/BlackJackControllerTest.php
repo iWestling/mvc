@@ -287,6 +287,7 @@ class BlackJackControllerTest extends WebTestCase
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
     }
+
     public function testHit(): void
     {
         $controller = $this->getMockBuilder(BlackJackController::class)
@@ -430,7 +431,10 @@ class BlackJackControllerTest extends WebTestCase
     }
 
     // Helper method to create a mock CardHand with necessary expectations
-    private function createCardHandMock(): CardHand
+    /**
+     * @return MockObject&CardHand
+     */
+    private function createCardHandMock(): MockObject
     {
         $cardHandMock = $this->getMockBuilder(CardHand::class)
             ->disableOriginalConstructor()
@@ -446,7 +450,10 @@ class BlackJackControllerTest extends WebTestCase
     }
 
     // Helper method to create a mock CardGraphic
-    private function createCardGraphicMock(): CardGraphic
+    /**
+     * @return MockObject&CardGraphic
+     */
+    private function createCardGraphicMock(): MockObject
     {
         $cardGraphicMock = $this->getMockBuilder(CardGraphic::class)
             ->disableOriginalConstructor()

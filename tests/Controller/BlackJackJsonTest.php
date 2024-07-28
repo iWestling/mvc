@@ -104,9 +104,9 @@ class BlackJackJsonTest extends WebTestCase
     /**
      * @param CardGraphic[] $cards
      * @param array<string, int> $totals
-     * @return CardHand
+     * @return MockObject&CardHand
      */
-    private function createCardHandMock(array $cards, array $totals): CardHand
+    private function createCardHandMock(array $cards, array $totals): MockObject
     {
         $handMock = $this->createMock(CardHand::class);
         $handMock->method('getCards')->willReturn($cards);
@@ -116,9 +116,9 @@ class BlackJackJsonTest extends WebTestCase
     }
 
     /**
-     * @return CardGraphic
+     * @return MockObject&CardGraphic
      */
-    private function createCardGraphicMock(string $asString, int $value, string $suit, string $unturned = 'card_back.png'): CardGraphic
+    private function createCardGraphicMock(string $asString, int $value, string $suit, string $unturned = 'card_back.png'): MockObject
     {
         $cardMock = $this->createMock(CardGraphic::class);
         $cardMock->method('getAsString')->willReturn($asString);
