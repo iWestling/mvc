@@ -53,7 +53,7 @@ class GameDataServiceTest extends TestCase
     public function testGetGameData(): void
     {
         // Mock session values
-        $this->sessionMock->method('get')
+        $this->sessionMock->/** @scrutinizer ignore-call */method('get')
             ->willReturnMap([
                 ['playerMoney', null, 100],
                 ['playerBet', null, 50],
@@ -62,9 +62,9 @@ class GameDataServiceTest extends TestCase
             ]);
 
         // Mock card behavior
-        $this->cardMock->method('getAsString')->willReturn('5 of Hearts');
-        $this->playerHandMock->method('getCards')->willReturn([$this->cardMock, $this->cardMock]);
-        $this->dealerHandMock->method('getCards')->willReturn([$this->cardMock, $this->cardMock]);
+        $this->cardMock->/** @scrutinizer ignore-call */method('getAsString')->willReturn('5 of Hearts');
+        $this->playerHandMock->/** @scrutinizer ignore-call */method('getCards')->willReturn([$this->cardMock, $this->cardMock]);
+        $this->dealerHandMock->/** @scrutinizer ignore-call */method('getCards')->willReturn([$this->cardMock, $this->cardMock]);
 
         // Define player and dealer totals
         $playerTotals = ['low' => 5, 'high' => 15];

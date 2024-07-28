@@ -10,6 +10,11 @@ use App\CardGame\CardGraphic;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @method mixed get(string $name, mixed $default = null)
+ * @method void method(string $name)
+ * @method void willReturnMap(array $map)
+ */
 class BlackJackJsonTest extends WebTestCase
 {
     /**
