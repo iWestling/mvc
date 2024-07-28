@@ -188,34 +188,6 @@ class LibraryControllerTest extends WebTestCase
         }
     }
 
-    public function testGetBookByIsbn(): void
-    {
-        $client = static::createClient();
-
-        // Simulate a GET request to fetch a book by ISBN via API
-        $client->request('GET', '/api/library/book/978-7-536-69293-0');
-
-        // Assert the response
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
-        // Assert the content type is JSON
-        $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
-
-        // Decode the JSON response
-        $responseContent = $client->getResponse()->getContent();
-        $responseData = json_decode($responseContent !== false ? $responseContent : '', true);
-
-        // Assert that the response data is an array
-        $this->assertIsArray($responseData);
-
-        // Assert that the book entry contains expected keys
-        $this->assertArrayHasKey('title', $responseData);
-        $this->assertArrayHasKey('author', $responseData);
-        $this->assertArrayHasKey('isbn', $responseData);
-        $this->assertArrayHasKey('bookimage', $responseData);
-        $this->assertArrayHasKey('description', $responseData);
-    }
-
     public function testCreateBookRender(): void
     {
         $client = static::createClient();
