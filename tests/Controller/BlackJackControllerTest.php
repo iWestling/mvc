@@ -40,10 +40,8 @@ class BlackJackControllerTest extends WebTestCase
         $this->gameLoggerMock = $this->createMock(GameLogger::class);
         $this->gameDataServiceMock = $this->createMock(GameDataService::class);
     }
-
     public function testGame(): void
     {
-        // Ensure the initializeGame method calls session's clear and set methods
         $this->gameServiceMock->expects($this->once())
             ->method('initializeGame')
             ->with($this->isInstanceOf(SessionInterface::class))
@@ -53,7 +51,6 @@ class BlackJackControllerTest extends WebTestCase
                 $session->set('dealerMoney', 100);
             });
 
-        // Mock the session
         $session = $this->createMock(SessionInterface::class);
         $session->expects($this->once())->method('clear');
         $session->expects($this->exactly(2))->method('set')->withConsecutive(
@@ -61,7 +58,6 @@ class BlackJackControllerTest extends WebTestCase
             ['dealerMoney', 100]
         );
 
-        // Mock the render method to return a Response object
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render'])
@@ -72,23 +68,17 @@ class BlackJackControllerTest extends WebTestCase
             ->with('blackjack/home.html.twig')
             ->willReturn(new Response());
 
-        // Create a mock container
         $container = $this->createMock(ContainerInterface::class);
-
-        // Set the container for the controller
         $controller->setContainer($container);
 
-        // Call the method
         $response = $controller->game($session);
 
-        // Assert the response
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testInit(): void
     {
-        // Create the controller with mocked dependencies
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render'])
@@ -97,14 +87,12 @@ class BlackJackControllerTest extends WebTestCase
         $session = $this->createMock(SessionInterface::class);
         $session->expects($this->exactly(2))->method('get')->willReturn(100);
 
-        // Mock the render method to return a Response object
         $controller->expects($this->once())
             ->method('render')
             ->with('blackjack/init.html.twig', ['playerMoney' => 100, 'dealerMoney' => 100])
             ->willReturn(new Response());
 
         $container = $this->createMock(ContainerInterface::class);
-
         $controller->setContainer($container);
 
         $response = $controller->init($session);
@@ -176,7 +164,6 @@ class BlackJackControllerTest extends WebTestCase
 
     public function testPlay(): void
     {
-        // Mock the gameService and gameLogger dependencies
         $this->gameServiceMock->expects($this->once())
             ->method('isValidBet')
             ->with($this->isInstanceOf(SessionInterface::class))
@@ -194,16 +181,13 @@ class BlackJackControllerTest extends WebTestCase
                 $this->isInstanceOf(CardHand::class)
             );
 
-        // Create the controller with mocked dependencies
         $controller = new BlackJackController($this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock);
 
-        // Mock the session
         $session = $this->createMock(SessionInterface::class);
         $playerHand = $this->createMock(CardHand::class);
         $dealerHand = $this->createMock(CardHand::class);
         $card = $this->createMock(CardGraphic::class);
 
-        // Ensure getCards returns an array with at least one CardGraphic object
         $playerHand->method('getCards')->willReturn([$card]);
         $dealerHand->method('getCards')->willReturn([$card, $card]);
 
@@ -220,7 +204,6 @@ class BlackJackControllerTest extends WebTestCase
                 ['gameLog', null, ''],
             ]);
 
-        // Mock the render method to return a Response object
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render'])
@@ -231,16 +214,11 @@ class BlackJackControllerTest extends WebTestCase
             ->with('blackjack/play.html.twig', $this->isType('array'))
             ->willReturn(new Response());
 
-        // Create a mock container
         $container = $this->createMock(ContainerInterface::class);
-
-        // Set the container for the controller
         $controller->setContainer($container);
 
-        // Call the method
         $response = $controller->play($session);
 
-        // Assert the response
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
     }
@@ -337,7 +315,6 @@ class BlackJackControllerTest extends WebTestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-
     public function testDealerHit(): void
     {
         $controller = $this->getMockBuilder(BlackJackController::class)
@@ -388,16 +365,13 @@ class BlackJackControllerTest extends WebTestCase
 
     public function testEndResult(): void
     {
-        // Mock dependencies
         $this->gameServiceMock = $this->createMock(GameService::class);
         $this->gameLoggerMock = $this->createMock(GameLogger::class);
 
-        // Expectations for gameLoggerMock
         $this->gameLoggerMock->expects($this->once())
             ->method('updateGameLog')
             ->with($this->isInstanceOf(SessionInterface::class), $this->stringContains('Round ended.'));
 
-        // Mock the session
         $session = $this->createMock(SessionInterface::class);
         $session->method('get')->will($this->returnValueMap([
             ['playerBet', null, 10],
@@ -408,10 +382,8 @@ class BlackJackControllerTest extends WebTestCase
             ['gameLog', null, '']
         ]));
 
-        // Create the controller with mocked dependencies
         $controller = new BlackJackController($this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock);
 
-        // Mock the render method to return a Response object
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render'])
@@ -422,18 +394,12 @@ class BlackJackControllerTest extends WebTestCase
             ->with('blackjack/play.html.twig', $this->isType('array'))
             ->willReturn(new Response());
 
-        // Call the method
         $response = $controller->endResult($session);
 
-        // Assert the response
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    // Helper method to create a mock CardHand with necessary expectations
-    /**
-     * @return MockObject&CardHand
-     */
     private function createCardHandMock(): MockObject
     {
         $cardHandMock = $this->getMockBuilder(CardHand::class)
@@ -449,10 +415,6 @@ class BlackJackControllerTest extends WebTestCase
         return $cardHandMock;
     }
 
-    // Helper method to create a mock CardGraphic
-    /**
-     * @return MockObject&CardGraphic
-     */
     private function createCardGraphicMock(): MockObject
     {
         $cardGraphicMock = $this->getMockBuilder(CardGraphic::class)
@@ -470,7 +432,6 @@ class BlackJackControllerTest extends WebTestCase
 
     public function testDoc(): void
     {
-        // Mock the render method to return a Response object
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render'])
@@ -481,16 +442,12 @@ class BlackJackControllerTest extends WebTestCase
             ->with('blackjack/doc.html.twig')
             ->willReturn(new Response());
 
-        // Create a mock container
         $container = $this->createMock(ContainerInterface::class);
 
-        // Set the container for the controller
         $controller->setContainer($container);
 
-        // Call the method
         $response = $controller->doc();
 
-        // Assert the response
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
     }

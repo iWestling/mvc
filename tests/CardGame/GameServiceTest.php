@@ -86,3 +86,4 @@ class GameServiceTest extends TestCase
         $this->assertFalse($this->gameService->isValidBet($this->session));
     }
 }
+
