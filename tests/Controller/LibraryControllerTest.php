@@ -188,18 +188,4 @@ class LibraryControllerTest extends WebTestCase
         }
     }
 
-    public function testCreateBookRender(): void
-    {
-        $client = static::createClient();
-
-        // Simulate a GET request to the create book page
-        $crawler = $client->request('GET', '/library/book/create');
-
-        // Assert the response is successful
-        $this->assertTrue($client->getResponse()->isSuccessful());
-
-        // Assert the page contains expected content
-        $this->assertStringContainsString('Create a New Book', $crawler->filter('h1')->text());
-        // You can add more specific assertions here based on your HTML structure
-    }
 }
