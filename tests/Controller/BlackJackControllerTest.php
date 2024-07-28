@@ -53,9 +53,6 @@ class BlackJackControllerTest extends WebTestCase
                 $session->set('dealerMoney', 100);
             });
 
-        // Create the controller with mocked dependencies
-        $controller = new BlackJackController($this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock);
-
         // Mock the session
         $session = $this->createMock(SessionInterface::class);
         $session->expects($this->once())->method('clear');
@@ -435,7 +432,10 @@ class BlackJackControllerTest extends WebTestCase
     // Helper method to create a mock CardHand with necessary expectations
     private function createCardHandMock(): CardHand
     {
-        $cardHandMock = $this->createMock(CardHand::class);
+        $cardHandMock = $this->getMockBuilder(CardHand::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $cardHandMock->method('calculateTotal')->willReturn(['low' => 10, 'high' => 20]);
         $cardHandMock->method('getCards')->willReturn([
             $this->createCardGraphicMock(),
@@ -448,7 +448,10 @@ class BlackJackControllerTest extends WebTestCase
     // Helper method to create a mock CardGraphic
     private function createCardGraphicMock(): CardGraphic
     {
-        $cardGraphicMock = $this->createMock(CardGraphic::class);
+        $cardGraphicMock = $this->getMockBuilder(CardGraphic::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $cardGraphicMock->method('getValue')->willReturn(10);
         $cardGraphicMock->method('getAsString')->willReturn('10 of Hearts');
         $cardGraphicMock->method('getCardName')->willReturn('10');
@@ -460,9 +463,6 @@ class BlackJackControllerTest extends WebTestCase
 
     public function testDoc(): void
     {
-        // Create the controller with mocked dependencies
-        $controller = new BlackJackController($this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock);
-
         // Mock the render method to return a Response object
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])

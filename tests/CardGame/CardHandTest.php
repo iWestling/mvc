@@ -154,5 +154,4 @@ class CardHandTest extends TestCase
         // Check if the deck contains the remaining cards
         $this->assertCount(2, $deck);
     }
-
 }

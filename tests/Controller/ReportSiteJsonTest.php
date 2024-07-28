@@ -5,8 +5,6 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Controller\ReportSiteJson;
-use App\Card\CardHand;
-use App\Card\CardGraphic;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -32,8 +30,10 @@ class ReportSiteJsonTest extends WebTestCase
     {
         $response = $this->controller->jsonNumber();
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $data = json_decode($response->getContent(), true);
+        $content = $response->getContent();
+        $data = json_decode($content !== false ? $content : '', true);
 
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('lucky-number', $data);
         $this->assertArrayHasKey('lucky-message', $data);
         $this->assertEquals('Hi there!', $data['lucky-message']);
@@ -43,8 +43,10 @@ class ReportSiteJsonTest extends WebTestCase
     {
         $response = $this->controller->jsonQuote();
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $data = json_decode($response->getContent(), true);
+        $content = $response->getContent();
+        $data = json_decode($content !== false ? $content : '', true);
 
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('quote', $data);
         $this->assertArrayHasKey('date', $data);
         $this->assertArrayHasKey('timestamp', $data);
@@ -59,8 +61,10 @@ class ReportSiteJsonTest extends WebTestCase
 
         $response = $this->controller->drawCardFromDeck($this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $data = json_decode($response->getContent(), true);
+        $content = $response->getContent();
+        $data = json_decode($content !== false ? $content : '', true);
 
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
         $this->assertEquals('No cards in the deck. Please shuffle the deck.', $data['error']);
     }
@@ -74,8 +78,10 @@ class ReportSiteJsonTest extends WebTestCase
 
         $response = $this->controller->drawMultipleCardsFromDeck($this->sessionMock, 5);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $data = json_decode($response->getContent(), true);
+        $content = $response->getContent();
+        $data = json_decode($content !== false ? $content : '', true);
 
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
         $this->assertEquals('No cards in the deck. Please shuffle the deck.', $data['error']);
     }

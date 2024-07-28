@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1722189069">
-  <project timestamp="1722189069">
+<coverage generated="1722193906">
+  <project timestamp="1722193906">
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Card/Card.php">
       <class name="App\Card\Card" namespace="global">
         <metrics complexity="4" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="12" coveredelements="0"/>
@@ -194,24 +194,24 @@
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/CardGame/GameDataService.php">
       <class name="App\CardGame\GameDataService" namespace="global">
-        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="15" coveredelements="0"/>
+        <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="15" coveredelements="15"/>
       </class>
-      <line num="18" type="method" name="getGameData" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="26" type="stmt" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
-      <line num="29" type="stmt" count="0"/>
-      <line num="30" type="stmt" count="0"/>
-      <line num="31" type="stmt" count="0"/>
-      <line num="32" type="stmt" count="0"/>
-      <line num="33" type="stmt" count="0"/>
-      <line num="34" type="stmt" count="0"/>
-      <line num="35" type="stmt" count="0"/>
-      <line num="36" type="stmt" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <line num="38" type="stmt" count="0"/>
-      <line num="39" type="stmt" count="0"/>
-      <metrics loc="42" ncloc="33" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="15" coveredelements="0"/>
+      <line num="18" type="method" name="getGameData" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="26" type="stmt" count="1"/>
+      <line num="27" type="stmt" count="1"/>
+      <line num="28" type="stmt" count="1"/>
+      <line num="29" type="stmt" count="1"/>
+      <line num="30" type="stmt" count="1"/>
+      <line num="31" type="stmt" count="1"/>
+      <line num="32" type="stmt" count="1"/>
+      <line num="33" type="stmt" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="35" type="stmt" count="1"/>
+      <line num="36" type="stmt" count="1"/>
+      <line num="37" type="stmt" count="1"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="39" type="stmt" count="1"/>
+      <metrics loc="42" ncloc="33" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="15" coveredelements="15"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/CardGame/GameLogger.php">
       <class name="App\CardGame\GameLogger" namespace="global">
@@ -654,13 +654,13 @@
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Controller/LibraryController.php">
       <class name="App\Controller\LibraryController" namespace="global">
-        <metrics complexity="22" methods="10" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="3" elements="85" coveredelements="5"/>
+        <metrics complexity="22" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="0" elements="85" coveredelements="0"/>
       </class>
-      <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="27" type="stmt" count="1"/>
-      <line num="28" type="stmt" count="1"/>
-      <line num="31" type="method" name="index" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="34" type="stmt" count="1"/>
+      <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="27" type="stmt" count="0"/>
+      <line num="28" type="stmt" count="0"/>
+      <line num="31" type="method" name="index" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="34" type="stmt" count="0"/>
       <line num="37" type="method" name="createBook" visibility="public" complexity="5" crap="30" count="0"/>
       <line num="40" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
@@ -741,7 +741,7 @@
       <line num="172" type="stmt" count="0"/>
       <line num="175" type="method" name="resetDatabase" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="178" type="stmt" count="0"/>
-      <metrics loc="182" ncloc="179" classes="1" methods="10" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="3" elements="85" coveredelements="5"/>
+      <metrics loc="182" ncloc="179" classes="1" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="0" elements="85" coveredelements="0"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Controller/LuckyController.php">
       <class name="App\Controller\LuckyController" namespace="global">
@@ -1056,10 +1056,10 @@
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Repository/LibraryRepository.php">
       <class name="App\Repository\LibraryRepository" namespace="global">
-        <metrics complexity="4" methods="4" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="1" elements="14" coveredelements="2"/>
+        <metrics complexity="4" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="14" coveredelements="0"/>
       </class>
-      <line num="14" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="16" type="stmt" count="1"/>
+      <line num="14" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="16" type="stmt" count="0"/>
       <line num="19" type="method" name="deleteAll" visibility="public" complexity="1" crap="2" count="0"/>
       <line num="21" type="stmt" count="0"/>
       <line num="22" type="stmt" count="0"/>
@@ -1072,7 +1072,7 @@
       <line num="35" type="stmt" count="0"/>
       <line num="36" type="stmt" count="0"/>
       <line num="37" type="stmt" count="0"/>
-      <metrics loc="66" ncloc="40" classes="1" methods="4" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="1" elements="14" coveredelements="2"/>
+      <metrics loc="66" ncloc="40" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="14" coveredelements="0"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Repository/ProductRepository.php">
       <class name="App\Repository\ProductRepository" namespace="global">
@@ -1084,10 +1084,10 @@
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Service/ApiService.php">
       <class name="App\Service\ApiService" namespace="global">
-        <metrics complexity="5" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="1" elements="31" coveredelements="2"/>
+        <metrics complexity="5" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="31" coveredelements="0"/>
       </class>
-      <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="15" type="stmt" count="1"/>
+      <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="15" type="stmt" count="0"/>
       <line num="18" type="method" name="getAllBooks" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="21" type="stmt" count="0"/>
       <line num="23" type="stmt" count="0"/>
@@ -1117,14 +1117,14 @@
       <line num="57" type="stmt" count="0"/>
       <line num="58" type="stmt" count="0"/>
       <line num="60" type="stmt" count="0"/>
-      <metrics loc="63" ncloc="62" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="1" elements="31" coveredelements="2"/>
+      <metrics loc="63" ncloc="62" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="31" coveredelements="0"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Service/DatabaseResetService.php">
       <class name="App\Service\DatabaseResetService" namespace="global">
-        <metrics complexity="3" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="1" elements="19" coveredelements="2"/>
+        <metrics complexity="3" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="19" coveredelements="0"/>
       </class>
-      <line num="14" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="16" type="stmt" count="1"/>
+      <line num="14" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="16" type="stmt" count="0"/>
       <line num="19" type="method" name="resetDatabase" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="22" type="stmt" count="0"/>
       <line num="23" type="stmt" count="0"/>
@@ -1142,8 +1142,8 @@
       <line num="39" type="stmt" count="0"/>
       <line num="40" type="stmt" count="0"/>
       <line num="43" type="stmt" count="0"/>
-      <metrics loc="46" ncloc="43" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="1" elements="19" coveredelements="2"/>
+      <metrics loc="46" ncloc="43" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="19" coveredelements="0"/>
     </file>
-    <metrics files="29" loc="2528" ncloc="2153" classes="28" methods="126" coveredmethods="54" conditionals="0" coveredconditionals="0" statements="843" coveredstatements="378" elements="969" coveredelements="432"/>
+    <metrics files="29" loc="2528" ncloc="2153" classes="28" methods="126" coveredmethods="50" conditionals="0" coveredconditionals="0" statements="843" coveredstatements="386" elements="969" coveredelements="436"/>
   </project>
 </coverage>

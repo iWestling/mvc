@@ -4,7 +4,6 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use App\Controller\BlackJackJson;
 use App\CardGame\CardHand;
 use App\CardGame\CardGraphic;
@@ -43,8 +42,12 @@ class BlackJackJsonTest extends WebTestCase
 
         $response = $this->controller->play($this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $data = json_decode($response->getContent(), true);
 
+        $content = $response->getContent();
+        $data = json_decode($content !== false ? $content : '', true);
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('message', $data);
         $this->assertEquals('Please start a game.', $data['message']);
     }
 
@@ -68,7 +71,22 @@ class BlackJackJsonTest extends WebTestCase
 
         $response = $this->controller->play($this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $data = json_decode($response->getContent(), true);
+
+        $content = $response->getContent();
+        $data = json_decode($content !== false ? $content : '', true);
+
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('playerHand', $data);
+        $this->assertArrayHasKey('dealerHand', $data);
+        $this->assertArrayHasKey('dealerUnturned', $data);
+        $this->assertArrayHasKey('playerMoney', $data);
+        $this->assertArrayHasKey('playerBet', $data);
+        $this->assertArrayHasKey('dealerMoney', $data);
+        $this->assertArrayHasKey('playerTotalLow', $data);
+        $this->assertArrayHasKey('playerTotalHigh', $data);
+        $this->assertArrayHasKey('dealerTotalLow', $data);
+        $this->assertArrayHasKey('dealerTotalHigh', $data);
+        $this->assertArrayHasKey('gameLog', $data);
 
         $this->assertEquals(['5 of Hearts', '10 of Diamonds'], $data['playerHand']);
         $this->assertEquals(['7 of Clubs'], $data['dealerHand']);
@@ -83,6 +101,11 @@ class BlackJackJsonTest extends WebTestCase
         $this->assertEquals('Player hits and gets 5 of Hearts.', $data['gameLog']);
     }
 
+    /**
+     * @param CardGraphic[] $cards
+     * @param array<string, int> $totals
+     * @return CardHand
+     */
     private function createCardHandMock(array $cards, array $totals): CardHand
     {
         $handMock = $this->createMock(CardHand::class);
@@ -92,6 +115,9 @@ class BlackJackJsonTest extends WebTestCase
         return $handMock;
     }
 
+    /**
+     * @return CardGraphic
+     */
     private function createCardGraphicMock(string $asString, int $value, string $suit, string $unturned = 'card_back.png'): CardGraphic
     {
         $cardMock = $this->createMock(CardGraphic::class);
