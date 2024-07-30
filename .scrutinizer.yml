@@ -5,9 +5,8 @@ filter:
     excluded_paths: 
         - vendor/*
         - test/*
-        - src/Card/*
         - src/Dice/*
-        - .php-cs-fixer.dist.php
+        - .php-cs-fixer.dist.
 
 build:
     image: default-bionic
