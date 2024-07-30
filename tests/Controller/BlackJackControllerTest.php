@@ -53,12 +53,17 @@ class BlackJackControllerTest extends WebTestCase
 
         $session = $this->createMock(SessionInterface::class);
         $session->expects($this->once())->method('clear');
+
+        // Use callback to verify the set calls
         $session->expects($this->exactly(2))
             ->method('set')
-            ->withConsecutive(
-                [$this->equalTo('playerMoney'), $this->equalTo(100)],
-                [$this->equalTo('dealerMoney'), $this->equalTo(100)]
-            );
+            ->willReturnCallback(function ($name, $value) {
+                if ($name === 'playerMoney') {
+                    $this->assertEquals(100, $value);
+                } elseif ($name === 'dealerMoney') {
+                    $this->assertEquals(100, $value);
+                }
+            });
 
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
@@ -78,6 +83,7 @@ class BlackJackControllerTest extends WebTestCase
         $this->assertNotNull($response);
         $this->assertInstanceOf(Response::class, $response);
     }
+
 
     public function testInit(): void
     {

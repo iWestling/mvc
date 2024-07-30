@@ -28,7 +28,7 @@ class GameServiceTest extends TestCase
     public function testInitializeGame(): void
     {
         $this->session->expects($this->once())->method('clear');
-    
+
         // Separate expectation statements for each call
         $this->session->expects($this->exactly(2))
             ->method('set')
@@ -39,7 +39,7 @@ class GameServiceTest extends TestCase
                     $this->assertEquals(100, $value);
                 }
             });
-    
+
         $this->gameService->initializeGame($this->session);
     }
 
@@ -48,11 +48,11 @@ class GameServiceTest extends TestCase
         $this->session->expects($this->exactly(4))
             ->method('set')
             ->willReturnSelf();
-    
+
         $result = $this->gameService->initGame($this->session, 10);
         $this->assertTrue($result);
     }
-    
+
 
     public function testAdjustMoneyForBet(): void
     {
@@ -62,7 +62,7 @@ class GameServiceTest extends TestCase
                 ['playerMoney', null, 100],
                 ['dealerMoney', null, 100],
             ]);
-    
+
         // Separate expectation statements for each call
         $this->session->expects($this->exactly(2))
             ->method('set')
@@ -73,7 +73,7 @@ class GameServiceTest extends TestCase
                     $this->assertEquals(90, $value);
                 }
             });
-    
+
         $this->gameService->adjustMoneyForBet($this->session);
     }
 
