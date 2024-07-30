@@ -5,6 +5,8 @@ filter:
     excluded_paths: 
         - vendor/*
         - test/*
+        - src/Card/*
+        - src/Dice/*
         - .php-cs-fixer.dist.php
 
 build:
