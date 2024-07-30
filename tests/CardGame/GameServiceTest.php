@@ -28,16 +28,18 @@ class GameServiceTest extends TestCase
     public function testInitializeGame(): void
     {
         $this->session->expects($this->once())->method('clear');
-
+    
         $this->session->expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
-                ['playerMoney', 100],
-                ['dealerMoney', 100]
+                [$this->equalTo('playerMoney'), $this->equalTo(100)],
+                [$this->equalTo('dealerMoney'), $this->equalTo(100)]
             );
-
+    
         $this->gameService->initializeGame($this->session);
     }
+    
+
 
     public function testInitGameSuccess(): void
     {
@@ -56,14 +58,14 @@ class GameServiceTest extends TestCase
                 ['playerMoney', null, 100],
                 ['dealerMoney', null, 100],
             ]);
-
+    
         $this->session->expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
-                ['playerMoney', 90],
-                ['dealerMoney', 90]
+                [$this->equalTo('playerMoney'), $this->equalTo(90)],
+                [$this->equalTo('dealerMoney'), $this->equalTo(90)]
             );
-
+    
         $this->gameService->adjustMoneyForBet($this->session);
     }
 

@@ -53,10 +53,12 @@ class BlackJackControllerTest extends WebTestCase
 
         $session = $this->createMock(SessionInterface::class);
         $session->expects($this->once())->method('clear');
-        $session->expects($this->exactly(2))->method('set')->withConsecutive(
-            ['playerMoney', 100],
-            ['dealerMoney', 100]
-        );
+        $session->expects($this->exactly(2))
+            ->method('set')
+            ->withConsecutive(
+                [$this->equalTo('playerMoney'), $this->equalTo(100)],
+                [$this->equalTo('dealerMoney'), $this->equalTo(100)]
+            );
 
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
@@ -180,8 +182,6 @@ class BlackJackControllerTest extends WebTestCase
                 $this->isInstanceOf(CardHand::class),
                 $this->isInstanceOf(CardHand::class)
             );
-
-        $controller = new BlackJackController($this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock);
 
         $session = $this->createMock(SessionInterface::class);
         $playerHand = $this->createMock(CardHand::class);
@@ -382,8 +382,6 @@ class BlackJackControllerTest extends WebTestCase
             ['gameLog', null, '']
         ]));
 
-        $controller = new BlackJackController($this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock);
-
         $controller = $this->getMockBuilder(BlackJackController::class)
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['render'])
@@ -393,6 +391,9 @@ class BlackJackControllerTest extends WebTestCase
             ->method('render')
             ->with('blackjack/play.html.twig', $this->isType('array'))
             ->willReturn(new Response());
+
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
 
         $response = $controller->endResult($session);
 
