@@ -6,7 +6,7 @@ filter:
         - vendor/*
         - test/*
         - src/Dice/*
-        - .php-cs-fixer.dist.
+        - .php-cs-fixer.dist.php
 
 build:
     image: default-bionic
