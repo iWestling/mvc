@@ -29,26 +29,30 @@ class GameServiceTest extends TestCase
     {
         $this->session->expects($this->once())->method('clear');
     
-        $this->session->expects($this->at(0))
+        // Separate expectation statements for each call
+        $this->session->expects($this->exactly(2))
             ->method('set')
-            ->with('playerMoney', 100);
-    
-        $this->session->expects($this->at(1))
-            ->method('set')
-            ->with('dealerMoney', 100);
+            ->willReturnCallback(function ($name, $value) {
+                if ($name === 'playerMoney') {
+                    $this->assertEquals(100, $value);
+                } elseif ($name === 'dealerMoney') {
+                    $this->assertEquals(100, $value);
+                }
+            });
     
         $this->gameService->initializeGame($this->session);
     }
 
-
     public function testInitGameSuccess(): void
     {
         $this->session->expects($this->exactly(4))
-            ->method('set');
-
+            ->method('set')
+            ->willReturnSelf();
+    
         $result = $this->gameService->initGame($this->session, 10);
         $this->assertTrue($result);
     }
+    
 
     public function testAdjustMoneyForBet(): void
     {
@@ -59,13 +63,16 @@ class GameServiceTest extends TestCase
                 ['dealerMoney', null, 100],
             ]);
     
-        $this->session->expects($this->at(0))
+        // Separate expectation statements for each call
+        $this->session->expects($this->exactly(2))
             ->method('set')
-            ->with('playerMoney', 90);
-    
-        $this->session->expects($this->at(1))
-            ->method('set')
-            ->with('dealerMoney', 90);
+            ->willReturnCallback(function ($name, $value) {
+                if ($name === 'playerMoney') {
+                    $this->assertEquals(90, $value);
+                } elseif ($name === 'dealerMoney') {
+                    $this->assertEquals(90, $value);
+                }
+            });
     
         $this->gameService->adjustMoneyForBet($this->session);
     }
