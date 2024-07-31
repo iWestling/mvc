@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2024-07-31 20:55:18        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2024-07-31 21:49:59        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -60,24 +60,24 @@
         <div class="bloc bloc-number">
             <div class="label">Test suites</div>
             <div class="number">
-                17            </div>
+                19            </div>
         </div>
     </div>
     <div class="column">
         <div class="bloc bloc-number">
             <div class="label">Assertions</div>
             <div class="number">
-                231            </div>
+                243            </div>
         </div>
     </div>
     <div class="column">
         <div class="bloc bloc-number">
             <div class="label">
                 classes never called by tests
-                <small>(44.83 %)</small>
+                <small>(37.93 %)</small>
             </div>
             <div class="number">
-                13            </div>
+                11            </div>
         </div>
     </div>
 </div>
@@ -169,17 +169,6 @@
                                     </td>
                                                             </tr>
                                                         <tr>
-                                <td><span class="path">App\Controller\LuckyController</span></td>
-                                                                    <td>
-                                        <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0);">
-                                        1                                        </span>
-                                    </td>
-                                                                    <td>
-                                        <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0.02);">
-                                        0.02                                        </span>
-                                    </td>
-                                                            </tr>
-                                                        <tr>
                                 <td><span class="path">App\Controller\ProductController</span></td>
                                                                     <td>
                                         <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0.11);">
@@ -199,17 +188,6 @@
                                                                     <td>
                                         <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0.09);">
                                         0.1                                        </span>
-                                    </td>
-                                                            </tr>
-                                                        <tr>
-                                <td><span class="path">App\Entity\Product</span></td>
-                                                                    <td>
-                                        <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0);">
-                                        1                                        </span>
-                                    </td>
-                                                                    <td>
-                                        <span class="badge"  style="background-color: hsla(203, 82%, 76%, 0.02);">
-                                        0.02                                        </span>
                                     </td>
                                                             </tr>
                                                         <tr>
@@ -433,6 +411,17 @@
                                                                     </td>
                             </tr>
                                                     <tr>
+                                <td valign="top"><span class="path">App\Tests\Controller\LuckyControllerTest</span></td>
+                                <td style="padding-bottom: 1em;">
+                                                                                                                    <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">Symfony\Bundle\FrameworkBundle\Test\WebTestCase</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            1                                        </span>
+                                        <span class="path">App\Controller\LuckyController</span>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
                                 <td valign="top"><span class="path">App\Tests\Controller\ReportSiteJsonTest</span></td>
                                 <td style="padding-bottom: 1em;">
                                                                                                                     <span class="badge" title="Cyclomatic complexity of class">
@@ -463,6 +452,17 @@
                                                                             <br>                                        <span class="badge" title="Cyclomatic complexity of class">
                                             1                                        </span>
                                         <span class="path">App\Entity\Library</span>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
+                                <td valign="top"><span class="path">App\Tests\Entity\ProductTest</span></td>
+                                <td style="padding-bottom: 1em;">
+                                                                                                                    <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">PHPUnit\Framework\TestCase</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            1                                        </span>
+                                        <span class="path">App\Entity\Product</span>
                                                                     </td>
                             </tr>
                                                     <tr>
@@ -731,7 +731,7 @@
 
 
             
-            var json = {"name":"Execution time","children":[{"name":"App\\Tests\\CardGame\\CardGraphicTest","time":0.118306},{"name":"App\\Tests\\CardGame\\CardHandTest","time":0.041059},{"name":"App\\Tests\\CardGame\\CardTest","time":0.001154},{"name":"App\\Tests\\CardGame\\DeckOfCardsTest","time":0.010023},{"name":"App\\Tests\\CardGame\\GameDataServiceTest","time":0.392975},{"name":"App\\Tests\\CardGame\\GameLoggerTest","time":0.046457},{"name":"App\\Tests\\CardGame\\GameResultCheckTest","time":0.017326},{"name":"App\\Tests\\CardGame\\GameServiceTest","time":0.034138},{"name":"App\\Tests\\CardGame\\MoneyHandlingTest","time":0.0112},{"name":"App\\Tests\\Controller\\BlackJackControllerTest","time":0.260942},{"name":"App\\Tests\\Controller\\BlackJackJsonTest","time":0.028071},{"name":"App\\Tests\\Controller\\LibraryControllerTest","time":0.14889},{"name":"App\\Tests\\Controller\\ReportSiteJsonTest","time":0.014007},{"name":"App\\Dice\\DiceTest","time":0.022761},{"name":"App\\Entity\\LibraryTest","time":0.009554},{"name":"App\\Tests\\Service\\ApiServiceTest","time":0.003613},{"name":"App\\Tests\\Service\\DatabaseResetServiceTest","time":0.000838}]};
+            var json = {"name":"Execution time","children":[{"name":"App\\Tests\\CardGame\\CardGraphicTest","time":0.115827},{"name":"App\\Tests\\CardGame\\CardHandTest","time":0.043775},{"name":"App\\Tests\\CardGame\\CardTest","time":0.001287},{"name":"App\\Tests\\CardGame\\DeckOfCardsTest","time":0.010402},{"name":"App\\Tests\\CardGame\\GameDataServiceTest","time":0.39178},{"name":"App\\Tests\\CardGame\\GameLoggerTest","time":0.043523},{"name":"App\\Tests\\CardGame\\GameResultCheckTest","time":0.018641},{"name":"App\\Tests\\CardGame\\GameServiceTest","time":0.030406},{"name":"App\\Tests\\CardGame\\MoneyHandlingTest","time":0.008206},{"name":"App\\Tests\\Controller\\BlackJackControllerTest","time":0.249767},{"name":"App\\Tests\\Controller\\BlackJackJsonTest","time":0.036935},{"name":"App\\Tests\\Controller\\LibraryControllerTest","time":0.147719},{"name":"App\\Tests\\Controller\\LuckyControllerTest","time":0.071594},{"name":"App\\Tests\\Controller\\ReportSiteJsonTest","time":0.015036},{"name":"App\\Dice\\DiceTest","time":0.032012},{"name":"App\\Entity\\LibraryTest","time":0.001663},{"name":"App\\Tests\\Entity\\ProductTest","time":0.007571},{"name":"App\\Tests\\Service\\ApiServiceTest","time":0.003383},{"name":"App\\Tests\\Service\\DatabaseResetServiceTest","time":0.001151}]};
             root = json;
             var nodes = treemap.nodes(json)
                 .filter(function (d) {

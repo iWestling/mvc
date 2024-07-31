@@ -1622,7 +1622,7 @@ var classes = [
         "afferentCoupling": 0,
         "efferentCoupling": 1,
         "instability": 1,
-        "numberOfUnitTests": 0,
+        "numberOfUnitTests": 2,
         "violations": {}
     },
     {
@@ -2253,7 +2253,7 @@ var classes = [
         "afferentCoupling": 1,
         "efferentCoupling": 0,
         "instability": 0,
-        "numberOfUnitTests": 0,
+        "numberOfUnitTests": 2,
         "violations": {}
     },
     {
@@ -2381,12 +2381,12 @@ var classes = [
         "number_operands": 20,
         "number_operators_unique": 1,
         "number_operands_unique": 8,
-        "cloc": 27,
-        "loc": 52,
+        "cloc": 28,
+        "loc": 53,
         "lloc": 26,
-        "mi": 100.75,
+        "mi": 100.96,
         "mIwoC": 55.83,
-        "commentWeight": 44.92,
+        "commentWeight": 45.14,
         "kanDefect": 0.15,
         "relativeStructuralComplexity": 49,
         "relativeDataComplexity": 0.09,
