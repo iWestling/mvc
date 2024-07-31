@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1722377936">
-  <project timestamp="1722377936">
+<coverage generated="1722459117">
+  <project timestamp="1722459117">
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Card/Card.php">
       <class name="App\Card\Card" namespace="global">
         <metrics complexity="4" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="12" coveredelements="0"/>
@@ -654,13 +654,13 @@
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Controller/LibraryController.php">
       <class name="App\Controller\LibraryController" namespace="global">
-        <metrics complexity="22" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="0" elements="85" coveredelements="0"/>
+        <metrics complexity="22" methods="10" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="35" elements="85" coveredelements="41"/>
       </class>
-      <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
-      <line num="31" type="method" name="index" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="34" type="stmt" count="0"/>
+      <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="7"/>
+      <line num="27" type="stmt" count="7"/>
+      <line num="28" type="stmt" count="7"/>
+      <line num="31" type="method" name="index" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="34" type="stmt" count="1"/>
       <line num="37" type="method" name="createBook" visibility="public" complexity="5" crap="30" count="0"/>
       <line num="40" type="stmt" count="0"/>
       <line num="41" type="stmt" count="0"/>
@@ -679,40 +679,40 @@
       <line num="60" type="stmt" count="0"/>
       <line num="62" type="stmt" count="0"/>
       <line num="65" type="stmt" count="0"/>
-      <line num="69" type="method" name="showAllBooks" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="72" type="stmt" count="0"/>
-      <line num="73" type="stmt" count="0"/>
-      <line num="75" type="stmt" count="0"/>
-      <line num="76" type="stmt" count="0"/>
-      <line num="77" type="stmt" count="0"/>
-      <line num="78" type="stmt" count="0"/>
-      <line num="79" type="stmt" count="0"/>
-      <line num="80" type="stmt" count="0"/>
-      <line num="81" type="stmt" count="0"/>
-      <line num="84" type="stmt" count="0"/>
-      <line num="85" type="stmt" count="0"/>
-      <line num="86" type="stmt" count="0"/>
-      <line num="89" type="method" name="showBookById" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="92" type="stmt" count="0"/>
-      <line num="94" type="stmt" count="0"/>
+      <line num="69" type="method" name="showAllBooks" visibility="public" complexity="2" crap="2" count="1"/>
+      <line num="72" type="stmt" count="1"/>
+      <line num="73" type="stmt" count="1"/>
+      <line num="75" type="stmt" count="1"/>
+      <line num="76" type="stmt" count="1"/>
+      <line num="77" type="stmt" count="1"/>
+      <line num="78" type="stmt" count="1"/>
+      <line num="79" type="stmt" count="1"/>
+      <line num="80" type="stmt" count="1"/>
+      <line num="81" type="stmt" count="1"/>
+      <line num="84" type="stmt" count="1"/>
+      <line num="85" type="stmt" count="1"/>
+      <line num="86" type="stmt" count="1"/>
+      <line num="89" type="method" name="showBookById" visibility="public" complexity="2" crap="2.00" count="1"/>
+      <line num="92" type="stmt" count="1"/>
+      <line num="94" type="stmt" count="1"/>
       <line num="95" type="stmt" count="0"/>
-      <line num="98" type="stmt" count="0"/>
-      <line num="99" type="stmt" count="0"/>
-      <line num="100" type="stmt" count="0"/>
-      <line num="101" type="stmt" count="0"/>
-      <line num="102" type="stmt" count="0"/>
-      <line num="103" type="stmt" count="0"/>
-      <line num="104" type="stmt" count="0"/>
-      <line num="105" type="stmt" count="0"/>
-      <line num="107" type="stmt" count="0"/>
-      <line num="108" type="stmt" count="0"/>
-      <line num="109" type="stmt" count="0"/>
-      <line num="112" type="method" name="deleteBookById" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="115" type="stmt" count="0"/>
-      <line num="117" type="stmt" count="0"/>
+      <line num="98" type="stmt" count="1"/>
+      <line num="99" type="stmt" count="1"/>
+      <line num="100" type="stmt" count="1"/>
+      <line num="101" type="stmt" count="1"/>
+      <line num="102" type="stmt" count="1"/>
+      <line num="103" type="stmt" count="1"/>
+      <line num="104" type="stmt" count="1"/>
+      <line num="105" type="stmt" count="1"/>
+      <line num="107" type="stmt" count="1"/>
+      <line num="108" type="stmt" count="1"/>
+      <line num="109" type="stmt" count="1"/>
+      <line num="112" type="method" name="deleteBookById" visibility="public" complexity="2" crap="2.03" count="1"/>
+      <line num="115" type="stmt" count="1"/>
+      <line num="117" type="stmt" count="1"/>
       <line num="118" type="stmt" count="0"/>
-      <line num="121" type="stmt" count="0"/>
-      <line num="123" type="stmt" count="0"/>
+      <line num="121" type="stmt" count="1"/>
+      <line num="123" type="stmt" count="1"/>
       <line num="126" type="method" name="updateBook" visibility="public" complexity="6" crap="42" count="0"/>
       <line num="129" type="stmt" count="0"/>
       <line num="131" type="stmt" count="0"/>
@@ -735,13 +735,13 @@
       <line num="158" type="stmt" count="0"/>
       <line num="159" type="stmt" count="0"/>
       <line num="160" type="stmt" count="0"/>
-      <line num="163" type="method" name="getAllBooks" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="166" type="stmt" count="0"/>
-      <line num="169" type="method" name="getBookByIsbn" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="172" type="stmt" count="0"/>
-      <line num="175" type="method" name="resetDatabase" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="178" type="stmt" count="0"/>
-      <metrics loc="182" ncloc="179" classes="1" methods="10" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="0" elements="85" coveredelements="0"/>
+      <line num="163" type="method" name="getAllBooks" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="166" type="stmt" count="1"/>
+      <line num="169" type="method" name="getBookByIsbn" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="172" type="stmt" count="1"/>
+      <line num="175" type="method" name="resetDatabase" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="178" type="stmt" count="1"/>
+      <metrics loc="182" ncloc="179" classes="1" methods="10" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="75" coveredstatements="35" elements="85" coveredelements="41"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Controller/LuckyController.php">
       <class name="App\Controller\LuckyController" namespace="global">
@@ -1005,29 +1005,29 @@
       <line num="33" type="stmt" count="0"/>
       <line num="36" type="method" name="getTitle" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="38" type="stmt" count="1"/>
-      <line num="41" type="method" name="setTitle" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="43" type="stmt" count="1"/>
-      <line num="45" type="stmt" count="1"/>
+      <line num="41" type="method" name="setTitle" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="43" type="stmt" count="2"/>
+      <line num="45" type="stmt" count="2"/>
       <line num="48" type="method" name="getAuthor" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="50" type="stmt" count="1"/>
-      <line num="53" type="method" name="setAuthor" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="55" type="stmt" count="1"/>
-      <line num="57" type="stmt" count="1"/>
+      <line num="53" type="method" name="setAuthor" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="55" type="stmt" count="2"/>
+      <line num="57" type="stmt" count="2"/>
       <line num="60" type="method" name="getIsbn" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="62" type="stmt" count="1"/>
-      <line num="65" type="method" name="setIsbn" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="67" type="stmt" count="1"/>
-      <line num="69" type="stmt" count="1"/>
+      <line num="65" type="method" name="setIsbn" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="67" type="stmt" count="2"/>
+      <line num="69" type="stmt" count="2"/>
       <line num="72" type="method" name="getBookimage" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="74" type="stmt" count="1"/>
-      <line num="77" type="method" name="setBookimage" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="79" type="stmt" count="1"/>
-      <line num="81" type="stmt" count="1"/>
+      <line num="77" type="method" name="setBookimage" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="79" type="stmt" count="2"/>
+      <line num="81" type="stmt" count="2"/>
       <line num="84" type="method" name="getDescription" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="86" type="stmt" count="1"/>
-      <line num="89" type="method" name="setDescription" visibility="public" complexity="1" crap="1" count="1"/>
-      <line num="91" type="stmt" count="1"/>
-      <line num="93" type="stmt" count="1"/>
+      <line num="89" type="method" name="setDescription" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="91" type="stmt" count="2"/>
+      <line num="93" type="stmt" count="2"/>
       <metrics loc="96" ncloc="96" classes="1" methods="11" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="15" elements="27" coveredelements="25"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Entity/Product.php">
@@ -1084,66 +1084,66 @@
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Service/ApiService.php">
       <class name="App\Service\ApiService" namespace="global">
-        <metrics complexity="5" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="31" coveredelements="0"/>
+        <metrics complexity="5" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="28" elements="31" coveredelements="31"/>
       </class>
-      <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="15" type="stmt" count="0"/>
-      <line num="18" type="method" name="getAllBooks" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="21" type="stmt" count="0"/>
-      <line num="23" type="stmt" count="0"/>
-      <line num="24" type="stmt" count="0"/>
-      <line num="25" type="stmt" count="0"/>
-      <line num="26" type="stmt" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
-      <line num="29" type="stmt" count="0"/>
-      <line num="30" type="stmt" count="0"/>
-      <line num="31" type="stmt" count="0"/>
-      <line num="34" type="stmt" count="0"/>
-      <line num="35" type="stmt" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <line num="40" type="method" name="getBookByIsbn" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="42" type="stmt" count="0"/>
-      <line num="44" type="stmt" count="0"/>
-      <line num="45" type="stmt" count="0"/>
-      <line num="46" type="stmt" count="0"/>
-      <line num="49" type="stmt" count="0"/>
-      <line num="50" type="stmt" count="0"/>
-      <line num="51" type="stmt" count="0"/>
-      <line num="52" type="stmt" count="0"/>
-      <line num="53" type="stmt" count="0"/>
-      <line num="54" type="stmt" count="0"/>
-      <line num="55" type="stmt" count="0"/>
-      <line num="57" type="stmt" count="0"/>
-      <line num="58" type="stmt" count="0"/>
-      <line num="60" type="stmt" count="0"/>
-      <metrics loc="63" ncloc="62" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="31" coveredelements="0"/>
+      <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="3"/>
+      <line num="15" type="stmt" count="3"/>
+      <line num="18" type="method" name="getAllBooks" visibility="public" complexity="2" crap="2" count="1"/>
+      <line num="21" type="stmt" count="1"/>
+      <line num="23" type="stmt" count="1"/>
+      <line num="24" type="stmt" count="1"/>
+      <line num="25" type="stmt" count="1"/>
+      <line num="26" type="stmt" count="1"/>
+      <line num="27" type="stmt" count="1"/>
+      <line num="28" type="stmt" count="1"/>
+      <line num="29" type="stmt" count="1"/>
+      <line num="30" type="stmt" count="1"/>
+      <line num="31" type="stmt" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="35" type="stmt" count="1"/>
+      <line num="37" type="stmt" count="1"/>
+      <line num="40" type="method" name="getBookByIsbn" visibility="public" complexity="2" crap="2" count="2"/>
+      <line num="42" type="stmt" count="2"/>
+      <line num="44" type="stmt" count="2"/>
+      <line num="45" type="stmt" count="1"/>
+      <line num="46" type="stmt" count="1"/>
+      <line num="49" type="stmt" count="1"/>
+      <line num="50" type="stmt" count="1"/>
+      <line num="51" type="stmt" count="1"/>
+      <line num="52" type="stmt" count="1"/>
+      <line num="53" type="stmt" count="1"/>
+      <line num="54" type="stmt" count="1"/>
+      <line num="55" type="stmt" count="1"/>
+      <line num="57" type="stmt" count="1"/>
+      <line num="58" type="stmt" count="1"/>
+      <line num="60" type="stmt" count="1"/>
+      <metrics loc="63" ncloc="62" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="28" elements="31" coveredelements="31"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Service/DatabaseResetService.php">
       <class name="App\Service\DatabaseResetService" namespace="global">
-        <metrics complexity="3" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="19" coveredelements="0"/>
+        <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="19" coveredelements="19"/>
       </class>
-      <line num="14" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="16" type="stmt" count="0"/>
-      <line num="19" type="method" name="resetDatabase" visibility="public" complexity="2" crap="6" count="0"/>
-      <line num="22" type="stmt" count="0"/>
-      <line num="23" type="stmt" count="0"/>
-      <line num="24" type="stmt" count="0"/>
-      <line num="25" type="stmt" count="0"/>
-      <line num="26" type="stmt" count="0"/>
-      <line num="27" type="stmt" count="0"/>
-      <line num="30" type="stmt" count="0"/>
-      <line num="33" type="stmt" count="0"/>
-      <line num="34" type="stmt" count="0"/>
-      <line num="35" type="stmt" count="0"/>
-      <line num="36" type="stmt" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <line num="38" type="stmt" count="0"/>
-      <line num="39" type="stmt" count="0"/>
-      <line num="40" type="stmt" count="0"/>
-      <line num="43" type="stmt" count="0"/>
-      <metrics loc="46" ncloc="43" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="19" coveredelements="0"/>
+      <line num="14" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="16" type="stmt" count="1"/>
+      <line num="19" type="method" name="resetDatabase" visibility="public" complexity="2" crap="2" count="1"/>
+      <line num="22" type="stmt" count="1"/>
+      <line num="23" type="stmt" count="1"/>
+      <line num="24" type="stmt" count="1"/>
+      <line num="25" type="stmt" count="1"/>
+      <line num="26" type="stmt" count="1"/>
+      <line num="27" type="stmt" count="1"/>
+      <line num="30" type="stmt" count="1"/>
+      <line num="33" type="stmt" count="1"/>
+      <line num="34" type="stmt" count="1"/>
+      <line num="35" type="stmt" count="1"/>
+      <line num="36" type="stmt" count="1"/>
+      <line num="37" type="stmt" count="1"/>
+      <line num="38" type="stmt" count="1"/>
+      <line num="39" type="stmt" count="1"/>
+      <line num="40" type="stmt" count="1"/>
+      <line num="43" type="stmt" count="1"/>
+      <metrics loc="46" ncloc="43" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="19" coveredelements="19"/>
     </file>
-    <metrics files="29" loc="2528" ncloc="2153" classes="28" methods="126" coveredmethods="50" conditionals="0" coveredconditionals="0" statements="843" coveredstatements="386" elements="969" coveredelements="436"/>
+    <metrics files="29" loc="2528" ncloc="2153" classes="28" methods="126" coveredmethods="61" conditionals="0" coveredconditionals="0" statements="843" coveredstatements="466" elements="969" coveredelements="527"/>
   </project>
 </coverage>

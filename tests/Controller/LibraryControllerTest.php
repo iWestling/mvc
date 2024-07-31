@@ -2,232 +2,182 @@
 
 namespace App\Tests\Controller;
 
+use App\Controller\LibraryController;
+use App\Service\ApiService;
+use App\Service\DatabaseResetService;
+use App\Repository\LibraryRepository;
 use App\Entity\Library;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Psr\Container\ContainerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class LibraryControllerTest extends WebTestCase
 {
-    // public function testIndex(): void
-    // {
-    //     $client = static::createClient();
+    /** @var MockObject&ApiService */
+    private MockObject $apiServiceMock;
+    /** @var MockObject&DatabaseResetService */
+    private MockObject $dbResetServiceMock;
 
-    //     // Simulate a GET request to the index page
-    //     $crawler = $client->request('GET', '/library');
+    protected function setUp(): void
+    {
+        $this->apiServiceMock = $this->createMock(ApiService::class);
+        $this->dbResetServiceMock = $this->createMock(DatabaseResetService::class);
+    }
 
-    //     // Assert the response is successful
-    //     $this->assertTrue($client->getResponse()->isSuccessful());
+    public function testIndex(): void
+    {
+        $controller = $this->getMockBuilder(LibraryController::class)
+            ->setConstructorArgs([$this->apiServiceMock, $this->dbResetServiceMock])
+            ->onlyMethods(['render'])
+            ->getMock();
 
-    //     // Assert the page contains expected content
-    //     $this->assertStringContainsString('Library', $crawler->filter('h1')->text());
-    //     // You can add more specific assertions here based on your HTML structure
-    // }
+        $controller->expects($this->once())
+            ->method('render')
+            ->with('library/index.html.twig')
+            ->willReturn(new Response());
 
-    // public function testCreateBook(): void
-    // {
-    //     $client = static::createClient();
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
 
-    //     // Simulate a POST request to create a book
-    //     $crawler = $client->request('POST', '/library/book/create', [
-    //         'title' => 'Test Book',
-    //         'author' => 'Test Author',
-    //         'isbn' => '1234567890',
-    //         'description' => 'This is a test book',
-    //     ]);
+        $response = $controller->index();
 
-    //     // Check if the response is a redirect (HTTP status code 302)
-    //     $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertNotNull($response);
+        $this->assertInstanceOf(Response::class, $response);
+    }
 
-    //     // Follow the redirect
-    //     $crawler = $client->followRedirect();
+    public function testShowAllBooks(): void
+    {
+        $libRepoMock = $this->createMock(LibraryRepository::class);
 
-    //     // Check if the redirected page is successful (HTTP status code 200)
-    //     $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $libRepoMock->expects($this->once())
+            ->method('findAll')
+            ->willReturn([$this->createMock(Library::class)]);
 
-    //     // Check if the book details are displayed correctly on the redirected page
-    //     $this->assertStringContainsString('Test Book', $crawler->filter('h1')->text());
-    // }
+        $controller = $this->getMockBuilder(LibraryController::class)
+            ->setConstructorArgs([$this->apiServiceMock, $this->dbResetServiceMock])
+            ->onlyMethods(['render'])
+            ->getMock();
 
-    // public function testShowAllBooks(): void
-    // {
-    //     $client = static::createClient();
+        $controller->expects($this->once())
+            ->method('render')
+            ->with('library/show_all_books.html.twig', $this->isType('array'))
+            ->willReturn(new Response());
 
-    //     // Simulate a GET request to show all books
-    //     $crawler = $client->request('GET', '/library/books');
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
 
-    //     // Check if the response is successful (HTTP status code 200)
-    //     $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $response = $controller->showAllBooks($libRepoMock);
 
-    //     // Check if the page contains expected content
-    //     $this->assertStringContainsString('All Books', $crawler->filter('h1')->text());
-    //     // You can add more specific assertions here based on your HTML structure
-    // }
+        $this->assertNotNull($response);
+        $this->assertInstanceOf(Response::class, $response);
+    }
 
-    // public function testShowBookById(): void
-    // {
-    //     // Create a new book entry in the test database
-    //     $client = static::createClient();
-    //     /** @var EntityManagerInterface $entityManager */
-    //     $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-    //     $book = new Library();
-    //     $book->setTitle('Test Book');
-    //     $book->setAuthor('Test Author');
-    //     $book->setIsbn('1234567890'); // Set a dummy ISBN
-    //     // Set other properties as needed
-    //     $entityManager->persist($book);
-    //     $entityManager->flush();
+    public function testShowBookById(): void
+    {
+        $libRepoMock = $this->createMock(LibraryRepository::class);
+        $library = $this->createMock(Library::class);
 
-    //     // Retrieve the ID of the newly created book
-    //     $bookId = $book->getId();
+        $libRepoMock->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(1))
+            ->willReturn($library);
 
-    //     // Use the retrieved book ID in the request URL
-    //     $client->request('GET', '/library/book/' . $bookId);
+        $controller = $this->getMockBuilder(LibraryController::class)
+            ->setConstructorArgs([$this->apiServiceMock, $this->dbResetServiceMock])
+            ->onlyMethods(['render'])
+            ->getMock();
 
-    //     // Assert the response
-    //     $this->assertResponseIsSuccessful();
-    //     // You can add more specific assertions here based on your HTML structure
-    // }
+        $controller->expects($this->once())
+            ->method('render')
+            ->with('library/show_book.html.twig', $this->isType('array'))
+            ->willReturn(new Response());
 
-    // public function testDeleteBookById(): void
-    // {
-    //     $client = static::createClient();
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
 
-    //     // Create a new book entry in the test database
-    //     /** @var EntityManagerInterface $entityManager */
-    //     $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-    //     $book = new Library();
-    //     $book->setTitle('Test Book');
-    //     $book->setAuthor('Test Author');
-    //     $book->setIsbn('1234567890'); // Set a dummy ISBN
-    //     // Set other properties as needed
-    //     $entityManager->persist($book);
-    //     $entityManager->flush();
+        $response = $controller->showBookById($libRepoMock, 1);
 
-    //     // Retrieve the ID of the newly created book
-    //     $bookId = $book->getId();
+        $this->assertNotNull($response);
+        $this->assertInstanceOf(Response::class, $response);
+    }
 
-    //     // Simulate a DELETE request to delete the book
-    //     $client->request('DELETE', '/library/book/delete/' . $bookId);
+    public function testDeleteBookById(): void
+    {
+        $libRepoMock = $this->createMock(LibraryRepository::class);
+        $library = $this->createMock(Library::class);
 
-    //     // Assert the response
-    //     $this->assertTrue($client->getResponse()->isRedirect());
-    //     $this->assertEquals('/library/books', $client->getResponse()->headers->get('Location'));
-    // }
+        $libRepoMock->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(1))
+            ->willReturn($library);
 
-    // public function testUpdateBook(): void
-    // {
-    //     $client = static::createClient();
+        $libRepoMock->expects($this->once())
+            ->method('remove')
+            ->with($this->equalTo($library));
 
-    //     // Create a new book entry in the test database
-    //     /** @var EntityManagerInterface $entityManager */
-    //     $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
-    //     $book = new Library();
-    //     $book->setTitle('Test Book');
-    //     $book->setAuthor('Test Author');
-    //     $book->setIsbn('1234567890'); // Set a dummy ISBN
-    //     // Set other properties as needed
-    //     $entityManager->persist($book);
-    //     $entityManager->flush();
+        $controller = $this->getMockBuilder(LibraryController::class)
+            ->setConstructorArgs([$this->apiServiceMock, $this->dbResetServiceMock])
+            ->onlyMethods(['redirectToRoute'])
+            ->getMock();
 
-    //     // Retrieve the ID of the newly created book
-    //     $bookId = $book->getId();
+        $controller->expects($this->once())
+            ->method('redirectToRoute')
+            ->with('book_show_all')
+            ->willReturn(new RedirectResponse('/library/books'));
 
-    //     // Simulate a POST request to update the book
-    //     $client->request('POST', '/library/book/update/' . $bookId, [
-    //         'title' => 'Updated Title',
-    //         'author' => 'Updated Author',
-    //         'isbn' => '0987654321', // Set a new ISBN
-    //         'description' => 'Updated description',
-    //     ]);
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
 
-    //     // Assert the response
-    //     $this->assertTrue($client->getResponse()->isRedirect());
-    //     $this->assertEquals('/library/book/' . $bookId, $client->getResponse()->headers->get('Location'));
+        $response = $controller->deleteBookById($libRepoMock, 1);
 
-    //     // Fetch the updated book from the database
-    //     $updatedBook = $entityManager->getRepository(Library::class)->find($bookId);
+        $this->assertNotNull($response);
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+    }
 
-    //     // Ensure $updatedBook is not null before asserting
-    //     $this->assertNotNull($updatedBook);
-    //     if ($updatedBook !== null) {
-    //         // Assert that the book details have been updated
-    //         $this->assertEquals('Updated Title', $updatedBook->getTitle());
-    //         $this->assertEquals('Updated Author', $updatedBook->getAuthor());
-    //         $this->assertEquals('0987654321', $updatedBook->getIsbn());
-    //         $this->assertEquals('Updated description', $updatedBook->getDescription());
-    //     }
-    // }
+    public function testGetAllBooks(): void
+    {
+        $this->apiServiceMock->expects($this->once())
+            ->method('getAllBooks')
+            ->willReturn(new JsonResponse());
 
-    // public function testGetAllBooks(): void
-    // {
-    //     $client = static::createClient();
+        $controller = new LibraryController($this->apiServiceMock, $this->dbResetServiceMock);
 
-    //     // Simulate a GET request to fetch all books via API
-    //     $client->request('GET', '/api/library/books');
+        $response = $controller->getAllBooks();
 
-    //     // Assert the response
-    //     $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertNotNull($response);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
 
-    //     // Assert the content type is JSON
-    //     $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
+    public function testGetBookByIsbn(): void
+    {
+        $this->apiServiceMock->expects($this->once())
+            ->method('getBookByIsbn')
+            ->with('1234567890')
+            ->willReturn(new JsonResponse());
 
-    //     // Decode the JSON response
-    //     $responseContent = $client->getResponse()->getContent();
-    //     $responseData = json_decode($responseContent !== false ? $responseContent : '', true);
+        $controller = new LibraryController($this->apiServiceMock, $this->dbResetServiceMock);
 
-    //     // Assert that the response data is an array
-    //     $this->assertIsArray($responseData);
+        $response = $controller->getBookByIsbn('1234567890');
 
-    //     // Assert that each book entry contains expected keys
-    //     foreach ($responseData as $book) {
-    //         $this->assertArrayHasKey('title', $book);
-    //         $this->assertArrayHasKey('author', $book);
-    //         $this->assertArrayHasKey('isbn', $book);
-    //         $this->assertArrayHasKey('bookimage', $book);
-    //         $this->assertArrayHasKey('description', $book);
-    //     }
-    // }
+        $this->assertNotNull($response);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+    }
 
-    // public function testGetBookByIsbn(): void
-    // {
-    //     $client = static::createClient();
+    public function testResetDatabase(): void
+    {
+        $this->dbResetServiceMock->expects($this->once())
+            ->method('resetDatabase')
+            ->willReturn(new Response());
 
-    //     // Simulate a GET request to fetch a book by ISBN via API
-    //     $client->request('GET', '/api/library/book/978-7-536-69293-0');
+        $controller = new LibraryController($this->apiServiceMock, $this->dbResetServiceMock);
 
-    //     // Assert the response
-    //     $this->assertTrue($client->getResponse()->isSuccessful());
+        $response = $controller->resetDatabase();
 
-    //     // Assert the content type is JSON
-    //     $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
-
-    //     // Decode the JSON response
-    //     $responseContent = $client->getResponse()->getContent();
-    //     $responseData = json_decode($responseContent !== false ? $responseContent : '', true);
-
-    //     // Assert that the response data is an array
-    //     $this->assertIsArray($responseData);
-
-    //     // Assert that the book entry contains expected keys
-    //     $this->assertArrayHasKey('title', $responseData);
-    //     $this->assertArrayHasKey('author', $responseData);
-    //     $this->assertArrayHasKey('isbn', $responseData);
-    //     $this->assertArrayHasKey('bookimage', $responseData);
-    //     $this->assertArrayHasKey('description', $responseData);
-    // }
-
-    // public function testCreateBookRender(): void
-    // {
-    //     $client = static::createClient();
-
-    //     // Simulate a GET request to the create book page
-    //     $crawler = $client->request('GET', '/library/book/create');
-
-    //     // Assert the response is successful
-    //     $this->assertTrue($client->getResponse()->isSuccessful());
-
-    //     // Assert the page contains expected content
-    //     $this->assertStringContainsString('Create a New Book', $crawler->filter('h1')->text());
-    //     // You can add more specific assertions here based on your HTML structure
-    // }
+        $this->assertNotNull($response);
+        $this->assertInstanceOf(Response::class, $response);
+    }
 }
