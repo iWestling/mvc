@@ -49,8 +49,8 @@ class BlackJackJsonTest extends WebTestCase
         $response = $this->controller->play($this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
-        $content = $response->getContent();
-        $data = json_decode($content !== false ? $content : '', true);
+        $content = (string) $response->getContent();
+        $data = json_decode($content, true);
 
         $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);

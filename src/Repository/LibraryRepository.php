@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Library>
+ * @method \PHPUnit\Framework\MockObject\Builder\InvocationMocker expects($argument)
  */
 class LibraryRepository extends ServiceEntityRepository
 {
