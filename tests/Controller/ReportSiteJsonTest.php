@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Controller\ReportSiteJson;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use App\Card\DeckOfCards;
+use App\Card\Card;
+use App\Card\CardGraphic;
 
 class ReportSiteJsonTest extends WebTestCase
 {
@@ -85,4 +88,5 @@ class ReportSiteJsonTest extends WebTestCase
         $this->assertArrayHasKey('error', $data);
         $this->assertEquals('No cards in the deck. Please shuffle the deck.', $data['error']);
     }
+
 }
