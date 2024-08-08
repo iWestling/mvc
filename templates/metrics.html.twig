@@ -49,8 +49,6 @@
     <br>
     <br>
     <h3>Scrutinizer</h3>
-    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main" alt="Quality Score"></a>
-    [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/iWestling/mvc/?branch=main)
 
     <a href="{{ asset('img/7.jpg') }}">
         <img src="{{ asset('img/7.jpg') }}" class="metrics-image" alt="A Scrutinizer image">
@@ -72,25 +70,26 @@
     </a>
     <br>
     <br>
-    Scrutinizer-analys:
+    Scrutinizer-analys:<br>
 
-    Code Coverage: Den totala kodtäckningen är låg på 15,4 %, med 160 av 1 041 linjer täckta. Betydande delar av kodbasen saknar tester, särskilt i kritiska klasser som BlackJackController och LibraryController.
+    Code Coverage: Den totala kodtäckningen är låg på 15,4 %, med 160 av 1 041 linjer täckta. Betydande delar av kodbasen saknar tester, särskilt i kritiska klasser som BlackJackController och LibraryController.<br>
 
-    Minst testade klasser och funktioner: Flera klasser, inklusive Card, DeckOfCards, Product och ProductController, har 0 % testtäckning. Nyckeloperationer i BlackJackController och LibraryController är också helt otestade.
+    Minst testade klasser och funktioner: Flera klasser, inklusive Card, DeckOfCards, Product och ProductController, har 0 % testtäckning. Nyckeloperationer i BlackJackController och LibraryController är också helt otestade.<br>
 
-    Kodkvalitetsproblem: Flera filer, som BlackjackController.php och MoneyHandling.php, innehåller buggar. BlackJackController och LibraryController har höga CRAP-poäng, vilket indikerar hög komplexitet och potential för buggar.
+    Kodkvalitetsproblem: Flera filer, som BlackjackController.php och MoneyHandling.php, innehåller buggar. BlackJackController och LibraryController har höga CRAP-poäng, vilket indikerar hög komplexitet och potential för buggar.<br>
 
-    Totalt betyg: Kodbasen har ett Scrutinizer-betyg på 9,68 (mycket bra), men den låga testtäckningen och identifierade buggar visar områden som behöver förbättras.
-
+    Totalt betyg: Kodbasen har ett Scrutinizer-betyg på 9,68 (mycket bra), men den låga testtäckningen och identifierade buggar visar områden som behöver förbättras.<br>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main" alt="Quality Score"></a>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/coverage.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/coverage.png?b=main" alt="Coverage"></a>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main" alt="Build"></a>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main" <https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main alt="Code Intelligence"></a>
     <br>
-    Överlag kan man alltså utröna att de största problemen med min kod är:
-    1. Låg Code Coverage: Overall code coverage är bara 15,4%. Detta ökar risk för buggar och andra problem med koden.
+    Överlag är därmed de största problemen med min kod:<br>
+    1. Overall code coverage är bara 15,4%. Detta ökar risk för buggar och andra problem med koden.<br>
 
-    2. Issues:
-    Flera filer har issues så som i.e. MoneyHandling, BlackjackController.
+    2. Flera filer har issues så som i.e. MoneyHandling, BlackjackController. <br>
     
-    3. Complexity:
-    Koden har på många ställen hög complexity och CRAP score. Om man minskar/delar upp medoter bör detta göra koden mer hanterbar.
+    3. Koden har på många ställen hög complexity och CRAP score. Om man minskar/delar upp medoter bör detta göra koden mer hanterbar.<br>
 
     <h3>Förbättringar</h3>
     <p>
@@ -112,7 +111,57 @@
     Förbättringsplan: Dela upp komplexa klasser och metoder för att förenkla deras logik och minska cyklomatisk komplexitet. Bryt ner stora metoder i mindre och eventuellt tillämpa designmönster för att förbättra kodstrukturen och underhållbarheten. 
     <br>
     </p>
+    <h3>Efter förbättringar:</h3>
+    <p>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main" alt="Quality Score"></a>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/coverage.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/coverage.png?b=main" alt="Coverage"></a>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main" alt="Build"></a>
+    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main" <https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main alt="Code Intelligence"></a>
+    <br>
+    <a href="{{ asset('img/better11.jpg') }}">
+        <img src="{{ asset('img/better11.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <a href="{{ asset('img/better1.jpg') }}">
+        <img src="{{ asset('img/better1.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <a href="{{ asset('img/better2.jpg') }}">
+        <img src="{{ asset('img/better2.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <br>
+    <a href="{{ asset('img/better3.jpg') }}">
+        <img src="{{ asset('img/better3.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <a href="{{ asset('img/better4.jpg') }}">
+        <img src="{{ asset('img/better4.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <br>
+    <a href="{{ asset('img/better5.jpg') }}">
+        <img src="{{ asset('img/better5.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+    <a href="{{ asset('img/better6.jpg') }}">
+        <img src="{{ asset('img/better6.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+        <a href="{{ asset('img/better7.jpg') }}">
+        <img src="{{ asset('img/better7.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
+        <a href="{{ asset('img/better8.jpg') }}">
+        <img src="{{ asset('img/better8.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
+    </a>
 
+    Mest notaba förbättringar är alltså: <br>
+    - Fått bort de två största class violations med Blob/God object.
+    - Minskat på cyklomatisk complexitet där den största klassen (BlackJackController) gått från till 2.03 till 1.15, minskat LLOC från 256 till 187, volym från 6095.5 till 3445.73 m.m.
+    - Fått bort alla major och minor issues samt buggar och nu enbart har några små unknown kvar som inte inverkar på koden särskilt mycket. 
+    - Ökat test coverage från 15.4% till 60% (och då inbegrips ej använd kod från övningar, utan dem är ca 90% kod testad)
+    - Minskat högsta CRAP scoren från 72 till 42. 
+    </p>
+    <h3>Diskussion</h3>
+    <p>
+    Det har varit intressant att jobba med clean code på detta sätt även om det kändes lite krångligt att behöva ändra mycket kod i efterhand. 
+    Den största fördelen jag kan se med det är att man aktivt upptäcker potentiella problem och förbättringsmöjligheter i ett tidigt stadium så att man inte behöver spendera så mycket tid på att fixa dem senare.<br>
+    Jag tror även att man med hjälp av detta aktivt lär sig en viss kod-standard och kan bättre hålla sig till "best practices", vilket även hjälper till om man är flera som ska arbeta med koden.<br>
+    Några nackdelar jag kan se med det är att det kan ta lite tid att starta upp och köra, vilket kan göra att processen känns långsam. Det kan även ta lite väl lång tid att lära sig och jag kan tänka mig att det är bra att inte helt förlita sig på automatiserade verktyg.<br>
+    Av det jag hört från folk som jobbar inom IT är det mest vanliga sättet att arbeta mot clean code en ordentlig dokumentation som hjälper till att hålla en viss standard och gör det enklare för andra att förstå och arbeta med koden. Andra sätt att arbeta med clean code skulle kunna vara ha en utvecklingsprocess där man får konstant feedback på sin kod eller/och pair programming-sessioner där man delar sin kundskap och ser till att alla följer kod-standard.
 
 
 {% endblock %}

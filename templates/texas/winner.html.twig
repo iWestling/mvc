@@ -1,0 +1,12 @@
+{% extends 'texas/base.html.twig' %}
+
+{% block title %}Game Over{% endblock %}
+
+{% block main %}
+    <h1>Game Over</h1>
+    <h2>Winner(s)</h2>
+    {% for winner in winners %}
+        <p>{{ winner.getName }} with {{ winner.getChips }} chips</p>
+    {% endfor %}
+    <a href="{{ path('proj_start') }}">Start New Game</a>
+{% endblock %}

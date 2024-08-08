@@ -1,0 +1,11 @@
+{% extends 'texas/base.html.twig' %}
+
+{% block title %}Texas Hold'em - Home{% endblock %}
+
+{% block main %}
+    <br>
+    <h1>Welcome to Texas Hold'em!</h1>
+    <br>
+    <p>Click "Start Game" to begin a new game.</p>
+    <a href="{{ path('proj_start') }}">Start Game</a>
+{% endblock %}

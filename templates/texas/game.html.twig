@@ -1,0 +1,60 @@
+{% extends 'texas/base.html.twig' %}
+
+{% block title %}Texas Hold'em{% endblock %}
+
+{% block main %}
+    <h1>Texas Hold'em</h1>
+    <div class="game-container">
+        <div class="players">
+            {% for player in game.players %}
+                <div class="player">
+                    <h2>{{ player.name }}</h2>
+                    {% if player.isFolded %}
+                        <p>Folded</p>
+                        {% for card in player.hand %}
+                            <img class="card-image" src="{{ asset(card.getUnturned()) }}" alt="Card">
+                        {% endfor %}
+                    {% else %}
+                        <ul>
+                            {% for card in player.hand %}
+                                <li>{{ card.getCardName() }} of {{ card.getSuit() }}</li>
+                                <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card">
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <p>Chips: {{ player.chips }}</p>
+                    <p>Action: {{ game.actions[player.name] ?? 'No action yet' }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="community-cards">
+            <h2>Community Cards</h2>
+            <ul>
+                {% for card in game.communityCards %}
+                    <li>{{ card.getCardName() }} of {{ card.getSuit() }}</li>
+                    <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card">
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="actions">
+            <h2>Your Actions</h2>
+            <form method="post" action="{{ path('proj_play') }}">
+                <input type="hidden" name="action" value="call">
+                <button type="submit">Call</button>
+            </form>
+            <form method="post" action="{{ path('proj_play') }}">
+                <input type="hidden" name="action" value="raise">
+                <input type="number" id="raiseAmount" name="raiseAmount" min="1" max="{{ game.players[0].chips }}">
+                <button type="submit">Raise</button>
+            </form>
+            <form method="post" action="{{ path('proj_play') }}">
+                <input type="hidden" name="action" value="check">
+                <button type="submit">Check</button>
+            </form>
+            <form method="post" action="{{ path('proj_play') }}">
+                <input type="hidden" name="action" value="fold">
+                <button type="submit">Fold</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

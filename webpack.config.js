@@ -22,6 +22,10 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
+    // webpack.config.js
+    .addStyleEntry('project', './assets/styles/project.css')
+
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
@@ -55,6 +59,8 @@ Encore
 
     // enables Sass/SCSS support
     //.enableSassLoader()
+
+    .enablePostCssLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

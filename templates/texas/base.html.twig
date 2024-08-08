@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Texas Hold'em{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('project') }}
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="{{ path('home') }}">Report Page</a></li>
+            <li><a href="{{ path('proj_home') }}">Home</a></li>
+            <li><a href="{{ path('proj_start') }}">Start Game</a></li>
+            <li><a href="{{ path('proj_play') }}">Play Round</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('project') }}
+    {% endblock %}
+</body>
+</html>
