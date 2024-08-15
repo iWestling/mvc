@@ -4,6 +4,7 @@ namespace App\CardGame;
 
 class Deck
 {
+    /** @var CardGraphic[] */
     private array $cards;
 
     public function __construct()
@@ -23,6 +24,9 @@ class Deck
         return array_shift($this->cards);
     }
 
+    /**
+     * @return CardGraphic[]
+     */
     public function getCards(): array
     {
         return $this->cards;

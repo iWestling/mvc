@@ -4,12 +4,12 @@ namespace App\CardGame;
 
 class Bank
 {
-    private array $bets;
+    /** @var array<string, int> */
+    private array $bets = [];
     private int $pot;
 
     public function __construct()
     {
-        $this->bets = [];
         $this->pot = 0;
     }
 

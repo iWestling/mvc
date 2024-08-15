@@ -2,19 +2,29 @@
 
 namespace App\CardGame;
 
+use App\CardGame\HandRankingEvaluator;
+
 class HandEvaluator
 {
-    public static function getBestHand(array $cards): array
+    private HandRankingEvaluator $rankingEvaluator;
+
+    public function __construct()
     {
-        $bestHand = ['rank' => '', 'values' => []]; // Initialize with a valid structure
+        $this->rankingEvaluator = new HandRankingEvaluator();
+    }
 
-        // Generate all possible 5-card combinations
-        $combinations = self::combinations($cards, 5);
+    /**
+     * @param CardGraphic[] $cards
+     * @return array<string, mixed>
+     */
+    public function getBestHand(array $cards): array
+    {
+        $bestHand = ['rank' => '', 'values' => []];
+        $combinations = $this->combinations($cards, 5);
 
-        // Evaluate each combination and determine the best hand
         foreach ($combinations as $combination) {
-            $rank = self::evaluateHand($combination);
-            if (empty($bestHand['rank']) || self::compareHands(['rank' => $rank['rank'], 'values' => $rank['values']], $bestHand) > 0) {
+            $rank = $this->rankingEvaluator->evaluateHand($combination);
+            if ($this->isBetterHand($rank, $bestHand)) {
                 $bestHand = ['hand' => $combination, 'rank' => $rank['rank'], 'values' => $rank['values']];
             }
         }
@@ -22,183 +32,101 @@ class HandEvaluator
         return $bestHand;
     }
 
-    private static function combinations(array $cards, int $k): array
+    /**
+     * @param array<string, mixed> $rank
+     * @param array<string, mixed> $bestHand
+     * @return bool
+     */
+    private function isBetterHand(array $rank, array $bestHand): bool
+    {
+        return $this->compareHands($rank, $bestHand) > 0;
+    }
+
+    /**
+     * @param CardGraphic[] $cards
+     * @return CardGraphic[][]
+     */
+    public function combinations(array $cards, int $kcomb): array
     {
         $results = [];
-        $n = count($cards);
-        self::combinationsHelper($cards, $n, $k, 0, [], $results);
+        $ncomb = count($cards);
+        $this->combinationsHelper($cards, $ncomb, $kcomb, 0, [], $results);
         return $results;
     }
 
-    private static function combinationsHelper(array $cards, int $n, int $k, int $index, array $current, array &$results)
+    /**
+     * @param CardGraphic[] $cards
+     * @param CardGraphic[] $current
+     * @param CardGraphic[][] $results
+     */
+    private function combinationsHelper(array $cards, int $ncomb, int $kcomb, int $index, array $current, array &$results): void
     {
-        if ($k == 0) {
+        if ($kcomb == 0) {
             $results[] = $current;
             return;
         }
 
-        for ($i = $index; $i <= $n - $k; $i++) {
+        for ($i = $index; $i <= $ncomb - $kcomb; $i++) {
             $current[] = $cards[$i];
-            self::combinationsHelper($cards, $n, $k - 1, $i + 1, $current, $results);
+            $this->combinationsHelper($cards, $ncomb, $kcomb - 1, $i + 1, $current, $results);
             array_pop($current);
         }
     }
 
-    private static function evaluateHand(array $hand): array
+    /**
+     * @param array<string, mixed> $hand1
+     * @param array<string, mixed> $hand2
+     * @return int
+     */
+    public function compareHands(array $hand1, array $hand2): int
     {
-        // Sort hand by card value
-        usort($hand, fn($a, $b) => $a->getValue() - $b->getValue());
-
-        if (self::isRoyalFlush($hand)) {
-            return ['rank' => 'Royal Flush', 'values' => [14, 13, 12, 11, 10]];
-        }
-        if (self::isStraightFlush($hand)) {
-            return ['rank' => 'Straight Flush', 'values' => array_map(fn($card) => $card->getValue(), $hand)];
-        }
-        if ($fourOfAKind = self::isFourOfAKind($hand)) {
-            return ['rank' => 'Four of a Kind', 'values' => $fourOfAKind];
-        }
-        if ($fullHouse = self::isFullHouse($hand)) {
-            return ['rank' => 'Full House', 'values' => $fullHouse];
-        }
-        if (self::isFlush($hand)) {
-            return ['rank' => 'Flush', 'values' => array_map(fn($card) => $card->getValue(), $hand)];
-        }
-        if (self::isStraight($hand)) {
-            return ['rank' => 'Straight', 'values' => array_map(fn($card) => $card->getValue(), $hand)];
-        }
-        if ($threeOfAKind = self::isThreeOfAKind($hand)) {
-            return ['rank' => 'Three of a Kind', 'values' => $threeOfAKind];
-        }
-        if ($twoPair = self::isTwoPair($hand)) {
-            return ['rank' => 'Two Pair', 'values' => $twoPair];
-        }
-        if ($onePair = self::isOnePair($hand)) {
-            return ['rank' => 'One Pair', 'values' => $onePair];
+        if (!$this->areHandsValid($hand1, $hand2)) {
+            return -1;
         }
 
-        return ['rank' => 'High Card', 'values' => array_map(fn($card) => $card->getValue(), $hand)];
+        $rank1 = $this->getRankValue($hand1);
+        $rank2 = $this->getRankValue($hand2);
+
+        // Compare ranks
+        if ($rank1 > $rank2) {
+            return 1;
+        } elseif ($rank1 < $rank2) {
+            return -1;
+        }
+
+        // Ensure 'values' is an array before comparing
+        $values1 = $hand1['values'] ?? [];
+        $values2 = $hand2['values'] ?? [];
+
+        if (!is_array($values1) || !is_array($values2)) {
+            return 0; // Treat invalid values as equal
+        }
+
+        // Compare the hand values (kickers)
+        return $this->compareHandValues($values1, $values2);
     }
 
-    private static function isRoyalFlush(array $hand): bool
+
+
+    /**
+     * Check if the hands are valid
+     *
+     * @param array<string, mixed> $hand1
+     * @param array<string, mixed> $hand2
+     * @return bool
+     */
+    private function areHandsValid(array $hand1, array $hand2): bool
     {
-        return self::isStraightFlush($hand) && $hand[0]->getValue() == 10;
+        return isset($hand1['rank'], $hand2['rank']);
     }
 
-    private static function isStraightFlush(array $hand): bool
-    {
-        return self::isFlush($hand) && self::isStraight($hand);
-    }
-
-    private static function isFourOfAKind(array $hand): ?array
-    {
-        $values = array_map(fn($card) => $card->getValue(), $hand);
-        $counts = array_count_values($values);
-
-        foreach ($counts as $value => $count) {
-            if ($count === 4) {
-                return [$value, array_values(array_diff($values, [$value]))[0]];
-            }
-        }
-
-        return null;
-    }
-
-    private static function isFullHouse(array $hand): ?array
-    {
-        $values = array_map(fn($card) => $card->getValue(), $hand);
-        $counts = array_count_values($values);
-
-        $threeOfAKind = null;
-        $pair = null;
-
-        foreach ($counts as $value => $count) {
-            if ($count === 3) {
-                $threeOfAKind = $value;
-            } elseif ($count === 2) {
-                $pair = $value;
-            }
-        }
-
-        if ($threeOfAKind && $pair) {
-            return [$threeOfAKind, $pair];
-        }
-
-        return null;
-    }
-
-    private static function isFlush(array $hand): bool
-    {
-        $suits = array_map(fn($card) => $card->getSuit(), $hand);
-        return count(array_unique($suits)) === 1;
-    }
-
-    private static function isStraight(array $hand): bool
-    {
-        $values = array_map(fn($card) => $card->getValue(), $hand);
-        sort($values);
-
-        for ($i = 0; $i < count($values) - 1; $i++) {
-            if ($values[$i + 1] !== $values[$i] + 1) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static function isThreeOfAKind(array $hand): ?array
-    {
-        $values = array_map(fn($card) => $card->getValue(), $hand);
-        $counts = array_count_values($values);
-
-        foreach ($counts as $value => $count) {
-            if ($count === 3) {
-                $remainingValues = array_values(array_diff($values, [$value]));
-                return [$value, $remainingValues[0], $remainingValues[1]];
-            }
-        }
-
-        return null;
-    }
-
-    private static function isTwoPair(array $hand): ?array
-    {
-        $values = array_map(fn($card) => $card->getValue(), $hand);
-        $counts = array_count_values($values);
-
-        $pairs = [];
-
-        foreach ($counts as $value => $count) {
-            if ($count === 2) {
-                $pairs[] = $value;
-            }
-        }
-
-        if (count($pairs) === 2) {
-            $remainingValue = array_values(array_diff($values, $pairs))[0];
-            return [$pairs[0], $pairs[1], $remainingValue];
-        }
-
-        return null;
-    }
-
-    private static function isOnePair(array $hand): ?array
-    {
-        $values = array_map(fn($card) => $card->getValue(), $hand);
-        $counts = array_count_values($values);
-
-        foreach ($counts as $value => $count) {
-            if ($count === 2) {
-                $remainingValues = array_values(array_diff($values, [$value]));
-                return [$value, $remainingValues[0], $remainingValues[1], $remainingValues[2]];
-            }
-        }
-
-        return null;
-    }
-
-    public static function compareHands(array $hand1, array $hand2): int
+    /**
+     * Get the rank value of the hand
+     *
+     * @param array<string, mixed> $hand
+     * @return int
+     */
+    private function getRankValue(array $hand): int
     {
         $rankings = [
             'High Card' => 1,
@@ -213,28 +141,53 @@ class HandEvaluator
             'Royal Flush' => 10,
         ];
 
-        if (!isset($hand1['rank'], $hand2['rank'])) {
-            throw new \InvalidArgumentException("Invalid hand structure: 'rank' key is missing.");
-        }
+        return $rankings[$hand['rank']] ?? 0;
+    }
 
-        $rank1 = $rankings[$hand1['rank']];
-        $rank2 = $rankings[$hand2['rank']];
-
-        if ($rank1 > $rank2) {
-            return 1;
-        } elseif ($rank1 < $rank2) {
-            return -1;
-        }
-
-        // If ranks are the same, compare the values
-        for ($i = 0; $i < count($hand1['values']); $i++) {
-            if ($hand1['values'][$i] > $hand2['values'][$i]) {
-                return 1;
-            } elseif ($hand1['values'][$i] < $hand2['values'][$i]) {
-                return -1;
+    /**
+     * Compare the values of the hands
+     *
+     * @param array<int> $values1
+     * @param array<int> $values2
+     * @return int
+     */
+    private function compareHandValues(array $values1, array $values2): int
+    {
+        for ($i = 0, $valueCount = count($values1); $i < $valueCount; $i++) {
+            if (isset($values1[$i], $values2[$i])) {
+                if ($values1[$i] > $values2[$i]) {
+                    return 1;
+                } elseif ($values1[$i] < $values2[$i]) {
+                    return -1;
+                }
             }
         }
 
-        return 0;
+        return 0; // Return 0 if hands are identical
+    }
+
+
+    /**
+     * Check if the hand is a Royal Flush
+     *
+     * @param CardGraphic[] $hand
+     * @return bool
+     */
+    public function isRoyalFlush(array $hand): bool
+    {
+        return $this->isStraightFlush($hand) && $hand[0]->getValue() == 10;
+    }
+
+    /**
+     * Check if the hand is a Straight Flush
+     *
+     * @param CardGraphic[] $hand
+     * @return bool
+     */
+    public function isStraightFlush(array $hand): bool
+    {
+        // Instead of static calls, we instantiate HandRankingEvaluator and use it
+        $handRankingEvaluator = new HandRankingEvaluator();
+        return $handRankingEvaluator->isFlush($hand) && $handRankingEvaluator->isStraight($hand);
     }
 }

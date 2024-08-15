@@ -10,7 +10,7 @@ body {
 
 main {
     width: 100%;
-    max-width: 1200px; /* Adjust the max-width as needed */
+    max-width: 1200px;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -29,7 +29,7 @@ main {
 }
 
 .navbar li {
-    margin: 0 10px; /* Adds space between nav items */
+    margin: 0 10px;
 }
 
 .navbar li a {
@@ -50,13 +50,52 @@ main {
 
 .content {
     width: 100%;
-    max-width: 1200px; /* Adjust the max-width as needed */
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.winner-announcement {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.winner-announcement h1 {
+    font-size: 2em;
+    color: #FFD700;
+}
+
+.game-info {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.community-cards-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.community-cards {
+    width: 90%;
+    padding: 20px;
+    background-color: #2a5226;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center; /* Center the community cards horizontally */
+}
+
+.community-cards .cards {
+    display: flex;
+    gap: 20px;
+    padding-left: 20px; /* Padding to adjust starting position, can be removed if unnecessary */
 }
 
 .players {
@@ -71,6 +110,34 @@ main {
     width: 30%;
 }
 
-.community-cards {
+.cards {
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.action-buttons button {
+    padding: 10px 20px; /* Increase the button size */
+    font-size: 1.1em; /* Increase font size */
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+    background-color: #666;
+}
+
+.actions {
     margin-top: 20px;
+    text-align: center;
 }

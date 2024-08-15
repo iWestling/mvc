@@ -4,200 +4,250 @@ namespace App\CardGame;
 
 class TexasHoldemGame
 {
-    private Deck $deck;
+    /** @var Player[] */
     private array $players = [];
-    private array $communityCards = [];
-    private int $pot = 0;
-    private int $currentBet = 0;
-    private int $stage = 0; // 0: Pre-Flop, 1: Flop, 2: Turn, 3: River
-    private Bank $bank;
+
+    private CommunityCardManager $communityCardManager;
+    private Deck $deck;
+    private PotManager $potManager;
+    private GameStageManager $stageManager;
+    private PlayerActionHandler $actionHandler;
+    private WinnerEvaluator $winnerEvaluator;
+
+    /** @var string[] */
+    // Suppress the 'never read' warning for now as this property will be used later
     private array $actions = [];
-    private bool $gameOver = false;
+
+    /** @var Player[] */
     private array $winners = [];
+
+    private bool $gameOver = false;
 
     public function __construct()
     {
         $this->deck = new Deck();
-        $this->bank = new Bank();
+        $this->potManager = new PotManager();
+        $this->stageManager = new GameStageManager();
+        $this->actionHandler = new PlayerActionHandler($this->potManager);
+        $this->communityCardManager = new CommunityCardManager($this->deck);
+        $this->winnerEvaluator = new WinnerEvaluator(new HandEvaluator());
+    }
+
+    public function getHandEvaluator(): HandEvaluator
+    {
+        return $this->winnerEvaluator->getHandEvaluator();
+    }
+
+    /**
+     * @return Player[]
+     */
+    public function getPlayers(): array
+    {
+        return $this->players;
+    }
+
+
+    public function getCommunityCardManager(): CommunityCardManager
+    {
+        return $this->communityCardManager;
     }
 
     public function addPlayer(Player $player): void
     {
         $this->players[] = $player;
     }
+    public function getPotManager(): PotManager
+    {
+        return $this->potManager;
+    }
 
     public function dealInitialCards(): void
     {
         foreach ($this->players as $player) {
-            $player->addCardToHand($this->deck->drawCard());
-            $player->addCardToHand($this->deck->drawCard());
+            $card1 = $this->deck->drawCard();
+            $card2 = $this->deck->drawCard();
+
+            if ($card1 instanceof CardGraphic) {
+                $player->addCardToHand($card1);
+            }
+            if ($card2 instanceof CardGraphic) {
+                $player->addCardToHand($card2);
+            }
         }
     }
 
-    public function dealCommunityCards(int $number): void
+    public function getMinimumChips(): int
     {
-        for ($i = 0; $i < $number; $i++) {
-            $this->communityCards[] = $this->deck->drawCard();
-        }
-    }
-
-    public function getCommunityCards(): array
-    {
-        return $this->communityCards;
-    }
-
-    public function getPlayers(): array
-    {
-        return $this->players;
-    }
-
-    public function getPot(): int
-    {
-        return $this->pot;
-    }
-
-    public function getCurrentBet(): int
-    {
-        return $this->currentBet;
-    }
-
-    public function resetCurrentBet(): void
-    {
-        $this->currentBet = 0;
+        $minChips = PHP_INT_MAX; // Set to maximum possible value initially
         foreach ($this->players as $player) {
-            $player->resetCurrentBet();
+            if (!$player->isFolded()) { // Consider only players who haven't folded
+                $minChips = min($minChips, $player->getChips());
+            }
+        }
+        return $minChips;
+    }
+
+    public function playRound(PlayerActionHandler $playerActionHandler, string $action, int $raiseAmount = 0): void
+    {
+        $this->processPlayerAction($action, $raiseAmount);
+        $this->processComputerPlayers();
+    
+        // Automatically advance the game stages if the player is all-in
+        if ($this->players[0]->getChips() === 0) {
+            while (!$this->isGameOver()) {
+                $this->advanceGameStage($playerActionHandler);
+            }
+            return; // Exit early, no need for further actions
+        }
+    
+        $this->advanceGameStage($playerActionHandler);
+    }
+    
+
+    private function processPlayerAction(string $action, int $raiseAmount): void
+    {
+        $player = $this->players[0];
+        $action = $this->normalizeAction($player, $action, $raiseAmount);
+        $this->handleAction($player, $action, $raiseAmount);
+    }
+
+    private function processComputerPlayers(): void
+    {
+        foreach (array_slice($this->players, 1) as $computerPlayer) { // Skipping the human player
+            if ($computerPlayer->isFolded() || $computerPlayer->getChips() === 0) {
+                continue;
+            }
+            $decision = $computerPlayer->makeDecision($this->communityCardManager->getCommunityCards(), $this->potManager->getCurrentBet());
+            $this->handleAction($computerPlayer, $decision);
         }
     }
 
+    private function normalizeAction(Player $player, string $action, int $raiseAmount): string
+    {
+        if ($action === 'raise' && $raiseAmount >= $player->getChips()) {
+            return 'all-in';
+        }
+        return $action;
+    }
+
+    private function handleAction(Player $player, string $action, int $raiseAmount = 0): void
+    {
+        switch ($action) {
+            case 'call':
+                $this->actionHandler->handleCall($player);
+                break;
+            case 'raise':
+                $this->actionHandler->handleRaise($player, $raiseAmount);
+                break;
+            case 'check':
+                $this->actionHandler->handleCheck($player);
+                break;
+            case 'fold':
+                $player->fold();
+                break;
+            case 'all-in':
+                $this->actionHandler->handleAllIn($player);
+                break;
+        }
+
+        // Update the actions array with the player's action
+        $this->actions[$player->getName()] = ucfirst($action); // Convert action to a readable string
+    }
+
+    /**
+     * @return string[] Array of player actions
+     */
     public function getActions(): array
     {
         return $this->actions;
     }
 
-    public function playRound(string $action, int $raiseAmount = 0): void
+    public function resetCurrentBet(PlayerActionHandler $playerActionHandler): void
     {
-        $player = $this->players[0];
+        // Reset the current bet in the PotManager
+        $this->potManager->resetCurrentBet();
 
-        // Handle player's action
-        switch ($action) {
-            case 'call':
-                $this->handleCall($player);
-                $this->actions[$player->getName()] = 'call';
-                break;
-            case 'raise':
-                $this->handleRaise($player, $raiseAmount);
-                $this->actions[$player->getName()] = 'raise';
-                break;
-            case 'check':
-                $this->handleCheck($player);
-                $this->actions[$player->getName()] = 'check';
-                break;
-            case 'fold':
-                $player->fold();
-                $this->actions[$player->getName()] = 'fold';
-                break;
+        // Reset the current bet for all players using the PlayerActionHandler
+        foreach ($this->players as $player) {
+            $playerActionHandler->resetCurrentBet($player);
         }
-
-        // Handle computer players' actions
-        foreach (array_slice($this->players, 1) as $computerPlayer) {
-            if ($computerPlayer->isFolded()) {
-                $this->actions[$computerPlayer->getName()] = 'fold';
-                continue;
-            }
-            $decision = $computerPlayer->makeDecision($this->communityCards, $this->currentBet);
-            switch ($decision) {
-                case 'call':
-                    $this->handleCall($computerPlayer);
-                    $this->actions[$computerPlayer->getName()] = 'call';
-                    break;
-                case 'raise':
-                    $this->handleRaise($computerPlayer, 20); // Example raise amount
-                    $this->actions[$computerPlayer->getName()] = 'raise';
-                    break;
-                case 'check':
-                    $this->handleCheck($computerPlayer);
-                    $this->actions[$computerPlayer->getName()] = 'check';
-                    break;
-                case 'fold':
-                    $computerPlayer->fold();
-                    $this->actions[$computerPlayer->getName()] = 'fold';
-                    break;
-            }
-        }
-
-        // Move to the next stage of community cards
-        $this->advanceGameStage();
     }
 
-    private function advanceGameStage(): void
+    private function advanceGameStage(PlayerActionHandler $playerActionHandler): void
     {
-        if (count(array_filter($this->players, fn($player) => !$player->isFolded())) == 1) {
-            $this->determineWinner(); // End game if only one player remains
+        if (count(array_filter($this->players, fn ($player) => !$player->isFolded())) == 1) {
+            $this->determineWinner();
             return;
         }
 
-        if ($this->stage == 0) {
-            $this->dealCommunityCards(3); // Flop
-        } elseif ($this->stage == 1) {
-            $this->dealCommunityCards(1); // Turn
-        } elseif ($this->stage == 2) {
-            $this->dealCommunityCards(1); // River
-        } elseif ($this->stage == 3) {
-            $this->determineWinner(); // End game
+        switch ($this->stageManager->getCurrentStage()) {
+            case 0:
+                $this->communityCardManager->dealCommunityCards(3); // Flop
+                break;
+            case 1:
+                $this->communityCardManager->dealCommunityCards(1); // Turn
+                break;
+            case 2:
+                $this->communityCardManager->dealCommunityCards(1); // River
+                break;
+            case 3:
+                $this->determineWinner();
+                break;
         }
 
-        $this->stage++;
-        $this->resetCurrentBet();
-    }
-
-    private function handleCall(Player $player): void
-    {
-        $player->call($this->currentBet);
-        $this->pot += $player->getCurrentBet();
-    }
-
-    private function handleRaise(Player $player, int $amount): void
-    {
-        $player->raise($amount);
-        $this->currentBet = $amount;
-        $this->pot += $player->getCurrentBet();
-    }
-
-    private function handleCheck(Player $player): void
-    {
-        $player->check();
+        $this->stageManager->advanceStage();
+        $this->resetCurrentBet($playerActionHandler);
     }
 
     private function determineWinner(): void
     {
-        $remainingPlayers = array_filter($this->players, fn($player) => !$player->isFolded());
-        $bestHand = ['rank' => '', 'values' => []]; // Initialize with a valid structure
-        $this->winners = [];
-
-        foreach ($remainingPlayers as $player) {
-            $hand = array_merge($player->getHand(), $this->communityCards);
-            $bestPlayerHand = HandEvaluator::getBestHand($hand);
-
-            if (empty($bestHand['rank']) || HandEvaluator::compareHands($bestPlayerHand, $bestHand) > 0) {
-                $bestHand = $bestPlayerHand;
-                $this->winners = [$player];
-            } elseif (HandEvaluator::compareHands($bestPlayerHand, $bestHand) == 0) {
-                $this->winners[] = $player;
-            }
-        }
+        $remainingPlayers = array_filter($this->players, fn ($player) => !$player->isFolded());
+        $this->winners = $this->winnerEvaluator->determineWinners($remainingPlayers, $this->communityCardManager->getCommunityCards());
 
         if (count($this->winners) > 1) {
-            // Handle tie: split the pot among winners
-            $potShare = intdiv($this->pot, count($this->winners));
-            foreach ($this->winners as $winner) {
-                $winner->addChips($potShare);
-            }
-        } else {
-            $this->winners[0]->addChips($this->pot);
+            $this->splitPotAmongWinners();
+            $this->gameOver = true; // Mark the game as over after splitting the pot
+            return;
         }
 
-        // Mark the game as over
-        $this->gameOver = true;
+        // If there is only one winner
+        $this->winners[0]->addChips($this->potManager->getPot());
+        $this->gameOver = true; // Mark the game as over
+    }
+
+
+    private function splitPotAmongWinners(): void
+    {
+        $potShare = intdiv($this->potManager->getPot(), count($this->winners));
+        foreach ($this->winners as $winner) {
+            $winner->addChips($potShare);
+        }
+    }
+
+    public function startNewRound(PlayerActionHandler $playerActionHandler): void
+    {
+        $this->deck = new Deck();
+        $this->communityCardManager->resetCommunityCards();
+        $this->potManager->resetPot();
+        $this->potManager->resetCurrentBet();
+        $this->stageManager->resetStage();
+
+        foreach ($this->players as $player) {
+            if ($player->getChips() < 20) {
+                $player->resetHand();
+                $player->fold();
+                $this->actions[$player->getName()] = "Player has insufficient chips, you'll need to start a new game.";
+                continue;
+            }
+            $this->actions[$player->getName()] = 'No action yet';
+            $player->resetHand();
+            $playerActionHandler->resetCurrentBet($player);
+            $player->unfold();
+        }
+
+        $this->gameOver = false;
+        $this->winners = [];
+        $this->dealInitialCards();
     }
 
     public function isGameOver(): bool
@@ -205,25 +255,11 @@ class TexasHoldemGame
         return $this->gameOver;
     }
 
+    /**
+     * @return Player[]
+     */
     public function getWinners(): array
     {
         return $this->winners;
-    }
-
-    private function resetGame(): void
-    {
-        $this->deck = new Deck();
-        $this->communityCards = [];
-        $this->pot = 0;
-        $this->currentBet = 0;
-        $this->stage = 0;
-        foreach ($this->players as $player) {
-            $player->resetHand();
-            $player->resetCurrentBet();
-            $player->unfold();
-        }
-        $this->actions = [];
-        $this->gameOver = false;
-        $this->winners = [];
     }
 }
