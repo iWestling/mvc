@@ -4,8 +4,11 @@ imports:
 filter:
     excluded_paths: 
         - vendor/*
-        - test/*
         - src/Dice/*
+        - src/Repository/*
+        - src/Controller/ProductController.php
+        - src/Controller/CardGameController.php
+        - src/Controller/LibraryController.php
         - .php-cs-fixer.dist.php
 
 build:

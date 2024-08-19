@@ -112,15 +112,17 @@ class PlayerTest extends TestCase
     public function testSetAndGetRole(): void
     {
         $player = new Player('Test Player', 1000, 'normal');
-
+    
         $player->setRole('dealer');
-
         $this->assertEquals('dealer', $player->getRole());
-
+    
+        // Debugging line to check the value of the role before setting it to null
+        var_dump($player->getRole()); // Should output 'dealer'
+    
         $player->setRole(null);
-
         $this->assertNull($player->getRole());
     }
+    
 
     public function testMakeDecision(): void
     {
