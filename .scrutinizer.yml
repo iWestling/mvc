@@ -9,6 +9,14 @@ filter:
         - src/Controller/ProductController.php
         - src/Controller/CardGameController.php
         - src/Controller/LibraryController.php
+        - src/Service/ApiService.php
+        - src/Service/DatabaseResetService.php 
+        - src/Entity/Product.php
+        - src/Entity/Library.php
+        - tests/Controller/LibraryControllerTest.php 
+        - tests/Service/ApiServiceTest.php 
+        - tests/Service/DatabaseResetServiceTest.php
+
         - .php-cs-fixer.dist.php
 
 build:
