@@ -1531,6 +1531,61 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemController.html#method_startNewRound"
         },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson",
+            "name": "TexasHoldemJson",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AapiPage\u0028\u0029",
+            "name": "apiPage",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_apiPage"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AstartNewGame\u0028\u0029",
+            "name": "startNewGame",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_startNewGame"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AgetGameState\u0028\u0029",
+            "name": "getGameState",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_getGameState"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AstartNewRound\u0028\u0029",
+            "name": "startNewRound",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_startNewRound"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AresetGame\u0028\u0029",
+            "name": "resetGame",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_resetGame"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AsetChips\u0028\u0029",
+            "name": "setChips",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_setChips"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AsetChipsCompOne\u0028\u0029",
+            "name": "setChipsCompOne",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_setChipsCompOne"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AsetChipsCompTwo\u0028\u0029",
+            "name": "setChipsCompTwo",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_setChipsCompTwo"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AgetCommunityCards\u0028\u0029",
+            "name": "getCommunityCards",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_getCommunityCards"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AgetPlayerCards\u0028\u0029",
+            "name": "getPlayerCards",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_getPlayerCards"
+        },                {
             "fqsen": "\\App\\Dice\\Dice",
             "name": "Dice",
             "summary": "",
