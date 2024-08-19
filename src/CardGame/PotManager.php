@@ -36,4 +36,43 @@ class PotManager
     {
         $this->currentBet = 0;
     }
+    /**
+     * Check if all active players have matched the current bet.
+     *
+     * @param Player[] $players
+     * @return bool
+     */
+    public function haveAllActivePlayersMatchedCurrentBet(array $players): bool
+    {
+        foreach ($players as $player) {
+            if (!$player->isFolded() && $player->getCurrentBet() < $this->currentBet) {
+                return false; // If any active player has not matched the current bet
+            }
+        }
+
+        return true; // All active players have matched the current bet
+    }
+
+    /**
+     * Distribute the pot to a single winner.
+     */
+    public function distributeWinningsToPlayer(Player $player): void
+    {
+        $amount = $this->getPot();
+        $player->addChips($amount);
+    }
+
+    /**
+     * Split the pot among multiple winners.
+     *
+     * @param Player[] $winners
+     */
+    public function splitPotAmongWinners(array $winners): void
+    {
+        $potShare = intdiv($this->getPot(), count($winners));
+        foreach ($winners as $winner) {
+            $winner->addChips($potShare);
+        }
+    }
+
 }

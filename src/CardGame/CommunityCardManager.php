@@ -36,4 +36,24 @@ class CommunityCardManager
     {
         $this->communityCards = [];
     }
+
+    /**
+     * Deal initial cards to each player.
+     *
+     * @param Player[] $players Array of Player objects
+     */
+    public function dealInitialCards(array $players): void
+    {
+        foreach ($players as $player) {
+            $card1 = $this->deck->drawCard();
+            $card2 = $this->deck->drawCard();
+
+            if ($card1 instanceof CardGraphic) {
+                $player->addCardToHand($card1);
+            }
+            if ($card2 instanceof CardGraphic) {
+                $player->addCardToHand($card2);
+            }
+        }
+    }
 }

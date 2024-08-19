@@ -42,4 +42,5 @@ class WinnerEvaluator
     {
         return $this->handEvaluator;
     }
+
 }

@@ -8,9 +8,9 @@ class HandEvaluator
 {
     private HandRankingEvaluator $rankingEvaluator;
 
-    public function __construct()
+    public function __construct(?HandRankingEvaluator $rankingEvaluator = null)
     {
-        $this->rankingEvaluator = new HandRankingEvaluator();
+        $this->rankingEvaluator = $rankingEvaluator ?? new HandRankingEvaluator();
     }
 
     /**
@@ -166,28 +166,4 @@ class HandEvaluator
         return 0; // Return 0 if hands are identical
     }
 
-
-    /**
-     * Check if the hand is a Royal Flush
-     *
-     * @param CardGraphic[] $hand
-     * @return bool
-     */
-    public function isRoyalFlush(array $hand): bool
-    {
-        return $this->isStraightFlush($hand) && $hand[0]->getValue() == 10;
-    }
-
-    /**
-     * Check if the hand is a Straight Flush
-     *
-     * @param CardGraphic[] $hand
-     * @return bool
-     */
-    public function isStraightFlush(array $hand): bool
-    {
-        // Instead of static calls, we instantiate HandRankingEvaluator and use it
-        $handRankingEvaluator = new HandRankingEvaluator();
-        return $handRankingEvaluator->isFlush($hand) && $handRankingEvaluator->isStraight($hand);
-    }
 }

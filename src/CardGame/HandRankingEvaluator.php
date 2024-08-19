@@ -52,6 +52,29 @@ class HandRankingEvaluator
     }
 
     /**
+     * Check if the hand is a Royal Flush
+     *
+     * @param CardGraphic[] $hand
+     * @return bool
+     */
+    public function isRoyalFlush(array $hand): bool
+    {
+        return $this->isStraightFlush($hand) && $hand[0]->getValue() === 10;
+    }
+
+    /**
+     * Check if the hand is a Straight Flush
+     *
+     * @param CardGraphic[] $hand
+     * @return bool
+     */
+    public function isStraightFlush(array $hand): bool
+    {
+        // Check if the hand is both a straight and a flush
+        return $this->isFlush($hand) && $this->isStraight($hand);
+    }
+
+    /**
      * @param CardGraphic[] $hand
      * @return ?array<int>
      */
@@ -183,12 +206,15 @@ class HandRankingEvaluator
         foreach ($counts as $value => $count) {
             if ($count === 2) {
                 $remainingValues = array_values(array_diff($values, [$value]));
-                // Return the pair first, followed by the kickers in descending order
-                return array_merge([$value, $value], array_reverse($remainingValues));
+                // Sort the remaining kickers in descending order
+                rsort($remainingValues);
+                // Return the pair first, followed by the sorted kickers
+                return array_merge([$value, $value], $remainingValues);
             }
         }
 
         return null;
     }
+
 
 }

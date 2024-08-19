@@ -22,6 +22,8 @@ class Player
 
     private int $currentBet;
 
+    private ?string $role = null;  // Add this property to track the player's role
+
     public function __construct(string $name, int $chips, string $level)
     {
         $this->name = $name;
@@ -44,6 +46,16 @@ class Player
     public function setCurrentBet(int $currentBet): void
     {
         $this->currentBet = $currentBet;
+    }
+
+    public function setRole(?string $role): void
+    {
+        $this->role = $role;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
     }
 
     /**
