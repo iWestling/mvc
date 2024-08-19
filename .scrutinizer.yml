@@ -13,10 +13,11 @@ filter:
         - src/Service/DatabaseResetService.php 
         - src/Entity/Product.php
         - src/Entity/Library.php
+        - src/Kernel.php
+        - tests/Library/ProductTest.php 
         - tests/Controller/LibraryControllerTest.php 
         - tests/Service/ApiServiceTest.php 
         - tests/Service/DatabaseResetServiceTest.php
-
         - .php-cs-fixer.dist.php
 
 build:
