@@ -2,6 +2,8 @@
 
 namespace App\Card;
 
+use OutOfBoundsException;
+
 class CardGraphic extends Card
 {
     /**
@@ -65,68 +67,12 @@ class CardGraphic extends Card
     public function getAsString(): string
     {
         $value = $this->getValue() - 1; // Adjust index
+
+        // Check for out-of-bounds access
+        if ($value < 0 || $value >= count($this->imagepath)) {
+            throw new OutOfBoundsException("Card value is out of bounds.");
+        }
+
         return $this->imagepath[$value];
     }
-
-    // private $apirepresentation = [
-    //     '[A♥]',
-    //     '[2♥]',
-    //     '[3♥]',
-    //     '[4♥]',
-    //     '[5♥]',
-    //     '[6♥]',
-    //     '[7♥]',
-    //     '[8♥]',
-    //     '[9♥]',
-    //     '[10♥]',
-    //     '[J♥]',
-    //     '[Q♥]',
-    //     '[K♥]',
-    //     '[A♦]',
-    //     '[2♦]',
-    //     '[3♦]',
-    //     '[4♦]',
-    //     '[5♦]',
-    //     '[6♦]',
-    //     '[7♦]',
-    //     '[8♦]',
-    //     '[9♦]',
-    //     '[10♦]',
-    //     '[J♦]',
-    //     '[Q♦]',
-    //     '[K♦]',
-    //     '[A♣]',
-    //     '[2♣]',
-    //     '[3♣]',
-    //     '[4♣]',
-    //     '[5♣]',
-    //     '[6♣]',
-    //     '[7♣]',
-    //     '[8♣]',
-    //     '[9♣]',
-    //     '[10♣]',
-    //     '[J♣]',
-    //     '[Q♣]',
-    //     '[K♣]',
-    //     '[A♠]',
-    //     '[2♠]',
-    //     '[3♠]',
-    //     '[4♠]',
-    //     '[5♠]',
-    //     '[6♠]',
-    //     '[7♠]',
-    //     '[8♠]',
-    //     '[9♠]',
-    //     '[10♠]',
-    //     '[J♠]',
-    //     '[Q♠]',
-    //     '[K♠]'
-    // ];
-
-    // public function getCardForAPI(): string
-    // {
-    //     $value = $this->getValue() - 1; // Adjust index
-    //     return $this->apirepresentation[$value];
-    // }
-
 }

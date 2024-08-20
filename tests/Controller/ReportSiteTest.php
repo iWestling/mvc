@@ -94,6 +94,19 @@ class ReportSiteTest extends WebTestCase
         $this->assertEquals('rendered template', $response->getContent());
     }
 
+    public function testProj(): void
+    {
+        $this->controller->expects($this->once())
+            ->method('render')
+            ->with('texas/index.html.twig')
+            ->willReturn(new Response('rendered template'));
+
+        $response = $this->controller->proj();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('rendered template', $response->getContent());
+    }
+
     public function testApiHome(): void
     {
         $this->controller->expects($this->once())

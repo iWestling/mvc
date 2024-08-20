@@ -126,6 +126,7 @@ class TexasHoldemJson extends AbstractController
 
         return new JsonResponse(['message' => 'Chips set successfully.'], 200);
     }
+
     #[Route('/proj/api/set-chips', name: 'api_set_chips_comp_two', methods: ['POST'])]
     public function setChipsCompTwo(Request $request, SessionInterface $session): JsonResponse
     {
