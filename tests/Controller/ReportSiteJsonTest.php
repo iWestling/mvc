@@ -193,7 +193,7 @@ class ReportSiteJsonTest extends WebTestCase
         $deck = $deckOfCards->getCards();
 
         // Expect 'set' to be called twice, once before and once after shuffle
-        $this->sessionMock->expects($this->exactly(2))
+        /** @scrutinizer ignore-deprecated */ $this->sessionMock->expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
                 ['deck', $deck],

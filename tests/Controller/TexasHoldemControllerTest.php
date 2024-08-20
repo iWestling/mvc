@@ -86,7 +86,7 @@ class TexasHoldemControllerTest extends WebTestCase
         $session = $this->createMock(SessionInterface::class);
 
         // Set expectations for the session interface
-        $session->expects($this->exactly(2))
+        /** @scrutinizer ignore-deprecated */ $session->expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
                 ['game', $this->isInstanceOf(TexasHoldemGame::class)],
@@ -150,7 +150,7 @@ class TexasHoldemControllerTest extends WebTestCase
             ->getMock();
 
         // Mock the game and session
-        $this->session->expects($this->exactly(2))
+        /** @scrutinizer ignore-deprecated */ $this->session->expects($this->exactly(2))
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);
@@ -209,7 +209,7 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testPlayRoundHandlesComputerPlayerAction(): void
     {
         // Mock the session to return the game object and action index
-        $this->session->expects($this->exactly(2))
+        /** @scrutinizer ignore-deprecated */ $this->session->expects($this->exactly(2))
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);

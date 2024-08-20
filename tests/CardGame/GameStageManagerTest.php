@@ -37,7 +37,7 @@ class GameStageManagerTest extends TestCase
         $communityCardManager = $this->createMock(CommunityCardManager::class);
 
         // Advance to Flop
-        $communityCardManager->expects($this->exactly(2))
+        /** @scrutinizer ignore-deprecated */ $communityCardManager->expects($this->exactly(2))
             ->method('dealCommunityCards')
             ->withConsecutive([3], [1]);
 
@@ -54,7 +54,7 @@ class GameStageManagerTest extends TestCase
         $communityCardManager = $this->createMock(CommunityCardManager::class);
 
         // Advance to Flop, Turn, and River
-        $communityCardManager->expects($this->exactly(3))
+        /** @scrutinizer ignore-deprecated */ $communityCardManager->expects($this->exactly(3))
             ->method('dealCommunityCards')
             ->withConsecutive([3], [1], [1]);
 
