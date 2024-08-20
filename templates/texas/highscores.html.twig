@@ -1,0 +1,35 @@
+{% extends 'texas/base.html.twig' %}
+
+{% block title %}Highscores{% endblock %}
+
+{% block main %}
+    <h1>Highscores - Highest won pots</h1>
+    <div class="playerstable">
+        <table>
+            <thead>
+                <tr>
+                    <th>Placement</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                    <th>Age</th>
+                    <th>ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for score in scores_with_players %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ score.username }}</td>
+                        <td>{{ score.score }}</td>
+                        <td>{{ score.date ? score.date|date('Y-m-d H:i') : 'N/A' }}</td>
+                        <td>{{ score.age }}</td>
+                        <td>{{ score.idn }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+{% endblock %}
+

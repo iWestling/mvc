@@ -135,41 +135,6 @@ class TexasHoldemGame
         $playerActionHandler->processActionsInOrder($playersInOrder, $playerAction, $raiseAmount, $this->communityCardManager, [$this, 'handleAction']);
     }
 
-    // public function processActionsInOrder(PlayerActionHandler $playerActionHandler, string $playerAction, int $raiseAmount): void
-    // {
-    //     $playersInOrder = $this->getPlayersInOrder();
-    //     $currentBet = $this->potManager->getCurrentBet();
-
-    //     dump("Processing actions in order. Current Bet: $currentBet");
-
-    //     foreach ($playersInOrder as $player) {
-    //         if ($player->isFolded()) {
-    //             dump($player->getName() . " has folded. Skipping...");
-    //             continue; // Skip folded players
-    //         }
-
-    //         dump("Processing action for: " . $player->getName());
-
-    //         if ($player->getName() === 'You') {
-    //             if ($player === reset($playersInOrder)) {
-    //                 dump("You are processing your action: $playerAction with raise amount: $raiseAmount");
-    //                 $this->processPlayerAction($playerAction, $raiseAmount);
-    //             }
-    //             continue;
-    //         }
-
-    //         // Computer player's turn
-    //         $decision = $player->makeDecision($this->communityCardManager->getCommunityCards(), $currentBet);
-    //         dump($player->getName() . " decision: " . ucfirst($decision));
-    //         $this->handleAction($player, $decision);
-    //     }
-
-    //     if ($this->haveAllActivePlayersMatchedCurrentBet()) {
-    //         dump("All active players have matched the current bet. Advancing to the next stage.");
-    //         $this->advanceGameStage($playerActionHandler);
-    //     }
-    // }
-
     public function processPlayerAction(PlayerActionHandler $playerActionHandler, string $action, int $raiseAmount): void
     {
         $player = $this->players[0];
@@ -315,32 +280,6 @@ class TexasHoldemGame
         $this->gameOver = true;
         $this->winnerDetermined = true;
     }
-
-
-
-    // private function distributeWinningsToPlayer(Player $player, int $amount): void
-    // {
-    //     dump("Before distributing, " . $player->getName() . " has " . $player->getChips() . " chips");
-    //     dump("Distributing $amount chips to " . $player->getName());
-
-    //     $player->addChips($amount); // Add the pot amount to the winner's chips
-
-    //     dump("After distributing, " . $player->getName() . " now has " . $player->getChips() . " chips");
-
-    //     // // Reset the pot AFTER distributing the winnings
-    //     // $this->potManager->resetPot();
-    // }
-
-
-
-    // private function splitPotAmongWinners(): void
-    // {
-    //     $potShare = intdiv($this->potManager->getPot(), count($this->winners));
-    //     foreach ($this->winners as $winner) {
-    //         // Distribute only the calculated share to each winner
-    //         $this->distributeWinningsToPlayer($winner, $potShare);
-    //     }
-    // }
 
     public function startNewRound(): void
     {

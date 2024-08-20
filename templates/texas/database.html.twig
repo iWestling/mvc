@@ -1,0 +1,22 @@
+{% extends 'texas/base.html.twig' %}
+
+{% block title %}Texas Hold'em - About{% endblock %}
+
+{% block main %}
+    <h1>About</h1>
+
+    <div class="action-buttons">
+        <form method="post" action="{{ path('highscores') }}">
+            <input type="hidden" name="action" value="highscores">
+            <button type="submit">See Highest Wins</button>
+        </form>
+        <form method="post" action="{{ path('game_players') }}">
+            <input type="hidden" name="action" value="game_players">
+            <button type="submit">See Player Table</button>
+        </form>
+        <form method="post" action="{{ path('reset_database') }}">
+            <input type="hidden" name="action" value="reset_database">
+            <button type="submit">Reset Database</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'texas/base.html.twig' %}
+
+{% block title %}Players{% endblock %}
+
+{% block main %}
+    <h1>All Players</h1>
+    <div class="playerstable">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in gameplayer %}
+                    <tr>
+                        <td>{{ player.id }}</td>
+                        <td>{{ player.username }}</td>
+                        <td>{{ player.age }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+{% endblock %}
+

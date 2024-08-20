@@ -7,7 +7,9 @@
 
     <div class="game-info">
         <h2>Pot:  {{ pot }}</h2>
-        <h3>Current Bet: {{ game.getPotManager().getCurrentBet() }}</h3> <!-- Display the current bet -->
+        {% if game.getPotManager().getCurrentBet() != 0 %}
+            <h3>Bet you have to match: {{ game.getPotManager().getCurrentBet() }}</h3>
+        {% endif %}
         <h3>Current Phase: 
         {% set currentStage = game.stageManager.getCurrentStage() %}
         {% if currentStage == 0 %}
@@ -30,15 +32,42 @@
             <h2>Round Over</h2>
             <h1>Winner:</h1>
             {% for winner in winners %}
-                <p>{{ winner.getName }} wins  {{ pot }} chips and now has {{ winner.getChips() }} chips in total.</p>
+                <p>{{ winner.getName }} won {{ pot }} chips, {{ winner.getName }} now has {{ winner.getChips() }} chips in total.</p>
             {% endfor %}
         </div>
+        {% set youAreWinner = false %}
+        {% for winner in winners %}
+            {% if winner.getName() == 'You' %}
+                {% set youAreWinner = true %}
+            {% endif %}
+        {% endfor %}
+        {% if youAreWinner %}
+            {% if success_message is defined %}
+                <div class="success-message">
+                    <p>{{ success_message }}</p>
+                </div>
+            {% endif %}
+            <div class="score-submission-form">
+                <h2>Do you want to submit your score to the highscore list?</h2>
+                <form method="post" action="{{ path('submit_score') }}">
+                    <input type="hidden" name="score" value="{{ pot }}">
+                    <label for="username">Your Name:</label>
+                    <br>
+                    <input type="text" id="username" name="username" required>
+                    <br>
+                    <label for="age">Your Age:</label>
+                    <br>
+                    <input type="number" id="age" name="age" required>
+                    <br>
+                    <button type="submit">Submit Score</button>
+                </form>
+            </div>
+        {% endif %}
     {% endif %}
 
     <div class="community-cards-container">
         <div class="community-cards">
-            <h2>Community Cards</h2>
-            <div class="cards">
+            <div class="com-cards">
                 {% for card in game.getCommunityCardManager().getCommunityCards() %}
                     <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card">
                 {% endfor %}
@@ -49,7 +78,18 @@
     <div class="players">
         {% for player in game.getPlayers() %}
             <div class="player">
-                <h2>{{ player.getName() }} ({{ player.getRole() | capitalize }})</h2>
+                <h2>
+                    {{ player.getName() }}
+                    {% if player.getRole() == 'dealer' %}
+                        <img src="{{ asset('img/dealerbadge.png') }}" alt="Dealer Badge">
+                    {% endif %}
+                    {% if player.getRole() == 'small blind' %}
+                        <img src="{{ asset('img/smallblind.png') }}" alt="Small Blind">
+                    {% endif %}
+                    {% if player.getRole() == 'big blind' %}
+                        <img src="{{ asset('img/bigblind.png') }}" alt="Big Blind">
+                    {% endif %}
+                </h2>
                 {% set action = game.getActions()[player.getName()] | default('No action yet') %}
                 {% if player.isFolded() %}
                     <p>Folded</p>
@@ -62,21 +102,26 @@
                 {% endif %}
                 <p>Chips: {{ player.getChips() }}</p>
                 <p>Took action: {{ action }}</p>
-            </div>
+                <br>
+            <details>
             {# Dump the evaluated hand and rank #}
-            {% set bestHand = game.getHandEvaluator().getBestHand(player.getHand() | merge(game.getCommunityCardManager().getCommunityCards())) %}
-            <p>Best Hand: {{ bestHand.rank }}</p>
-            <p>Values: {{ bestHand.values|join(', ') }}</p>
+                {% set bestHand = game.getHandEvaluator().getBestHand(player.getHand() | merge(game.getCommunityCardManager().getCommunityCards())) %}
+                <p>Best Hand: {{ bestHand.rank }}</p>
+                <p>Values: {{ bestHand.values|join(', ') }}</p>
+            </details>
+            </div>
         {% endfor %}
     </div>
-
-    <h2>Debug Information:</h2>
-{{ dump(game.getActions()) }}
-    <ul>
-        <li>Current Stage: {{ game.stageManager.getCurrentStage() }}</li>
-        <li>Remaining Active Players: {{ game.countActivePlayers() }}</li>
-    </ul>
-
+    <div class="debuginfo">
+        <details>
+        <h2>Debug Information:</h2>
+        {{ dump(game.getActions()) }}
+        <ul>
+            <li>Current Stage: {{ game.stageManager.getCurrentStage() }}</li>
+            <li>Remaining Active Players: {{ game.countActivePlayers() }}</li>
+        </ul>
+        </details>
+    </div>
     <div class="actions">
         {% if isGameOver %}
             {% if game.getPlayers()[0].getChips() >= 20 %}
@@ -84,7 +129,9 @@
                     <button type="submit">Start New Round</button>
                 </form>
             {% endif %}
-            <a href="{{ path('proj_start') }}">Start New Game</a>
+                <form method="post" action="{{ path('proj_start') }}">
+                    <button type="submit">Start New Game</button>
+                </form>
         {% else %}
         <h2>Your Actions</h2>
             {% set currentBet = game.getPotManager().getCurrentBet() %}

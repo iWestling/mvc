@@ -80,6 +80,8 @@ main {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    margin-top: 20px;
+    min-height: 150px;
 }
 
 .community-cards {
@@ -98,16 +100,24 @@ main {
     padding-left: 20px; /* Padding to adjust starting position, can be removed if unnecessary */
 }
 
+.debuginfo {
+    padding-left: 50px;
+}
+
 .players {
     display: flex;
     justify-content: space-around;
     width: 100%;
+    padding-left: 50px;
 }
 
 .player {
-    border: 1px solid #000;
     padding: 10px;
     width: 30%;
+}
+
+.player h2 {
+    padding-right: 10px;
 }
 
 .cards {
@@ -140,4 +150,61 @@ main {
 .actions {
     margin-top: 20px;
     text-align: center;
+}
+
+.playerstable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color:#000;
+  }
+  
+  .playerstable td, .playerstable th {
+    padding: 8px;
+    color:#000;
+  }
+  
+  .playerstable tr:nth-child(even){background-color: #e8e8e8;}
+  .playerstable tr:nth-child(odd){background-color: #ced5d1;}
+  
+  .playerstable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #a4c796;
+    color: #000;
+}
+/* Make the score submission form wider and shorter in height */
+.score-submission-form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 500px; /* Increase the width */
+    background-color: #346930;
+}
+
+/* Adjust form elements to reduce height and make them fit the wider form */
+.score-submission-form label,
+.score-submission-form input,
+.score-submission-form button {
+    margin-bottom: 5px; /* Reduce spacing between elements */
+}
+
+/* Adjust the submit button to reduce height */
+.score-submission-form button {
+    padding: 8px; /* Reduce the padding to make the button shorter */
+    font-size: 16px; /* Adjust font size if needed */
+}
+
+.community-cards .cards {
+    display: flex;
+    justify-content: center; /* Center the cards */
+    flex-wrap: wrap; /* Ensure cards wrap if too many */
+    clear: both;
+}
+
+.card-image {
+    margin: 2px;
 }

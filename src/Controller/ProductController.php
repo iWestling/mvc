@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Controller;
+// namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+// use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+// use Symfony\Component\HttpFoundation\Response;
+// use Symfony\Component\Routing\Attribute\Route;
 
-use App\Entity\Product;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Repository\ProductRepository;
+// use App\Entity\Product;
+// use Doctrine\Persistence\ManagerRegistry;
+// use App\Repository\ProductRepository;
 
 // class ProductController extends AbstractController
 // {

@@ -1286,6 +1286,41 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-CardGameController.html#method_dealCardsGet"
         },                {
+            "fqsen": "\\App\\Controller\\GamePlayerController",
+            "name": "GamePlayerController",
+            "summary": "",
+            "url": "classes/App-Controller-GamePlayerController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\GamePlayerController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-GamePlayerController.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Controller\\GamePlayerController\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "",
+            "url": "classes/App-Controller-GamePlayerController.html#method_index"
+        },                {
+            "fqsen": "\\App\\Controller\\GamePlayerController\u003A\u003AshowAllGamePlayers\u0028\u0029",
+            "name": "showAllGamePlayers",
+            "summary": "",
+            "url": "classes/App-Controller-GamePlayerController.html#method_showAllGamePlayers"
+        },                {
+            "fqsen": "\\App\\Controller\\GamePlayerController\u003A\u003AshowAllScoresWithPlayers\u0028\u0029",
+            "name": "showAllScoresWithPlayers",
+            "summary": "",
+            "url": "classes/App-Controller-GamePlayerController.html#method_showAllScoresWithPlayers"
+        },                {
+            "fqsen": "\\App\\Controller\\GamePlayerController\u003A\u003AresetPlayerDatabase\u0028\u0029",
+            "name": "resetPlayerDatabase",
+            "summary": "",
+            "url": "classes/App-Controller-GamePlayerController.html#method_resetPlayerDatabase"
+        },                {
+            "fqsen": "\\App\\Controller\\GamePlayerController\u003A\u003A\u0024resetService",
+            "name": "resetService",
+            "summary": "",
+            "url": "classes/App-Controller-GamePlayerController.html#property_resetService"
+        },                {
             "fqsen": "\\App\\Controller\\LibraryController",
             "name": "LibraryController",
             "summary": "",
@@ -1365,46 +1400,6 @@ Search.appendIndex(
             "name": "hiya",
             "summary": "",
             "url": "classes/App-Controller-LuckyController.html#method_hiya"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController",
-            "name": "ProductController",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController\u003A\u003Aindex\u0028\u0029",
-            "name": "index",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html#method_index"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController\u003A\u003AcreateProduct\u0028\u0029",
-            "name": "createProduct",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html#method_createProduct"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController\u003A\u003AshowAllProduct\u0028\u0029",
-            "name": "showAllProduct",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html#method_showAllProduct"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController\u003A\u003AshowProductById\u0028\u0029",
-            "name": "showProductById",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html#method_showProductById"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController\u003A\u003AdeleteProductById\u0028\u0029",
-            "name": "deleteProductById",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html#method_deleteProductById"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController\u003A\u003AupdateProduct\u0028\u0029",
-            "name": "updateProduct",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html#method_updateProduct"
-        },                {
-            "fqsen": "\\App\\Controller\\ProductController\u003A\u003AviewAllProduct\u0028\u0029",
-            "name": "viewAllProduct",
-            "summary": "",
-            "url": "classes/App-Controller-ProductController.html#method_viewAllProduct"
         },                {
             "fqsen": "\\App\\Controller\\ReportSite",
             "name": "ReportSite",
@@ -1501,6 +1496,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemController.html#method_about"
         },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003Adatabase\u0028\u0029",
+            "name": "database",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemController.html#method_database"
+        },                {
             "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AstartGame\u0028\u0029",
             "name": "startGame",
             "summary": "",
@@ -1525,6 +1525,11 @@ Search.appendIndex(
             "name": "handleAllInScenario",
             "summary": "Handle\u0020the\u0020scenario\u0020when\u0020an\u0020All\u002DIn\u0020has\u0020occurred.",
             "url": "classes/App-Controller-TexasHoldemController.html#method_handleAllInScenario"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AsubmitScore\u0028\u0029",
+            "name": "submitScore",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemController.html#method_submitScore"
         },                {
             "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AstartNewRound\u0028\u0029",
             "name": "startNewRound",
@@ -1610,6 +1615,81 @@ Search.appendIndex(
             "name": "value",
             "summary": "",
             "url": "classes/App-Dice-Dice.html#property_value"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer",
+            "name": "GamePlayer",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_getId"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AsetId\u0028\u0029",
+            "name": "setId",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_setId"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AgetUsername\u0028\u0029",
+            "name": "getUsername",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_getUsername"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AsetUsername\u0028\u0029",
+            "name": "setUsername",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_setUsername"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AgetAge\u0028\u0029",
+            "name": "getAge",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_getAge"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AsetAge\u0028\u0029",
+            "name": "setAge",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_setAge"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AgetScores\u0028\u0029",
+            "name": "getScores",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_getScores"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AaddScore\u0028\u0029",
+            "name": "addScore",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_addScore"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003AremoveScore\u0028\u0029",
+            "name": "removeScore",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#method_removeScore"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003A\u0024idn",
+            "name": "idn",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#property_idn"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003A\u0024username",
+            "name": "username",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#property_username"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003A\u0024age",
+            "name": "age",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#property_age"
+        },                {
+            "fqsen": "\\App\\Entity\\GamePlayer\u003A\u003A\u0024scores",
+            "name": "scores",
+            "summary": "",
+            "url": "classes/App-Entity-GamePlayer.html#property_scores"
         },                {
             "fqsen": "\\App\\Entity\\Library",
             "name": "Library",
@@ -1746,10 +1826,85 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Entity-Product.html#property_value"
         },                {
+            "fqsen": "\\App\\Entity\\Scores",
+            "name": "Scores",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003AgetId\u0028\u0029",
+            "name": "getId",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#method_getId"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003AgetUserId\u0028\u0029",
+            "name": "getUserId",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#method_getUserId"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003AsetUserId\u0028\u0029",
+            "name": "setUserId",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#method_setUserId"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003AgetScore\u0028\u0029",
+            "name": "getScore",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#method_getScore"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003AsetScore\u0028\u0029",
+            "name": "setScore",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#method_setScore"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003AgetDate\u0028\u0029",
+            "name": "getDate",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#method_getDate"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003AsetDate\u0028\u0029",
+            "name": "setDate",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#method_setDate"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003A\u0024idn",
+            "name": "idn",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#property_idn"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003A\u0024userId",
+            "name": "userId",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#property_userId"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003A\u0024score",
+            "name": "score",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#property_score"
+        },                {
+            "fqsen": "\\App\\Entity\\Scores\u003A\u003A\u0024date",
+            "name": "date",
+            "summary": "",
+            "url": "classes/App-Entity-Scores.html#property_date"
+        },                {
             "fqsen": "\\App\\Kernel",
             "name": "Kernel",
             "summary": "",
             "url": "classes/App-Kernel.html"
+        },                {
+            "fqsen": "\\App\\Repository\\GamePlayerRepository",
+            "name": "GamePlayerRepository",
+            "summary": "",
+            "url": "classes/App-Repository-GamePlayerRepository.html"
+        },                {
+            "fqsen": "\\App\\Repository\\GamePlayerRepository\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Repository-GamePlayerRepository.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Repository\\GamePlayerRepository\u003A\u003AdeleteAll\u0028\u0029",
+            "name": "deleteAll",
+            "summary": "",
+            "url": "classes/App-Repository-GamePlayerRepository.html#method_deleteAll"
         },                {
             "fqsen": "\\App\\Repository\\LibraryRepository",
             "name": "LibraryRepository",
@@ -1785,6 +1940,26 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/App-Repository-ProductRepository.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Repository\\ScoresRepository",
+            "name": "ScoresRepository",
+            "summary": "",
+            "url": "classes/App-Repository-ScoresRepository.html"
+        },                {
+            "fqsen": "\\App\\Repository\\ScoresRepository\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Repository-ScoresRepository.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Repository\\ScoresRepository\u003A\u003AfindAllWithPlayersOrderedByScore\u0028\u0029",
+            "name": "findAllWithPlayersOrderedByScore",
+            "summary": "Fetch\u0020joined\u0020data\u0020between\u0020Scores\u0020and\u0020GamePlayer,\u0020score\u0020descending.",
+            "url": "classes/App-Repository-ScoresRepository.html#method_findAllWithPlayersOrderedByScore"
+        },                {
+            "fqsen": "\\App\\Repository\\ScoresRepository\u003A\u003AdeleteAll\u0028\u0029",
+            "name": "deleteAll",
+            "summary": "",
+            "url": "classes/App-Repository-ScoresRepository.html#method_deleteAll"
         },                {
             "fqsen": "\\App\\Service\\ApiService",
             "name": "ApiService",
@@ -1830,6 +2005,36 @@ Search.appendIndex(
             "name": "libraryRepository",
             "summary": "",
             "url": "classes/App-Service-DatabaseResetService.html#property_libraryRepository"
+        },                {
+            "fqsen": "\\App\\Service\\PlayerScoreResetService",
+            "name": "PlayerScoreResetService",
+            "summary": "",
+            "url": "classes/App-Service-PlayerScoreResetService.html"
+        },                {
+            "fqsen": "\\App\\Service\\PlayerScoreResetService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-PlayerScoreResetService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\PlayerScoreResetService\u003A\u003AresetPlayerData\u0028\u0029",
+            "name": "resetPlayerData",
+            "summary": "",
+            "url": "classes/App-Service-PlayerScoreResetService.html#method_resetPlayerData"
+        },                {
+            "fqsen": "\\App\\Service\\PlayerScoreResetService\u003A\u003A\u0024gamePlayerRepository",
+            "name": "gamePlayerRepository",
+            "summary": "",
+            "url": "classes/App-Service-PlayerScoreResetService.html#property_gamePlayerRepository"
+        },                {
+            "fqsen": "\\App\\Service\\PlayerScoreResetService\u003A\u003A\u0024scoresRepository",
+            "name": "scoresRepository",
+            "summary": "",
+            "url": "classes/App-Service-PlayerScoreResetService.html#property_scoresRepository"
+        },                {
+            "fqsen": "\\App\\Service\\PlayerScoreResetService\u003A\u003A\u0024entityManager",
+            "name": "entityManager",
+            "summary": "",
+            "url": "classes/App-Service-PlayerScoreResetService.html#property_entityManager"
         },                {
             "fqsen": "\\",
             "name": "\\",

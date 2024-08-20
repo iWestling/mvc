@@ -7,10 +7,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\CardGame\TexasHoldemGame;
 use App\CardGame\Player;
 use App\CardGame\PlayerActionHandler;
 use App\CardGame\PlayerActionInit;
+
+use App\Entity\GamePlayer;
+use App\Entity\Scores;
+use Doctrine\Persistence\ManagerRegistry;
+use DateTime;
 
 class TexasHoldemController extends AbstractController
 {
@@ -24,6 +30,12 @@ class TexasHoldemController extends AbstractController
     public function about(): Response
     {
         return $this->render('texas/about.html.twig');
+    }
+
+    #[Route('/proj/about/database', name: 'proj_database')]
+    public function database(): Response
+    {
+        return $this->render('texas/database.html.twig');
     }
 
     #[Route('/proj/start', name: 'proj_start', methods: ['GET', 'POST'])]
@@ -190,7 +202,55 @@ class TexasHoldemController extends AbstractController
     }
 
 
+    #[Route('/proj/submit-score', name: 'submit_score', methods: ['POST'])]
+    public function submitScore(Request $request, ManagerRegistry $doctrine, SessionInterface $session): Response
+    {
+        $entityManager = $doctrine->getManager();
 
+        // Get form data
+        $username = $request->request->get('username');
+        $age = (int)$request->request->get('age');
+        $scoreValue = (int)$request->request->get('score');
+
+        // Validate that username is a string
+        if (!is_string($username)) {
+            return new JsonResponse(['error' => 'Invalid username.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Create new GamePlayer entity
+        $player = new GamePlayer();
+        $player->setUsername($username);
+        $player->setAge($age);
+
+        // Create new Scores entity
+        $score = new Scores();
+        $score->setUserId($player);  // Set the relationship between player and score
+        $score->setScore($scoreValue);
+        $score->setDate(new DateTime());  // Set the current date and time
+
+        // Persist entities to the database
+        $entityManager->persist($player);
+        $entityManager->persist($score);
+        $entityManager->flush();
+
+        // Retrieve the game from the session
+        $game = $session->get('game');
+
+        // Check if $game is an instance of TexasHoldemGame
+        if (!$game instanceof TexasHoldemGame) {
+            return $this->redirectToRoute('proj_start');
+        }
+
+        // Render the game view with a success message
+        return $this->render('texas/game.html.twig', [
+            'game' => $game,
+            'isGameOver' => $game->isGameOver(),
+            'winners' => $game->getWinners(),
+            'minChips' => $game->getMinimumChips(),
+            'pot' => $game->getPotManager()->getPot(),
+            'success_message' => 'Your score has been successfully submitted!'
+        ]);
+    }
 
     #[Route('/proj/new-round', name: 'proj_new_round', methods: ['POST'])]
     public function startNewRound(SessionInterface $session): Response
