@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Tests\Entity;
+
+use App\Entity\GamePlayer;
+use App\Entity\Scores;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\TestCase;
+
+class GamePlayerTest extends TestCase
+{
+    public function testInitialValues(): void
+    {
+        $player = new GamePlayer();
+
+        $this->assertNull($player->getId());
+        $this->assertNull($player->getUsername());
+        $this->assertNull($player->getAge());
+        $this->assertInstanceOf(Collection::class, $player->getScores());
+        $this->assertCount(0, $player->getScores());
+    }
+
+    public function testSetAndGetId(): void
+    {
+        $player = new GamePlayer();
+        $idn = 1;
+        $player->setId($idn);
+
+        $this->assertEquals($idn, $player->getId());
+    }
+
+    public function testSetAndGetUsername(): void
+    {
+        $player = new GamePlayer();
+        $username = 'TestPlayer';
+        $player->setUsername($username);
+
+        $this->assertEquals($username, $player->getUsername());
+    }
+
+    public function testSetAndGetAge(): void
+    {
+        $player = new GamePlayer();
+        $age = 30;
+        $player->setAge($age);
+
+        $this->assertEquals($age, $player->getAge());
+    }
+
+    public function testGetScoresReturnsCollection(): void
+    {
+        $player = new GamePlayer();
+        $this->assertInstanceOf(Collection::class, $player->getScores());
+        $this->assertCount(0, $player->getScores());
+    }
+
+    public function testAddScore(): void
+    {
+        $player = new GamePlayer();
+        $score = $this->getMockBuilder(Scores::class)->getMock();
+
+        $score->expects($this->once())
+            ->method('setUserId')
+            ->with($player);
+
+        $player->addScore($score);
+
+        $this->assertCount(1, $player->getScores());
+        $this->assertTrue($player->getScores()->contains($score));
+    }
+
+    public function testRemoveScore(): void
+    {
+        $player = new GamePlayer();
+        $score = $this->getMockBuilder(Scores::class)->getMock();
+
+        $score->expects($this->exactly(2))
+            ->method('setUserId')
+            ->withConsecutive([$player], [null]);
+
+        $player->addScore($score);
+        $this->assertCount(1, $player->getScores());
+
+        $player->removeScore($score);
+        $this->assertCount(0, $player->getScores());
+        $this->assertFalse($player->getScores()->contains($score));
+    }
+
+    public function testAddDuplicateScore(): void
+    {
+        $player = new GamePlayer();
+        $score = $this->getMockBuilder(Scores::class)->getMock();
+
+        $score->expects($this->once())
+            ->method('setUserId')
+            ->with($player);
+
+        $player->addScore($score);
+        $player->addScore($score);
+
+        $this->assertCount(1, $player->getScores());
+    }
+}
