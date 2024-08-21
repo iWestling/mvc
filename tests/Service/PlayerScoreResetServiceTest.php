@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Exception;
 use DateTime;
 
+/**
+ * @method \PHPUnit\Framework\MockObject\MockObject expects($param)
+ * @method \PHPUnit\Framework\MockObject\MockObject method($param)
+ */
 class PlayerScoreResetServiceTest extends TestCase
 {
     /** @var GamePlayerRepository&\PHPUnit\Framework\MockObject\MockObject */
