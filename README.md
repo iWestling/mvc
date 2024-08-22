@@ -12,6 +12,8 @@
 
 This is the Object-oriented web technologies course repo (also known as "mvc") by the student Isabel Westling.
 
+This repo includes assignments in the course as well as the final examination project with a Texas Hold'em game. 
+
 Course is available at:
 - https://dbwebb.se/mvc
 
