@@ -7,11 +7,7 @@
 
     <div class="game-info">
         <h2>Pot:  {{ pot }}</h2>
-        {% if game.getPotManager().getCurrentBet() != 0 %}
-            <h3>Bet you have to match: {{ game.getPotManager().getCurrentBet() }}</h3>
-        {% endif %}
         <h3>Current Phase: 
-        {% set currentStage = game.stageManager.getCurrentStage() %}
         {% if currentStage == 0 %}
             About to deal flop...
         {% elseif currentStage == 1 %}
@@ -30,9 +26,10 @@
     {% if isGameOver %}
         <div class="winner-announcement">
             <h2>Round Over</h2>
-            <h1>Winner:</h1>
+            <h1>Winner{{ winners|length > 1 ? 's' : '' }}:</h1>
+            {% set splitPot = pot // winners|length %}
             {% for winner in winners %}
-                <p>{{ winner.getName }} won {{ pot }} chips, {{ winner.getName }} now has {{ winner.getChips() }} chips in total.</p>
+                <p>{{ winner.getName }} won {{ splitPot }} chips, {{ winner.getName }} now has {{ winner.getChips() }} chips in total.</p>
             {% endfor %}
         </div>
         {% set youAreWinner = false %}
@@ -117,7 +114,7 @@
         <h2>Debug Information:</h2>
         {{ dump(game.getActions()) }}
         <ul>
-            <li>Current Stage: {{ game.stageManager.getCurrentStage() }}</li>
+            <li>Current Stage: {{ currentStage }}</li>
             <li>Remaining Active Players: {{ game.countActivePlayers() }}</li>
         </ul>
         </details>
@@ -129,7 +126,7 @@
                     <button type="submit">Start New Round</button>
                 </form>
             {% endif %}
-                <form method="post" action="{{ path('proj_start') }}">
+                <form method="get" action="{{ path('proj_start') }}">
                     <button type="submit">Start New Game</button>
                 </form>
         {% else %}
@@ -166,13 +163,13 @@
                             <button type="submit">Check</button>
                         </form>
                         <form method="post" action="{{ path('proj_play') }}">
+                            <input type="hidden" name="action" value="fold">
+                            <button type="submit">Fold</button>
+                        </form>
+                        <form method="post" action="{{ path('proj_play') }}">
                             <input type="hidden" name="action" value="raise">
                             <input type="number" id="raiseAmount" name="raiseAmount" min="1" max="{{ minChips }}" required>
                             <button type="submit">Raise</button>
-                        </form>
-                        <form method="post" action="{{ path('proj_play') }}">
-                            <input type="hidden" name="action" value="fold">
-                            <button type="submit">Fold</button>
                         </form>
                         <form method="post" action="{{ path('proj_play') }}">
                             <input type="hidden" name="action" value="all-in">

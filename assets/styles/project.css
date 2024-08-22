@@ -8,6 +8,22 @@ body {
     align-items: center;
 }
 
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #32261e;
+    height: 100px;
+    margin: 0 auto;
+    padding: 15px;
+    width: 100%;
+    color:#f1f1f1;
+    text-align: center;
+    font-size: 2.2em;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+}
+
 main {
     width: 100%;
     max-width: 1200px;
@@ -41,11 +57,44 @@ main {
 }
 
 .navbar li a:hover:not(.active) {
-    background-color: #111;
+    background-color: #1e1a17;
 }
 
 .navbar .active {
     background-color: #04aa04;
+}
+
+.navbar2 {
+    width: 100%;
+    background-color: #292626;
+}
+
+.navbar2 ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar2 li {
+    margin: 0 10px;
+}
+
+.navbar2 li a {
+    display: block;
+    color: #fff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar2 li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.navbar2 .active {
+    background-color: #0a8e0a;
 }
 
 .content {
@@ -59,6 +108,18 @@ main {
     align-items: center;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: rgba(35, 35, 35, 0.3);
+    color: #e7d9d9;
+    text-align: center;
+}
+
+
 .winner-announcement {
     text-align: center;
     margin-bottom: 20px;
@@ -67,6 +128,10 @@ main {
 .winner-announcement h1 {
     font-size: 2em;
     color: #FFD700;
+}
+
+.success-message {
+    text-align: center;
 }
 
 .game-info {

@@ -90,7 +90,8 @@ class TexasHoldemGameTest extends TestCase
     {
         $player = $this->createMock(Player::class);
         $player->method('getName')->willReturn('Player 1');
-        $player->expects($this->once())->method('isFolded')->willReturn(false);
+
+        $player->expects($this->any())->method('isFolded')->willReturn(false);
 
         $this->game->addPlayer($player);
 
@@ -99,6 +100,7 @@ class TexasHoldemGameTest extends TestCase
         $actions = $this->game->getActions();
         $this->assertEquals('Call', $actions['Player 1']);
     }
+
 
     public function testStartNewRound(): void
     {

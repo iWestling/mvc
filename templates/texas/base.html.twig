@@ -8,7 +8,26 @@
     {% endblock %}
 </head>
 <body>
+    <header class="site-header" style="header-image: url({{ asset('img/header.webp') }})">
+        <span class="site-title">My Symfony Site</span>
+    </header>
     <nav class="navbar">
+        <ul>
+            <li><a href="{{ path('home') }}">Home</a></li>
+            <li><a href="{{ path('about') }}">About</a></li>
+            <li><a href="{{ path('report') }}">Report</a></li>
+            <li><a href="{{ path('lucky_number') }}">Lucky</a></li>
+            <li><a href="{{ path('api') }}">APIs</a></li>
+            <li><a href="{{ path('card_start') }}">Card</a></li>
+            <li><a href="{{ path('session_show') }}">Session</a></li>
+            <li><a href="{{ path('session_delete') }}">Delete Session</a></li>
+            <li><a href="{{ path('game') }}">Game</a></li>
+            <li><a href="{{ path('library') }}">Library</a></li>
+            <li><a href="{{ path('metrics') }}">Metrics</a></li>
+            <li><a href="{{ path('proj') }}">Project</a></li>
+        </ul>
+    </nav>
+    <nav class="navbar2">
         <ul>
             <li><a href="{{ path('home') }}">Report Page</a></li>
             <li><a href="{{ path('proj_home') }}">Home</a></li>
@@ -25,5 +44,9 @@
     {% block javascripts %}
         {{ encore_entry_script_tags('project') }}
     {% endblock %}
+
+    <footer>
+        <p>Project by Isabel Westling</p>
+    </footer>
 </body>
 </html>

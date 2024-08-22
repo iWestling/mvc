@@ -182,7 +182,7 @@ class TexasHoldemJsonTest extends WebTestCase
         $this->assertIsArray($data, 'JSON response should decode to an array');
         $this->assertEquals(1500, $player->getChips());
         $this->assertArrayHasKey('message', $data);
-        $this->assertEquals('Chips set successfully.', $data['message']);
+        $this->assertEquals('Your chips set successfully.', $data['message']);
     }
 
     public function testSetChipsCompOne(): void
@@ -208,7 +208,7 @@ class TexasHoldemJsonTest extends WebTestCase
         $this->assertIsArray($data, 'JSON response should decode to an array');
         $this->assertEquals(2000, $game->getPlayers()[1]->getChips());
         $this->assertArrayHasKey('message', $data);
-        $this->assertEquals('Chips set successfully.', $data['message']);
+        $this->assertEquals('Computer 1 chips set successfully.', $data['message']);
     }
 
     public function testSetChipsCompTwo(): void
@@ -235,7 +235,7 @@ class TexasHoldemJsonTest extends WebTestCase
         $this->assertIsArray($data, 'JSON response should decode to an array');
         $this->assertEquals(3000, $game->getPlayers()[2]->getChips());
         $this->assertArrayHasKey('message', $data);
-        $this->assertEquals('Chips set successfully.', $data['message']);
+        $this->assertEquals('Computer 2 chips set successfully.', $data['message']);
     }
 
     public function testGetCommunityCardsWithoutGame(): void

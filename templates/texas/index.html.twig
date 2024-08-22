@@ -7,10 +7,7 @@
     <h1>Welcome to Texas Hold'em!</h1>
     <br>
     <p>Click "Start Game" to begin a new game.</p>
-    <div class="action-buttons">
-        <form method="post" action="{{ path('proj_start') }}">
-            <input type="hidden" name="action" value="proj_start">
-            <button type="submit">Start Game</button>
-        </form>
-    </div>
+    <form method="get" action="{{ path('proj_start') }}">
+        <button type="submit">Start Game</button>
+    </form>
 {% endblock %}

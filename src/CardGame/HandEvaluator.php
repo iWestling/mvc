@@ -126,7 +126,7 @@ class HandEvaluator
      * @param array<string, mixed> $hand
      * @return int
      */
-    private function getRankValue(array $hand): int
+    public function getRankValue(array $hand): int
     {
         $rankings = [
             'High Card' => 1,
@@ -153,17 +153,18 @@ class HandEvaluator
      */
     private function compareHandValues(array $values1, array $values2): int
     {
-        for ($i = 0, $valueCount = count($values1); $i < $valueCount; $i++) {
-            if (isset($values1[$i], $values2[$i])) {
-                if ($values1[$i] > $values2[$i]) {
-                    return 1;
-                } elseif ($values1[$i] < $values2[$i]) {
-                    return -1;
-                }
+        $valueCount = min(count($values1), count($values2));
+
+        for ($i = 0; $i < $valueCount; $i++) {
+            if ($values1[$i] > $values2[$i]) {
+                return 1;
+            } elseif ($values1[$i] < $values2[$i]) {
+                return -1;
             }
         }
 
-        return 0; // Return 0 if hands are identical
+        // If all values are equal, the hands are considered equal
+        return 0;
     }
 
 }

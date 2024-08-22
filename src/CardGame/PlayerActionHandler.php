@@ -15,11 +15,6 @@ class PlayerActionHandler
         $this->potManager = $potManager;
     }
 
-    public function rotateRoles(int &$dealerIndex, int $playerCount): void
-    {
-        $dealerIndex = ($dealerIndex + 1) % $playerCount;
-    }
-
     /**
      * Process actions in order for each player.
      *

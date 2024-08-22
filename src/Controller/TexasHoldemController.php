@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\CardGame\TexasHoldemGame;
 use App\CardGame\Player;
+use App\CardGame\Deck;
 use App\CardGame\PlayerActionHandler;
 use App\CardGame\PlayerActionInit;
 
@@ -151,57 +152,6 @@ class TexasHoldemController extends AbstractController
         return $response;
     }
 
-    private function advancePhaseIfNeeded(SessionInterface $session, TexasHoldemGame $game, int $currentActionIndex, int $totalPlayers): ?Response
-    {
-        if ($currentActionIndex >= $totalPlayers && $game->getPotManager()->haveAllActivePlayersMatchedCurrentBet($game->getPlayers())) {
-            // If all players have matched the current bet, advance to the next phase
-            $game->advanceGameStage();  // This now uses the refactored `advanceGameStage` method
-
-            // Reset the action index for the next phase
-            $session->set('current_action_index', 0);
-
-            // Check if the game is over and render the final state if it is
-            if ($game->isGameOver()) {
-                return $this->renderGameView($game);  // Reuse renderGameView for rendering
-            }
-
-            return $this->redirectToRoute('proj_play');  // Redirect to start the next phase
-        }
-
-        return null;  // Return null if no phase advancement is needed
-    }
-    private function renderGameView(TexasHoldemGame $game): Response
-    {
-        return $this->render('texas/game.html.twig', [
-            'game' => $game,
-            'isGameOver' => $game->isGameOver(),
-            'winners' => $game->getWinners(),
-            'minChips' => $game->getMinimumChips(),
-            'pot' => $game->getPotManager()->getPot(),  // Pass the current pot value
-        ]);
-    }
-    /**
-     * Handle the scenario when an All-In has occurred.
-     */
-    private function handleAllInScenario(TexasHoldemGame $game, PlayerActionHandler $playerActionHandler): bool
-    {
-        // Check if an All-In has occurred, and if so, ensure all players have acted
-        if ($game->hasAllInOccurred()) {
-            // Ensure remaining players have had a chance to call or fold
-            $game->handleRemainingPlayersAfterAllIn($playerActionHandler);
-
-            // After all players have acted, proceed with the game stages
-            while (!$game->isGameOver()) {
-                $game->advanceGameStage();  // This now uses the refactored `advanceGameStage` method
-            }
-
-            return true;  // Game has ended after the All-In scenario
-        }
-
-        return false;  // No All-In scenario handled
-    }
-
-
     #[Route('/proj/submit-score', name: 'submit_score', methods: ['POST'])]
     public function submitScore(Request $request, ManagerRegistry $doctrine, SessionInterface $session): Response
     {
@@ -248,6 +198,7 @@ class TexasHoldemController extends AbstractController
             'winners' => $game->getWinners(),
             'minChips' => $game->getMinimumChips(),
             'pot' => $game->getPotManager()->getPot(),
+            'currentStage' => $game->getStageManager()->getCurrentStage(),
             'success_message' => 'Your score has been successfully submitted!'
         ]);
     }
@@ -266,6 +217,58 @@ class TexasHoldemController extends AbstractController
         $session->set('game', $game);
 
         return $this->redirectToRoute('proj_play');
+    }
+    private function advancePhaseIfNeeded(SessionInterface $session, TexasHoldemGame $game, int $currentActionIndex, int $totalPlayers): ?Response
+    {
+        if ($currentActionIndex >= $totalPlayers && $game->getPotManager()->haveAllActivePlayersMatchedCurrentBet($game->getPlayers())) {
+            // If all players have matched the current bet, advance to the next phase
+            $game->advanceGameStage();  // This now uses the refactored `advanceGameStage` method
+
+            // Reset the action index for the next phase
+            $session->set('current_action_index', 0);
+
+            // Check if the game is over and render the final state if it is
+            if ($game->isGameOver()) {
+                return $this->renderGameView($game);  // Reuse renderGameView for rendering
+            }
+
+            return $this->redirectToRoute('proj_play');  // Redirect to start the next phase
+        }
+
+        return null;  // Return null if no phase advancement is needed
+    }
+    private function renderGameView(TexasHoldemGame $game): Response
+    {
+        // Render the game view with a success message
+        return $this->render('texas/game.html.twig', [
+            'game' => $game,
+            'isGameOver' => $game->isGameOver(),
+            'winners' => $game->getWinners(),
+            'minChips' => $game->getMinimumChips(),
+            'pot' => $game->getPotManager()->getPot(),
+            'currentStage' => $game->getStageManager()->getCurrentStage(),
+            'success_message' => 'Your score has been successfully submitted!'
+        ]);
+    }
+    /**
+     * Handle the scenario when an All-In has occurred.
+     */
+    private function handleAllInScenario(TexasHoldemGame $game, PlayerActionHandler $playerActionHandler): bool
+    {
+        // Check if an All-In has occurred, and if so, ensure all players have acted
+        if ($game->hasAllInOccurred()) {
+            // Ensure remaining players have had a chance to call or fold
+            $game->handleRemainingPlayersAfterAllIn($playerActionHandler);
+
+            // After all players have acted, proceed with the game stages
+            while (!$game->isGameOver()) {
+                $game->advanceGameStage();  // This now uses the refactored `advanceGameStage` method
+            }
+
+            return true;  // Game has ended after the All-In scenario
+        }
+
+        return false;  // No All-In scenario handled
     }
 
 }

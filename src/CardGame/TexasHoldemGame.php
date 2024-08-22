@@ -159,7 +159,11 @@ class TexasHoldemGame
 
     public function handleAction(Player $player, string $action, int $raiseAmount = 0): void
     {
-        dump($player->getName() . " is taking action: " . ucfirst($action) . " with raise amount: $raiseAmount");
+        // Check if the player is a computer and if the action is "raise"
+        if ($action === 'raise' && strpos($player->getName(), 'Computer') !== false) {
+            // Set the raise amount to a fixed value (e.g., 10 chips) for the computer player
+            $raiseAmount = 10;
+        }
 
         switch ($action) {
             case 'call':
@@ -184,11 +188,11 @@ class TexasHoldemGame
                 break;
         }
 
-        // Log the player's new status after the action
-        $status = $player->isFolded() ? "Folded" : "Active";
-        dump($player->getName() . " status after action: " . $status);
-
         $this->actions[$player->getName()] = ucfirst($action);
+        if ($this->countActivePlayers() === 1) {
+            $this->determineWinner();
+            $this->setGameOver(true);
+        }
     }
 
 
@@ -262,7 +266,8 @@ class TexasHoldemGame
     {
         if (count($this->winners) > 1) {
             $this->potManager->splitPotAmongWinners($this->winners);
-            $this->finalizeGame();
+            $this->gameOver = true;
+            $this->winnerDetermined = true;
             return;
         }
 
@@ -271,21 +276,18 @@ class TexasHoldemGame
             $this->potManager->distributeWinningsToPlayer($winner);
         }
 
-        $this->finalizeGame();
-    }
-
-
-    private function finalizeGame(): void
-    {
         $this->gameOver = true;
         $this->winnerDetermined = true;
     }
 
+
     public function startNewRound(): void
     {
-        $this->winnerDetermined = false;
+
         $this->deck = new Deck();
+        $this->communityCardManager = new CommunityCardManager($this->deck);
         $this->communityCardManager->resetCommunityCards();
+        $this->winnerDetermined = false;
         $this->potManager->resetPot();
         $this->potManager->resetCurrentBet();
         $this->stageManager->resetStage();
@@ -297,9 +299,6 @@ class TexasHoldemGame
         // Reset player states and handle blinds
         $this->actionInit->resetPlayersForNewRound($this->players, $this->actions);  // Reset player states for the new round
         $this->actionInit->handleBlinds($this->players);  // Handle blinds (small blind, big blind)
-
-
-        $this->actionInit->handleBlinds($this->players);
 
         $this->gameOver = false;
         $this->allInOccurred = false;

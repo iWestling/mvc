@@ -28,7 +28,7 @@ class NormalComputer
     private function hasHighCard(Player $player): bool
     {
         foreach ($player->getHand() as $card) {
-            if (in_array($card->getValue(), [1, 11, 12, 13])) {
+            if (in_array($card->getValue(), [1, 11, 12, 13, 14])) {
                 return true;
             }
         }

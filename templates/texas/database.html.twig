@@ -4,7 +4,15 @@
 
 {% block main %}
     <h1>About</h1>
-
+    <br>
+    <img src="{{ asset('img/table1.jpg') }}" alt="Database">
+    <p>Databasen har två tabeller och gjordes i SQLite.<br> 
+    I GamePlayer är idn primary key medan username och age sparar information om spelaren.<br>
+    I Score är idn primary key medan user_id är en foreign key som länkar till idn i GamePlayer-tabellen. Score och date sparar information om resulatet och tiden den sparades.</p>
+    <p>Relationen är en One-to-Many relation, varje GamePlayer måste ha en eller flera Scores och varje score hör till en spelare.</p>
+    <br>
+    <p>Jag gjorde enhetstester för Entity och Service med TestCase och EntityManagerInterface, jag provade runt lite att testa Respository också men gjorde inte mer med det då det verkade kräva en ännu större djupgrävning som jag inte hade tid med.
+    <br>
     <div class="action-buttons">
         <form method="post" action="{{ path('highscores') }}">
             <input type="hidden" name="action" value="highscores">
@@ -19,4 +27,15 @@
             <button type="submit">Reset Database</button>
         </form>
     </div>
+    <br>
+    <p>ORM och att jobba med databaser som vi gjorde i databasekursen har båda samma mål, dvs att interagera med databasen för att hämta, inserta, ta bort eller updatera data. De använder båda SQL även om det görs lite mer "behind the scenes" med ORM.
+    ORM ger ett "abstraction layer" som gör att programmerare kan jobba med objekt istället för att skriva direkta SQL-queries.<br>
+    Att arbeta med ORM har många fördelar. Tack vare dess "abstraction layer" kan man jobba med databasen genom att använda objekt och klasser i deras programmeringspråk. Detta gör att man inte behöver vara lika kunnig med SQL eller hur relationsdatabaser fungerar.  Man behöver inte heller skriva en massa repetitiva SQL queries. Många ORM frameworks har automatisk generering av databas-scheman och hjälper till att enkelt ta hand om t.ex. relationer mellan tabeller.<br>
+    Koden blir även "database-agnostic", dvs att man kan jobba i och byta mellan olika databaser utan att behöva ändra mycket av koden.<br>
+    Med ORM blir koden mer organiserad och enklare att förstå och underhålla. ORM frameworks har ofta inbyggt skydd mot SQL-injections vilket ökar säkerheten.<br>
+    Några nackdelar med ORM skulle kunna vara vid större projekt där det krävs lite mer komplexa SQL queries då detta inte är lika flexibelt och optimerat som med handskriven SQL. Man har mindre kontroll över de SQL queries som genereras av ORM vilket gör det svårare att finjustera koden för olika specifika användningar.
+    En annan nackdel med ORM är såklart att även det har en inlärningskurva man måste lära sig.<br>
+    Fördelar med direkt SQL skulle alltså vara det motsatta, dvs att arbeta direkt med SQL ger dig full kontroll där du kan skriva komplexa och specifika squeries. Detta skulle dock skapa mycket repetitiv kod, svårare kod att underhålla, göra dig låst till ett specifikt databassystem och öka risken för SQL injections.<br>
+    I slutändan tror jag att valet mellan ORM och direkt SQL beror på projektets specifika behov och omfattning samt programerarnas kunskaper med ORM, SQL och databashantering. 
+    </p>
 {% endblock %}

@@ -49,8 +49,8 @@ class PlayerScoreResetServiceTest extends TestCase
     public function testResetPlayerDataSuccess(): void
     {
         // Mock deleteAll methods
-        $this->scoresRepository->expects($this->once())->method('deleteAll');
-        $this->gamePlayerRepository->expects($this->once())->method('deleteAll');
+        $this->scoresRepository->/** @scrutinizer ignore-call */ expects($this->once())->method('deleteAll');
+        $this->gamePlayerRepository->/** @scrutinizer ignore-call */ expects($this->once())->method('deleteAll');
 
         // Mock persist and flush methods
         $this->entityManager->expects($this->exactly(6))->method('persist'); // 3 players + 3 scores
@@ -67,11 +67,11 @@ class PlayerScoreResetServiceTest extends TestCase
     public function testResetPlayerDataFailure(): void
     {
         // Mock deleteAll methods
-        $this->scoresRepository->expects($this->once())->method('deleteAll');
-        $this->gamePlayerRepository->expects($this->once())->method('deleteAll');
+        $this->scoresRepository->/** @scrutinizer ignore-call */ expects($this->once())->method('deleteAll');
+        $this->gamePlayerRepository->/** @scrutinizer ignore-call */ expects($this->once())->method('deleteAll');
 
         // Simulate an exception being thrown during the persist operation
-        $this->entityManager->method('persist')->will($this->throwException(new Exception('Test Exception')));
+        $this->entityManager->/** @scrutinizer ignore-call */ method('persist')->will($this->throwException(new Exception('Test Exception')));
 
         // Call the resetPlayerData method
         $response = $this->resetService->resetPlayerData();

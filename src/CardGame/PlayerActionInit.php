@@ -31,6 +31,7 @@ class PlayerActionInit
 
             if ($player->getRole() === 'big blind') {
                 $this->handleRaise($player, 4);  // Big blind bets
+                $this->potManager->updateCurrentBet(4);
             }
         }
     }
@@ -143,6 +144,7 @@ class PlayerActionInit
             }
             $actions[$player->getName()] = 'No action yet';
             $player->resetHand();
+            $this->resetCurrentBet($player);
             $player->unfold();
         }
     }

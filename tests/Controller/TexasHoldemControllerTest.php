@@ -10,8 +10,13 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Entity\GamePlayer;
+use App\Entity\Scores;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TexasHoldemControllerTest extends WebTestCase
 {
@@ -30,6 +35,17 @@ class TexasHoldemControllerTest extends WebTestCase
      */
     private $controller;
 
+    /**
+     * @var MockObject&ManagerRegistry
+     */
+    private $doctrine;
+
+    /**
+     * @var MockObject&EntityManagerInterface
+     */
+    private $entityManager;
+
+
     protected function setUp(): void
     {
         $this->session = $this->createMock(SessionInterface::class);
@@ -40,10 +56,59 @@ class TexasHoldemControllerTest extends WebTestCase
             ->onlyMethods(['render']) // Mock only the render method
             ->getMock();
 
+        // Mock the ManagerRegistry and EntityManager
+        $this->doctrine = $this->createMock(ManagerRegistry::class);
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
+
+        // Set up the ManagerRegistry to return the EntityManager
+        $this->doctrine->method('getManager')->willReturn($this->entityManager);
+
         // Set up the container to avoid container initialization error
         $container = $this->createMock(ContainerInterface::class);
         $this->controller->setContainer($container);
     }
+
+    public function testSubmitScore(): void
+    {
+        // Mock the game in the session
+        $this->session->expects($this->once())
+            ->method('get')
+            ->with('game')
+            ->willReturn($this->game);
+
+        // Mock form data
+        $request = new Request([], [
+            'username' => 'testuser',
+            'age' => 30,
+            'score' => 1000,
+        ]);
+
+        // Mock the persistence of GamePlayer and Scores entities
+        $this->entityManager->expects($this->exactly(2))
+        ->method('persist')
+        ->withConsecutive(
+            [$this->isInstanceOf(GamePlayer::class)], // Wrap in an array
+            [$this->isInstanceOf(Scores::class)] // Wrap in an array
+        );
+
+        // Mock the flush method being called
+        $this->entityManager->expects($this->once())
+            ->method('flush');
+
+        // Mock the rendering of the game view
+        $this->controller->expects($this->once())
+            ->method('render')
+            ->with('texas/game.html.twig', $this->isType('array'))
+            ->willReturn(new Response());
+
+        // Call the submitScore method
+        $response = $this->controller->submitScore($request, $this->doctrine, $this->session);
+
+        // Assert that the response is valid
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
 
     public function testStartGameGetRequest(): void
     {
@@ -290,4 +355,160 @@ class TexasHoldemControllerTest extends WebTestCase
         $this->assertNotNull($response);
         $this->assertInstanceOf(RedirectResponse::class, $response);
     }
+
+    public function testStartNewRoundRedirectsToStartIfNoGameInSession(): void
+    {
+        // Mock the session to return null when getting the 'game'
+        $this->session->expects($this->once())
+            ->method('get')
+            ->with('game')
+            ->willReturn(null);
+
+        // Mock the controller and expect a redirect to 'proj_start'
+        $controller = $this->getMockBuilder(TexasHoldemController::class)
+            ->onlyMethods(['redirectToRoute'])
+            ->getMock();
+
+        $controller->expects($this->once())
+            ->method('redirectToRoute')
+            ->with('proj_start')
+            ->willReturn(new RedirectResponse('/proj/start'));
+
+        // Set up the container
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
+
+        // Simulate the POST request
+        $response = $controller->startNewRound($this->session);
+
+        // Assert the redirect response
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        /** @var RedirectResponse $response */
+        $this->assertEquals('/proj/start', $response->getTargetUrl());
+    }
+    public function testSubmitScoreInvalidUsername(): void
+    {
+        // Mock form data with invalid username
+        $request = new Request([], [
+            'username' => null, // Invalid username
+            'age' => 30,
+            'score' => 1000,
+        ]);
+    
+        // Call the submitScore method
+        $response = $this->controller->submitScore($request, $this->doctrine, $this->session);
+    
+        // Assert the response is a JsonResponse with an error
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+    
+        // Get the content of the response
+        $content = $response->getContent();
+    
+        // Ensure content is not false and is a valid JSON string
+        $this->assertNotFalse($content, 'Response content should not be false.');
+    
+        // Decode the content
+        $data = json_decode($content, true);
+    
+        // Ensure that $data is an array before proceeding with further assertions
+        $this->assertIsArray($data, 'Decoded response should be an array.');
+    
+        // Assert that the 'error' key exists in the response data
+        $this->assertArrayHasKey('error', $data);
+        $this->assertEquals('Invalid username.', $data['error']);
+    }
+    
+    
+    public function testSubmitScoreRedirectsToStartIfNoGameInSession(): void
+    {
+        // Mock the session to return null when getting the 'game'
+        $this->session->expects($this->once())
+            ->method('get')
+            ->with('game')
+            ->willReturn(null);
+
+        // Mock the controller and expect a redirect to 'proj_start'
+        $controller = $this->getMockBuilder(TexasHoldemController::class)
+            ->onlyMethods(['redirectToRoute'])
+            ->getMock();
+
+        $controller->expects($this->once())
+            ->method('redirectToRoute')
+            ->with('proj_start')
+            ->willReturn(new RedirectResponse('/proj/start'));
+
+        // Set up the container
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
+
+        // Mock form data
+        $request = new Request([], [
+            'username' => 'testuser',
+            'age' => 30,
+            'score' => 1000,
+        ]);
+
+        // Call the submitScore method
+        $response = $controller->submitScore($request, $this->doctrine, $this->session);
+
+        // Assert the redirect response
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        /** @var RedirectResponse $response */
+        $this->assertEquals('/proj/start', $response->getTargetUrl());
+    }
+
+    public function testDatabaseRequest(): void
+    {
+        // Mock the controller to expect the render method call
+        $this->controller->expects($this->once())
+            ->method('render')
+            ->with('texas/database.html.twig')
+            ->willReturn(new Response());
+
+        // Call the database method
+        $response = $this->controller->database();
+
+        // Assert that the response is a successful render of the database page
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+    public function testPlayRoundRendersGameView(): void
+    {
+        // Mock the session to return the game object and handle multiple calls to 'current_action_index'
+        $this->session->expects($this->any())  // Use 'any' to allow multiple calls
+            ->method('get')
+            ->withConsecutive(['game'], ['current_action_index', 0])
+            ->willReturnOnConsecutiveCalls($this->game, 0);
+
+        // Mock the game behavior to indicate the game is not over
+        $this->game->expects($this->once())
+            ->method('isGameOver')
+            ->willReturn(false);
+
+        // Mock the render method directly
+        $this->controller = $this->getMockBuilder(TexasHoldemController::class)
+            ->onlyMethods(['render'])
+            ->getMock();
+
+        // Expect the `render` method to be called with the correct template and parameters
+        $this->controller->expects($this->once())
+            ->method('render')
+            ->with('texas/game.html.twig', $this->isType('array'))
+            ->willReturn(new Response());
+
+        // Set up the container
+        $container = $this->createMock(ContainerInterface::class);
+        $this->controller->setContainer($container);
+
+        // Simulate the GET request
+        $response = $this->controller->playRound(new Request(), $this->session);
+
+        // Assert that the response is valid
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+
+
 }

@@ -96,7 +96,7 @@ class TexasHoldemJson extends AbstractController
         return new JsonResponse(['message' => 'Game reset successfully.'], 200);
     }
 
-    #[Route('/proj/api/set-chips', name: 'api_set_chips_you', methods: ['POST'])]
+    #[Route('/proj/api/set-chips/you', name: 'api_set_chips_you', methods: ['POST'])]
     public function setChips(Request $request, SessionInterface $session): JsonResponse
     {
         $game = $session->get('game');
@@ -109,9 +109,10 @@ class TexasHoldemJson extends AbstractController
         $player = $game->getPlayers()[0]; // Assuming the first player is the human player
         $player->setChips($chips);
 
-        return new JsonResponse(['message' => 'Chips set successfully.'], 200);
+        return new JsonResponse(['message' => 'Your chips set successfully.'], 200);
     }
-    #[Route('/proj/api/set-chips', name: 'api_set_chips_comp_one', methods: ['POST'])]
+
+    #[Route('/proj/api/set-chips/comp1', name: 'api_set_chips_comp_one', methods: ['POST'])]
     public function setChipsCompOne(Request $request, SessionInterface $session): JsonResponse
     {
         $game = $session->get('game');
@@ -121,13 +122,13 @@ class TexasHoldemJson extends AbstractController
         }
 
         $chips = (int)$request->request->get('chips', 1000);
-        $player = $game->getPlayers()[1]; // Assuming the first player is the human player
+        $player = $game->getPlayers()[1]; // Assuming the second player is Computer 1
         $player->setChips($chips);
 
-        return new JsonResponse(['message' => 'Chips set successfully.'], 200);
+        return new JsonResponse(['message' => 'Computer 1 chips set successfully.'], 200);
     }
 
-    #[Route('/proj/api/set-chips', name: 'api_set_chips_comp_two', methods: ['POST'])]
+    #[Route('/proj/api/set-chips/comp2', name: 'api_set_chips_comp_two', methods: ['POST'])]
     public function setChipsCompTwo(Request $request, SessionInterface $session): JsonResponse
     {
         $game = $session->get('game');
@@ -137,10 +138,10 @@ class TexasHoldemJson extends AbstractController
         }
 
         $chips = (int)$request->request->get('chips', 1000);
-        $player = $game->getPlayers()[2]; // Assuming the first player is the human player
+        $player = $game->getPlayers()[2]; // Assuming the third player is Computer 2
         $player->setChips($chips);
 
-        return new JsonResponse(['message' => 'Chips set successfully.'], 200);
+        return new JsonResponse(['message' => 'Computer 2 chips set successfully.'], 200);
     }
 
     #[Route('proj/api/community-cards', name: 'api_community_cards', methods: ['GET'])]
