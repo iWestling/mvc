@@ -11,6 +11,9 @@ use App\CardGame\Deck;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ */
 class PlayerActionHandlerTest extends TestCase
 {
     private PotManager $potManager;
@@ -263,7 +266,68 @@ class PlayerActionHandlerTest extends TestCase
     // }
 
 
+    public function testProcessActionsInOrderSkipsFoldedPlayer(): void
+    {
+        // Create mock players
+        $player1 = $this->createMock(Player::class);
+        $player2 = $this->createMock(Player::class);
 
+        // Simulate player1 being folded
+        $player1->expects($this->once())->method('isFolded')->willReturn(true);
 
+        // Ensure player2 is not folded
+        $player2->expects($this->once())->method('isFolded')->willReturn(false);
+
+        $communityCardManager = $this->createMock(CommunityCardManager::class);
+
+        // Mock the action handler function
+        $handleActionMock = function ($player) use ($player2) {
+            // Ensure only player2 is processed
+            $this->assertSame($player2, $player);
+        };
+
+        // Process actions in order with player1 folded
+        $this->actionHandler->processActionsInOrder(
+            [$player1, $player2],
+            'check',
+            0,
+            $communityCardManager,
+            $handleActionMock
+        );
+    }
+
+    public function testProcessActionsInOrderHandlesHumanPlayer(): void
+    {
+        // Create a human player and a computer player
+        $humanPlayer = $this->createMock(Player::class);
+        $computerPlayer = $this->createMock(Player::class);
+
+        // Simulate human player actions
+        $humanPlayer->expects($this->once())->method('isFolded')->willReturn(false);
+        $humanPlayer->expects($this->once())->method('getName')->willReturn('You');
+
+        // Simulate computer player actions
+        $computerPlayer->expects($this->once())->method('isFolded')->willReturn(false);
+        $computerPlayer->expects($this->once())->method('getName')->willReturn('Computer');
+
+        $communityCardManager = $this->createMock(CommunityCardManager::class);
+
+        // Define a callable (anonymous function) to act as handleAction
+        $handleAction = function ($player, $action, $raiseAmount = 0) use ($humanPlayer) {
+            if ($player === $humanPlayer) {
+                $this->assertEquals('raise', $action);
+                $this->assertEquals(100, $raiseAmount);
+            }
+        };
+
+        // Process actions in order with human player and computer player
+        $this->actionHandler->processActionsInOrder(
+            [$humanPlayer, $computerPlayer],
+            'raise',
+            100,
+            $communityCardManager,
+            $handleAction
+        );
+    }
 
 }

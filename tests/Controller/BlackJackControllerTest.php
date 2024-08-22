@@ -17,6 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ * @SuppressWarnings("CouplingBetweenObjects")
+ */
 class BlackJackControllerTest extends WebTestCase
 {
     /**
@@ -497,20 +501,20 @@ class BlackJackControllerTest extends WebTestCase
             ->setConstructorArgs([$this->gameServiceMock, $this->gameLoggerMock, $this->gameDataServiceMock])
             ->onlyMethods(['redirectToRoute', 'addFlash', 'render'])
             ->getMock();
-    
+
         $session = $this->createMock(SessionInterface::class);
         $playerHand = $this->createMock(CardHand::class);
         $dealerHand = $this->createMock(CardHand::class);
         $deck = [$this->createMock(CardGraphic::class)];
-    
+
         // Mock the totals to return expected keys
         $playerHand->method('calculateTotal')->willReturn(['low' => 15, 'high' => 21]);
         $dealerHand->method('calculateTotalDealer')->willReturn(['low' => 15, 'high' => 19]);
-    
+
         // Mock the game result check to return a non-empty result, indicating the game is over
         $gameResultCheckMock = $this->createMock(GameResultCheck::class);
         $gameResultCheckMock->method('blackjackOrBust')->willReturn('Player wins with Blackjack!');
-    
+
         // Mock session data
         $session->method('get')
             ->will($this->returnValueMap([
@@ -518,30 +522,30 @@ class BlackJackControllerTest extends WebTestCase
                 ['dealerHand', null, $dealerHand],
                 ['deck', null, $deck],
             ]));
-    
+
         // Expect the redirect to be called to 'game_end_result'
         $controller->expects($this->once())
             ->method('redirectToRoute')
             ->with('game_end_result')
             ->willReturn(new RedirectResponse('/game/end-result'));
-    
+
         // Ensure the render method is not called
         $controller->expects($this->never())
             ->method('render');
-    
+
         // Mock the container
         $container = $this->createMock(ContainerInterface::class);
         $controller->setContainer($container);
-    
+
         // Call the hit method
         $response = $controller->hit($session);
-    
+
         // Assert that the response is a RedirectResponse to 'game_end_result'
         $this->assertInstanceOf(RedirectResponse::class, $response);
-                /** @var RedirectResponse $response */
+        /** @var RedirectResponse $response */
         $this->assertEquals('/game/end-result', $response->getTargetUrl());
     }
-    
-    
-    
+
+
+
 }

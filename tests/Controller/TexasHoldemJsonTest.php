@@ -345,4 +345,40 @@ class TexasHoldemJsonTest extends WebTestCase
         $this->assertEquals('PlayerName', $data['player_name']);
         $this->assertEquals(['mock_card_1', 'mock_card_2'], $data['cards']);
     }
+    public function testGetPlayerCardsPlayerNotFound(): void
+    {
+        $game = $this->createMock(TexasHoldemGame::class);
+
+        // Simulate the game having some players but not the requested player
+        $player1 = $this->createMock(Player::class);
+        $player1->method('getName')->willReturn('Player1');
+
+        $player2 = $this->createMock(Player::class);
+        $player2->method('getName')->willReturn('Player2');
+
+        $game->method('getPlayers')->willReturn([$player1, $player2]);
+
+        $this->sessionMock->expects($this->once())
+            ->method('get')
+            ->with('game')
+            ->willReturn($game);
+
+        // Call the controller with a player name that does not exist in the game
+        $response = $this->controller->getPlayerCards($this->sessionMock, 'NonExistentPlayer');
+
+        // Assert the response is a JsonResponse
+        $this->assertInstanceOf(JsonResponse::class, $response);
+
+        // Get the response content and check the structure
+        $content = $response->getContent();
+        $this->assertIsString($content, 'Response content should be a string');
+
+        // Decode JSON and verify the response contains the error
+        $data = json_decode($content, true);
+        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertArrayHasKey('error', $data);
+        $this->assertEquals('Player with name NonExistentPlayer not found.', $data['error']);
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
 }
