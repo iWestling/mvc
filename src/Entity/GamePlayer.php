@@ -89,7 +89,7 @@ class GamePlayer
     public function removeScore(Scores $score): static
     {
         if ($this->scores->removeElement($score)) {
-            // set the owning side to null (unless already changed)
+            // Only set userId to null if it hasn't already been set
             if ($score->getUserId() === $this) {
                 $score->setUserId(null);
             }
@@ -97,4 +97,5 @@ class GamePlayer
 
         return $this;
     }
+
 }

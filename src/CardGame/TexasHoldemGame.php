@@ -2,6 +2,8 @@
 
 namespace App\CardGame;
 
+use RuntimeException;
+
 class TexasHoldemGame
 {
     /** @var Player[] */
@@ -243,7 +245,6 @@ class TexasHoldemGame
             return; // Prevent duplicate calls
         }
 
-        dump("determineWinner() called");
         $remainingPlayers = array_filter($this->players, fn ($player) => !$player->isFolded());
 
         if (count($remainingPlayers) === 1) {
@@ -255,8 +256,7 @@ class TexasHoldemGame
         $this->winners = $this->winnerEvaluator->determineWinners($remainingPlayers, $this->communityCardManager->getCommunityCards());
 
         if (empty($this->winners)) {
-            dump('No winners found in the game, something went wrong.');
-            return;
+            throw new RuntimeException('No winners found in the game, something went wrong.');
         }
 
         $this->finalizeWinners();

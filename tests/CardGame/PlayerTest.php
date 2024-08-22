@@ -113,12 +113,18 @@ class PlayerTest extends TestCase
     {
         $player = new Player('Test Player', 1000, 'normal');
 
-        $player->setRole('dealer');
-        $this->assertEquals('dealer', $player->getRole());
+        // Assert initial state
+        $this->assertNull($player->getRole(), 'Role should initially be null.');
 
+        // Set and assert role
+        $player->setRole('dealer');
+        $this->assertEquals('dealer', $player->getRole(), 'Role should be dealer.');
+
+        // Reset and assert role
         $player->setRole(null);
-        $this->assertNull($player->getRole());
+        $this->assertNull($player->getRole(), 'Role should be reset to null.');
     }
+
 
 
     public function testMakeDecision(): void

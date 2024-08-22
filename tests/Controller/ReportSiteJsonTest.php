@@ -12,6 +12,9 @@ use App\Card\DeckOfCards;
 use App\Card\Card;
 use App\Card\CardGraphic;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ */
 class ReportSiteJsonTest extends WebTestCase
 {
     /**

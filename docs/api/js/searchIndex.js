@@ -576,6 +576,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-CardGame-IntelligentComputer.html"
         },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method___construct"
+        },                {
             "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AmakeDecision\u0028\u0029",
             "name": "makeDecision",
             "summary": "",
@@ -586,10 +591,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-CardGame-IntelligentComputer.html#method_hasHighCard"
         },                {
-            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AhasPair\u0028\u0029",
-            "name": "hasPair",
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003A\u0024handEvaluator",
+            "name": "handEvaluator",
             "summary": "",
-            "url": "classes/App-CardGame-IntelligentComputer.html#method_hasPair"
+            "url": "classes/App-CardGame-IntelligentComputer.html#property_handEvaluator"
         },                {
             "fqsen": "\\App\\CardGame\\MoneyHandling",
             "name": "MoneyHandling",
@@ -755,11 +760,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/App-CardGame-PlayerActionHandler.html#method___construct"
-        },                {
-            "fqsen": "\\App\\CardGame\\PlayerActionHandler\u003A\u003ArotateRoles\u0028\u0029",
-            "name": "rotateRoles",
-            "summary": "",
-            "url": "classes/App-CardGame-PlayerActionHandler.html#method_rotateRoles"
         },                {
             "fqsen": "\\App\\CardGame\\PlayerActionHandler\u003A\u003AprocessActionsInOrder\u0028\u0029",
             "name": "processActionsInOrder",
@@ -1035,11 +1035,6 @@ Search.appendIndex(
             "name": "finalizeWinners",
             "summary": "",
             "url": "classes/App-CardGame-TexasHoldemGame.html#method_finalizeWinners"
-        },                {
-            "fqsen": "\\App\\CardGame\\TexasHoldemGame\u003A\u003AfinalizeGame\u0028\u0029",
-            "name": "finalizeGame",
-            "summary": "",
-            "url": "classes/App-CardGame-TexasHoldemGame.html#method_finalizeGame"
         },                {
             "fqsen": "\\App\\CardGame\\TexasHoldemGame\u003A\u003AstartNewRound\u0028\u0029",
             "name": "startNewRound",
@@ -1401,6 +1396,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-LuckyController.html#method_hiya"
         },                {
+            "fqsen": "\\App\\Controller\\ProductController",
+            "name": "ProductController",
+            "summary": "",
+            "url": "classes/App-Controller-ProductController.html"
+        },                {
             "fqsen": "\\App\\Controller\\ReportSite",
             "name": "ReportSite",
             "summary": "",
@@ -1511,6 +1511,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemController.html#method_playRound"
         },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AsubmitScore\u0028\u0029",
+            "name": "submitScore",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemController.html#method_submitScore"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AstartNewRound\u0028\u0029",
+            "name": "startNewRound",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemController.html#method_startNewRound"
+        },                {
             "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AadvancePhaseIfNeeded\u0028\u0029",
             "name": "advancePhaseIfNeeded",
             "summary": "",
@@ -1525,16 +1535,6 @@ Search.appendIndex(
             "name": "handleAllInScenario",
             "summary": "Handle\u0020the\u0020scenario\u0020when\u0020an\u0020All\u002DIn\u0020has\u0020occurred.",
             "url": "classes/App-Controller-TexasHoldemController.html#method_handleAllInScenario"
-        },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AsubmitScore\u0028\u0029",
-            "name": "submitScore",
-            "summary": "",
-            "url": "classes/App-Controller-TexasHoldemController.html#method_submitScore"
-        },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AstartNewRound\u0028\u0029",
-            "name": "startNewRound",
-            "summary": "",
-            "url": "classes/App-Controller-TexasHoldemController.html#method_startNewRound"
         },                {
             "fqsen": "\\App\\Controller\\TexasHoldemJson",
             "name": "TexasHoldemJson",

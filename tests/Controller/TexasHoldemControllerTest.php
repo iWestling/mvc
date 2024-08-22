@@ -18,6 +18,10 @@ use App\Entity\Scores;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ * @SuppressWarnings("CouplingBetweenObjects")
+ */
 class TexasHoldemControllerTest extends WebTestCase
 {
     /**
@@ -84,7 +88,7 @@ class TexasHoldemControllerTest extends WebTestCase
         ]);
 
         // Mock the persistence of GamePlayer and Scores entities
-        $this->entityManager->expects($this->exactly(2))
+        /** @scrutinizer ignore-deprecated */ $this->entityManager->expects($this->exactly(2))
         ->method('persist')
         ->withConsecutive(
             [$this->isInstanceOf(GamePlayer::class)], // Wrap in an array
@@ -394,32 +398,32 @@ class TexasHoldemControllerTest extends WebTestCase
             'age' => 30,
             'score' => 1000,
         ]);
-    
+
         // Call the submitScore method
         $response = $this->controller->submitScore($request, $this->doctrine, $this->session);
-    
+
         // Assert the response is a JsonResponse with an error
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
-    
+
         // Get the content of the response
         $content = $response->getContent();
-    
+
         // Ensure content is not false and is a valid JSON string
         $this->assertNotFalse($content, 'Response content should not be false.');
-    
+
         // Decode the content
         $data = json_decode($content, true);
-    
+
         // Ensure that $data is an array before proceeding with further assertions
         $this->assertIsArray($data, 'Decoded response should be an array.');
-    
+
         // Assert that the 'error' key exists in the response data
         $this->assertArrayHasKey('error', $data);
         $this->assertEquals('Invalid username.', $data['error']);
     }
-    
-    
+
+
     public function testSubmitScoreRedirectsToStartIfNoGameInSession(): void
     {
         // Mock the session to return null when getting the 'game'
@@ -476,7 +480,7 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testPlayRoundRendersGameView(): void
     {
         // Mock the session to return the game object and handle multiple calls to 'current_action_index'
-        $this->session->expects($this->any())  // Use 'any' to allow multiple calls
+        /** @scrutinizer ignore-deprecated */ $this->session->expects($this->any())  // Use 'any' to allow multiple calls
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);

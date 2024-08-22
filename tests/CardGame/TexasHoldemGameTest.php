@@ -15,6 +15,9 @@ use App\CardGame\HandEvaluator;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ */
 class TexasHoldemGameTest extends TestCase
 {
     private TexasHoldemGame $game;
@@ -208,5 +211,82 @@ class TexasHoldemGameTest extends TestCase
         $this->game->playRound($mockActionHandler, 'raise', 100);
     }
 
+    public function testDetermineWinnerNoWinnersFound(): void
+    {
+        // Add two players to the game
+        $mockPlayer1 = $this->createMock(Player::class);
+        $mockPlayer2 = $this->createMock(Player::class);
+
+        $mockPlayer1->method('isFolded')->willReturn(false);
+        $mockPlayer2->method('isFolded')->willReturn(false);
+
+        $this->game->addPlayer($mockPlayer1);
+        $this->game->addPlayer($mockPlayer2);
+
+        // Mock the WinnerEvaluator to return an empty array (no winners found)
+        $mockWinnerEvaluator = $this->createMock(WinnerEvaluator::class);
+        $mockWinnerEvaluator->expects($this->once())
+            ->method('determineWinners')
+            ->willReturn([]); // Simulate no winners found
+
+        // Inject the mock WinnerEvaluator into TexasHoldemGame
+        $reflection = new ReflectionClass(TexasHoldemGame::class);
+        $winnerEvaluatorProp = $reflection->getProperty('winnerEvaluator');
+        $winnerEvaluatorProp->setAccessible(true);
+        $winnerEvaluatorProp->setValue($this->game, $mockWinnerEvaluator);
+
+        // Expect an exception to be thrown
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('No winners found in the game, something went wrong.');
+
+        $this->game->determineWinner();
+    }
+
+
+    public function testHandleAllIn(): void
+    {
+        $mockPlayer = $this->createMock(Player::class);
+        $mockPlayer->method('getName')->willReturn('Player 1');
+        $this->game->addPlayer($mockPlayer);
+
+        // Mock PlayerActionInit to verify that handleAllIn is called
+        $mockActionInit = $this->createMock(PlayerActionInit::class);
+        $mockActionInit->expects($this->once())
+            ->method('handleAllIn')
+            ->with($mockPlayer);
+
+        $reflection = new ReflectionClass(TexasHoldemGame::class);
+        $actionInitProperty = $reflection->getProperty('actionInit');
+        $actionInitProperty->setAccessible(true);
+        $actionInitProperty->setValue($this->game, $mockActionInit);
+
+        // Mock PlayerActionHandler to verify handleRemainingPlayersAfterAllIn is called
+        $mockActionHandler = $this->createMock(PlayerActionHandler::class);
+        $mockActionHandler->expects($this->once())
+            ->method('handleRemainingPlayersAfterAllIn')
+            ->with($this->game);
+
+        $actionHandlerProp = $reflection->getProperty('actionHandler');
+        $actionHandlerProp->setAccessible(true);
+        $actionHandlerProp->setValue($this->game, $mockActionHandler);
+
+        // Execute the handleAction method with 'all-in' action
+        $this->game->handleAction($mockPlayer, 'all-in');
+
+        // Verify that the allInOccurred flag is set to true
+        $this->assertTrue($this->game->hasAllInOccurred());
+    }
+    public function testHandleRemainingPlayersAfterAllIn(): void
+    {
+        $mockPlayerAction = $this->createMock(PlayerActionHandler::class);
+
+        // Set the expectation that handleRemainingPlayersAfterAllIn is called once
+        $mockPlayerAction->expects($this->once())
+            ->method('handleRemainingPlayersAfterAllIn')
+            ->with($this->game);
+
+        // Call the method under test
+        $this->game->handleRemainingPlayersAfterAllIn($mockPlayerAction);
+    }
 
 }

@@ -6,6 +6,9 @@ use App\CardGame\HandRankingEvaluator;
 use App\CardGame\CardGraphic;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ */
 class HandRankingEvaluatorTest extends TestCase
 {
     private HandRankingEvaluator $handRankingEvaluator;

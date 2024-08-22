@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ */
 class TexasHoldemJsonTest extends WebTestCase
 {
     /**

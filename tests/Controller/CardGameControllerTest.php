@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ */
 class CardGameControllerTest extends WebTestCase
 {
     /** @var MockObject&SessionInterface */
