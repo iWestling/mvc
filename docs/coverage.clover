@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724359807">
-  <project timestamp="1724359807">
+<coverage generated="1724363946">
+  <project timestamp="1724363946">
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Card/Card.php">
       <class name="App\Card\Card" namespace="global">
         <metrics complexity="4" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="12" coveredelements="12"/>
@@ -483,7 +483,7 @@
       <line num="36" type="stmt" count="5"/>
       <line num="45" type="method" name="adjustAceValue" visibility="private" complexity="2" crap="2" count="20"/>
       <line num="48" type="stmt" count="20"/>
-      <line num="49" type="stmt" count="1"/>
+      <line num="49" type="stmt" count="2"/>
       <line num="51" type="stmt" count="20"/>
       <line num="60" type="method" name="isRoyalFlush" visibility="public" complexity="2" crap="2" count="1"/>
       <line num="62" type="stmt" count="1"/>
@@ -678,8 +678,8 @@
       <class name="App\CardGame\PlayerActionHandler" namespace="global">
         <metrics complexity="29" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="55" coveredstatements="50" elements="62" coveredelements="56"/>
       </class>
-      <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="36"/>
-      <line num="15" type="stmt" count="36"/>
+      <line num="13" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="40"/>
+      <line num="15" type="stmt" count="40"/>
       <line num="27" type="method" name="processActionsInOrder" visibility="public" complexity="4" crap="4" count="3"/>
       <line num="29" type="stmt" count="3"/>
       <line num="31" type="stmt" count="3"/>
@@ -1656,7 +1656,7 @@
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Controller/TexasHoldemController.php">
       <class name="App\Controller\TexasHoldemController" namespace="global">
-        <metrics complexity="27" methods="10" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="110" coveredstatements="88" elements="120" coveredelements="95"/>
+        <metrics complexity="27" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="110" coveredstatements="95" elements="120" coveredelements="103"/>
       </class>
       <line num="24" type="method" name="index" visibility="public" complexity="1" crap="1" count="1"/>
       <line num="27" type="stmt" count="1"/>
@@ -1682,25 +1682,25 @@
       <line num="71" type="stmt" count="1"/>
       <line num="74" type="stmt" count="1"/>
       <line num="77" type="stmt" count="1"/>
-      <line num="80" type="method" name="playRound" visibility="public" complexity="9" crap="13.53" count="4"/>
-      <line num="84" type="stmt" count="4"/>
-      <line num="87" type="stmt" count="4"/>
+      <line num="80" type="method" name="playRound" visibility="public" complexity="9" crap="11.06" count="8"/>
+      <line num="84" type="stmt" count="8"/>
+      <line num="87" type="stmt" count="8"/>
       <line num="88" type="stmt" count="1"/>
-      <line num="91" type="stmt" count="3"/>
-      <line num="94" type="stmt" count="3"/>
+      <line num="91" type="stmt" count="7"/>
+      <line num="94" type="stmt" count="7"/>
       <line num="96" type="stmt" count="0"/>
-      <line num="100" type="stmt" count="3"/>
-      <line num="101" type="stmt" count="3"/>
-      <line num="103" type="stmt" count="3"/>
-      <line num="104" type="stmt" count="0"/>
-      <line num="106" type="stmt" count="3"/>
-      <line num="107" type="stmt" count="3"/>
-      <line num="110" type="stmt" count="3"/>
-      <line num="111" type="stmt" count="1"/>
-      <line num="114" type="stmt" count="1"/>
-      <line num="115" type="stmt" count="0"/>
-      <line num="116" type="stmt" count="0"/>
-      <line num="120" type="stmt" count="1"/>
+      <line num="100" type="stmt" count="7"/>
+      <line num="101" type="stmt" count="7"/>
+      <line num="103" type="stmt" count="7"/>
+      <line num="104" type="stmt" count="2"/>
+      <line num="106" type="stmt" count="7"/>
+      <line num="107" type="stmt" count="7"/>
+      <line num="110" type="stmt" count="7"/>
+      <line num="111" type="stmt" count="3"/>
+      <line num="114" type="stmt" count="3"/>
+      <line num="115" type="stmt" count="1"/>
+      <line num="116" type="stmt" count="1"/>
+      <line num="120" type="stmt" count="2"/>
       <line num="121" type="stmt" count="0"/>
       <line num="122" type="stmt" count="0"/>
       <line num="123" type="stmt" count="0"/>
@@ -1709,13 +1709,13 @@
       <line num="127" type="stmt" count="0"/>
       <line num="128" type="stmt" count="0"/>
       <line num="132" type="stmt" count="0"/>
-      <line num="136" type="stmt" count="1"/>
-      <line num="137" type="stmt" count="1"/>
-      <line num="140" type="stmt" count="1"/>
-      <line num="141" type="stmt" count="1"/>
-      <line num="145" type="stmt" count="3"/>
-      <line num="148" type="stmt" count="3"/>
-      <line num="149" type="stmt" count="3"/>
+      <line num="136" type="stmt" count="2"/>
+      <line num="137" type="stmt" count="2"/>
+      <line num="140" type="stmt" count="2"/>
+      <line num="141" type="stmt" count="2"/>
+      <line num="145" type="stmt" count="7"/>
+      <line num="148" type="stmt" count="7"/>
+      <line num="149" type="stmt" count="7"/>
       <line num="152" type="stmt" count="0"/>
       <line num="155" type="method" name="submitScore" visibility="public" complexity="3" crap="3" count="3"/>
       <line num="158" type="stmt" count="3"/>
@@ -1753,32 +1753,32 @@
       <line num="215" type="stmt" count="1"/>
       <line num="217" type="stmt" count="1"/>
       <line num="219" type="stmt" count="1"/>
-      <line num="221" type="method" name="advancePhaseIfNeeded" visibility="private" complexity="4" crap="9.83" count="3"/>
-      <line num="223" type="stmt" count="3"/>
+      <line num="221" type="method" name="advancePhaseIfNeeded" visibility="private" complexity="4" crap="9.83" count="7"/>
+      <line num="223" type="stmt" count="7"/>
       <line num="225" type="stmt" count="0"/>
       <line num="228" type="stmt" count="0"/>
       <line num="231" type="stmt" count="0"/>
       <line num="232" type="stmt" count="0"/>
       <line num="235" type="stmt" count="0"/>
-      <line num="238" type="stmt" count="3"/>
-      <line num="240" type="method" name="renderGameView" visibility="private" complexity="1" crap="1" count="3"/>
-      <line num="243" type="stmt" count="3"/>
-      <line num="244" type="stmt" count="3"/>
-      <line num="245" type="stmt" count="3"/>
-      <line num="246" type="stmt" count="3"/>
-      <line num="247" type="stmt" count="3"/>
-      <line num="248" type="stmt" count="3"/>
-      <line num="249" type="stmt" count="3"/>
-      <line num="250" type="stmt" count="3"/>
-      <line num="251" type="stmt" count="3"/>
-      <line num="256" type="method" name="handleAllInScenario" visibility="private" complexity="3" crap="5.67" count="3"/>
-      <line num="259" type="stmt" count="3"/>
-      <line num="261" type="stmt" count="0"/>
-      <line num="264" type="stmt" count="0"/>
-      <line num="265" type="stmt" count="0"/>
-      <line num="268" type="stmt" count="0"/>
-      <line num="271" type="stmt" count="3"/>
-      <metrics loc="275" ncloc="218" classes="1" methods="10" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="110" coveredstatements="88" elements="120" coveredelements="95"/>
+      <line num="238" type="stmt" count="7"/>
+      <line num="240" type="method" name="renderGameView" visibility="private" complexity="1" crap="1" count="7"/>
+      <line num="243" type="stmt" count="7"/>
+      <line num="244" type="stmt" count="7"/>
+      <line num="245" type="stmt" count="7"/>
+      <line num="246" type="stmt" count="7"/>
+      <line num="247" type="stmt" count="7"/>
+      <line num="248" type="stmt" count="7"/>
+      <line num="249" type="stmt" count="7"/>
+      <line num="250" type="stmt" count="7"/>
+      <line num="251" type="stmt" count="7"/>
+      <line num="256" type="method" name="handleAllInScenario" visibility="private" complexity="3" crap="3" count="8"/>
+      <line num="259" type="stmt" count="8"/>
+      <line num="261" type="stmt" count="1"/>
+      <line num="264" type="stmt" count="1"/>
+      <line num="265" type="stmt" count="1"/>
+      <line num="268" type="stmt" count="1"/>
+      <line num="271" type="stmt" count="7"/>
+      <metrics loc="275" ncloc="218" classes="1" methods="10" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="110" coveredstatements="95" elements="120" coveredelements="103"/>
     </file>
     <file name="/mnt/c/Users/isabe/dbwebb-kurser/mvc/me/report/src/Controller/TexasHoldemJson.php">
       <class name="App\Controller\TexasHoldemJson" namespace="global">
@@ -2171,6 +2171,6 @@
       <line num="73" type="stmt" count="1"/>
       <metrics loc="76" ncloc="67" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="29" elements="31" coveredelements="31"/>
     </file>
-    <metrics files="51" loc="4991" ncloc="4149" classes="49" methods="283" coveredmethods="236" conditionals="0" coveredconditionals="0" statements="1581" coveredstatements="1400" elements="1864" coveredelements="1636"/>
+    <metrics files="51" loc="4991" ncloc="4149" classes="49" methods="283" coveredmethods="237" conditionals="0" coveredconditionals="0" statements="1581" coveredstatements="1407" elements="1864" coveredelements="1644"/>
   </project>
 </coverage>

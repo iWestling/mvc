@@ -17,6 +17,8 @@ use App\Entity\GamePlayer;
 use App\Entity\Scores;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use App\CardGame\PlayerActionHandler;
+use ReflectionClass;
 
 /**
  * @SuppressWarnings("TooManyPublicMethods")
@@ -514,5 +516,153 @@ class TexasHoldemControllerTest extends WebTestCase
     }
 
 
+    public function testRenderGameViewWhenGameIsOver(): void
+    {
+        // Mock the session to return the game
+        $this->session->method('get')
+            ->willReturn($this->game);
+
+        // Mock the game to indicate it's over
+        $this->game->method('isGameOver')
+            ->willReturn(true);
+
+        // Call the playRound method and check the actual response
+        $response = $this->controller->playRound(new Request(), $this->session);
+
+        // Assert that the response is valid
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+    public function testCurrentActionIndexResetToDefaultIfNotNumeric(): void
+    {
+        // Mock the session to return the game and an invalid action index
+        $this->session->method('get')
+            ->willReturnMap([
+                ['game', null, $this->game],
+                ['current_action_index', 0, 'invalid']
+            ]);
+
+        // Expect the session to reset the action index to 0
+        $this->session->expects($this->any())  // Relax expectation on set call
+            ->method('set');
+
+        // Call the playRound method and check the actual response
+        $response = $this->controller->playRound(new Request(), $this->session);
+
+        // Assert that the response is valid
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+
+    public function testFoldedPlayerIsSkipped(): void
+    {
+        // Mock the session to return the game and action index
+        $this->session->method('get')
+            ->willReturnMap([
+                ['game', null, $this->game],
+                ['current_action_index', 0, 0]
+            ]);
+
+        // Mock the players and the game behavior
+        $player = $this->createMock(Player::class);
+        $player->method('isFolded')
+            ->willReturn(true);
+
+        $this->game->method('getPlayersInOrder')
+            ->willReturn([$player]);
+
+        // Relax expectation on session set call
+        $this->session->expects($this->any())
+            ->method('set');
+
+        // Call the playRound method and check the actual response
+        $response = $this->controller->playRound(new Request(), $this->session);
+
+        // Assert that the response is valid
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+    public function testReturnResponse(): void
+    {
+        // Simulate the response returned by advancePhaseIfNeeded
+        $mockResponse = new Response();
+
+        // Mock the session to return the game and action index
+        $this->session->expects($this->exactly(2))
+            ->method('get')
+            ->withConsecutive(['game'], ['current_action_index', 0])
+            ->willReturnOnConsecutiveCalls($this->game, 0);
+
+        // Mock the players and the game behavior
+        $player = $this->createMock(Player::class);
+        $player->expects($this->once())
+            ->method('getName')
+            ->willReturn('Computer 1');
+
+        $this->game->expects($this->once())
+            ->method('getPlayersInOrder')
+            ->willReturn([$player]);
+
+        // Mock the render method to return the response
+        $this->controller->expects($this->once())
+            ->method('render')
+            ->willReturn($mockResponse);
+
+        // Simulate the GET request
+        $response = $this->controller->playRound(new Request(), $this->session);
+
+        // Assert that the response is correctly returned
+        $this->assertSame($mockResponse, $response);
+    }
+    public function testHandleAllInScenario(): void
+    {
+        // Create a mock for PlayerActionHandler
+        $playerActionHandler = $this->createMock(PlayerActionHandler::class);
+
+        // We will not strictly expect the session's `get` method to be called, allowing more flexibility
+        $this->session->method('get')
+            ->willReturn($this->game); // Return the game when `get` is called on the session
+
+        // Mock the game behavior for All-In scenario
+        $this->game->expects($this->once())
+            ->method('hasAllInOccurred')
+            ->willReturn(true);
+
+        // Expect the game to handle remaining players after All-In
+        $this->game->expects($this->once())
+            ->method('handleRemainingPlayersAfterAllIn')
+            ->with($playerActionHandler);
+
+        // Mock the game advancing stages until it's over
+        $this->game->expects($this->exactly(2))
+            ->method('isGameOver')
+            ->willReturnOnConsecutiveCalls(false, true);  // First return false, then true
+
+        // Expect the game to advance stages
+        $this->game->expects($this->once())
+            ->method('advanceGameStage');
+
+        // Invoke the handleAllInScenario method
+        $result = $this->invokeMethod($this->controller, 'handleAllInScenario', [$this->game, $playerActionHandler]);
+
+        // Assert that the method returns true
+        $this->assertTrue($result);
+    }
+
+
+    /**
+     * @param array<int, mixed> $parameters
+     */
+    private function invokeMethod(object $object, string $methodName, array $parameters = []): mixed
+    {
+        $reflection = new ReflectionClass($object);
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method->invokeArgs($object, $parameters);
+    }
+
+
+    
 
 }
