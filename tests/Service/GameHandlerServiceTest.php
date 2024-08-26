@@ -60,7 +60,7 @@ class GameHandlerServiceTest extends TestCase
         $potManager = $this->createMock(\App\CardGame\PotManager::class);
         $potManager->method('haveAllActivePlayersMatchedCurrentBet')->willReturn(true);
 
-        $this->game->method('getPotManager')->willReturn($potManager);
+        $this->game->/** @scrutinizer ignore-call */ method('getPotManager')->willReturn($potManager);
         $this->game->method('getPlayers')->willReturn([]);
         $this->game->method('isGameOver')->willReturn(true);
 
