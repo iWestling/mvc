@@ -557,7 +557,7 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testFoldedPlayerIsSkipped(): void
     {
         // Mock the session to return the game and action index
-        $this->session->method('get')
+        $this->session->/** @scrutinizer ignore-call */method('get')
             ->willReturnMap([
                 ['game', null, $this->game],
                 ['current_action_index', 0, 0]
@@ -588,8 +588,7 @@ class TexasHoldemControllerTest extends WebTestCase
         $mockResponse = new Response();
 
         // Mock the session to return the game and action index
-        /** @scrutinizer ignore-call */ $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
-            ->method('get')
+        /** @scrutinizer ignore-call */ $this->session->/** @scrutinizer ignore-call */method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);
 

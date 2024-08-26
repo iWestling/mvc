@@ -218,6 +218,13 @@ class TexasHoldemController extends AbstractController
 
         return $this->redirectToRoute('proj_play');
     }
+
+    #[Route('/proj/api', name: 'proj_api')]
+    public function apiPage(): Response
+    {
+        return $this->render('texas/api.html.twig');
+    }
+
     private function advancePhaseIfNeeded(SessionInterface $session, TexasHoldemGame $game, int $currentActionIndex, int $totalPlayers): ?Response
     {
         if ($currentActionIndex >= $totalPlayers && $game->getPotManager()->haveAllActivePlayersMatchedCurrentBet($game->getPlayers())) {

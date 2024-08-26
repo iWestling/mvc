@@ -23,12 +23,6 @@ class TexasHoldemJson extends AbstractController
         $this->playerManager = $playerManager;
     }
 
-    #[Route('/proj/api', name: 'proj_api')]
-    public function apiPage(): Response
-    {
-        return $this->render('texas/api.html.twig');
-    }
-
 
     #[Route('/proj/api/start-game', name: 'api_start_game', methods: ['POST'])]
     public function startNewGame(Request $request, SessionInterface $session): JsonResponse

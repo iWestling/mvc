@@ -1571,6 +1571,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemController.html#method_startNewRound"
         },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AapiPage\u0028\u0029",
+            "name": "apiPage",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemController.html#method_apiPage"
+        },                {
             "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AadvancePhaseIfNeeded\u0028\u0029",
             "name": "advancePhaseIfNeeded",
             "summary": "",
@@ -1595,11 +1600,6 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemJson.html#method___construct"
-        },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AapiPage\u0028\u0029",
-            "name": "apiPage",
-            "summary": "",
-            "url": "classes/App-Controller-TexasHoldemJson.html#method_apiPage"
         },                {
             "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AstartNewGame\u0028\u0029",
             "name": "startNewGame",
