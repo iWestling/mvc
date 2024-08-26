@@ -10,6 +10,9 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
+/**
+ * @SuppressWarnings("TooManyPublicMethods")
+ */
 class PlayerTest extends TestCase
 {
     public function testConstructorSetsPropertiesCorrectly(): void
@@ -111,7 +114,7 @@ class PlayerTest extends TestCase
 
     public function testSetAndGetRole(): void
     {
-        $player = new Player('Test Player', 1000, 'normal');
+        $player = new Player('Test Player', 1000, 'intelligent');
 
         // Assert initial state
         $this->assertNull($player->getRole(), 'Role should initially be null.');
@@ -121,6 +124,25 @@ class PlayerTest extends TestCase
         $this->assertEquals('dealer', $player->getRole(), 'Role should be dealer.');
 
         // Reset and assert role
+        $player->setRole(null);
+        $this->assertNull($player->getRole(), 'Role should be reset to null.');
+    }
+
+    public function testSetAndGetRoleWithDifferentValues(): void
+    {
+        $player = new Player('Test Player', 1000, 'intelligent');
+
+        // Set role to different values and assert
+        $player->setRole('dealer');
+        $this->assertEquals('dealer', $player->getRole(), 'Role should be dealer.');
+
+        $player->setRole('small blind');
+        $this->assertEquals('small blind', $player->getRole(), 'Role should be small blind.');
+
+        $player->setRole('big blind');
+        $this->assertEquals('big blind', $player->getRole(), 'Role should be big blind.');
+
+        // Finally, reset role to null and check
         $player->setRole(null);
         $this->assertNull($player->getRole(), 'Role should be reset to null.');
     }

@@ -536,7 +536,7 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testCurrentActionIndexResetToDefaultIfNotNumeric(): void
     {
         // Mock the session to return the game and an invalid action index
-        $this->session->method('get')
+        $this->session->/** @scrutinizer ignore-call */method('get')
             ->willReturnMap([
                 ['game', null, $this->game],
                 ['current_action_index', 0, 'invalid']
@@ -568,7 +568,7 @@ class TexasHoldemControllerTest extends WebTestCase
         $player->method('isFolded')
             ->willReturn(true);
 
-        $this->game->method('getPlayersInOrder')
+        $this->game->/** @scrutinizer ignore-call */method('getPlayersInOrder')
             ->willReturn([$player]);
 
         // Relax expectation on session set call
@@ -588,7 +588,7 @@ class TexasHoldemControllerTest extends WebTestCase
         $mockResponse = new Response();
 
         // Mock the session to return the game and action index
-        $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
+        /** @scrutinizer ignore-call */ $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);

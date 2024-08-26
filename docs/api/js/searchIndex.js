@@ -516,6 +516,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-CardGame-HandEvaluator.html#method_compareHands"
         },                {
+            "fqsen": "\\App\\CardGame\\HandEvaluator\u003A\u003AfilterToIntArray\u0028\u0029",
+            "name": "filterToIntArray",
+            "summary": "",
+            "url": "classes/App-CardGame-HandEvaluator.html#method_filterToIntArray"
+        },                {
+            "fqsen": "\\App\\CardGame\\HandEvaluator\u003A\u003AcompareRanks\u0028\u0029",
+            "name": "compareRanks",
+            "summary": "",
+            "url": "classes/App-CardGame-HandEvaluator.html#method_compareRanks"
+        },                {
+            "fqsen": "\\App\\CardGame\\HandEvaluator\u003A\u003AcompareHandValuesSafely\u0028\u0029",
+            "name": "compareHandValuesSafely",
+            "summary": "",
+            "url": "classes/App-CardGame-HandEvaluator.html#method_compareHandValuesSafely"
+        },                {
             "fqsen": "\\App\\CardGame\\HandEvaluator\u003A\u003AareHandsValid\u0028\u0029",
             "name": "areHandsValid",
             "summary": "Check\u0020if\u0020the\u0020hands\u0020are\u0020valid",
@@ -1580,6 +1595,11 @@ Search.appendIndex(
             "name": "__construct",
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemJson.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AapiPage\u0028\u0029",
+            "name": "apiPage",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#method_apiPage"
         },                {
             "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AstartNewGame\u0028\u0029",
             "name": "startNewGame",
