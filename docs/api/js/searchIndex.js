@@ -101,6 +101,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Card-DeckOfCards.html#property_cards"
         },                {
+            "fqsen": "\\App\\CardGame\\AllInScenarioHandler",
+            "name": "AllInScenarioHandler",
+            "summary": "",
+            "url": "classes/App-CardGame-AllInScenarioHandler.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\AllInScenarioHandler\u003A\u003AhandleAllInScenario\u0028\u0029",
+            "name": "handleAllInScenario",
+            "summary": "",
+            "url": "classes/App-CardGame-AllInScenarioHandler.html#method_handleAllInScenario"
+        },                {
             "fqsen": "\\App\\CardGame\\Bank",
             "name": "Bank",
             "summary": "",
@@ -396,6 +406,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-CardGame-GameManagerJson.html#method_getCommunityCards"
         },                {
+            "fqsen": "\\App\\CardGame\\GameProgression",
+            "name": "GameProgression",
+            "summary": "",
+            "url": "classes/App-CardGame-GameProgression.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameProgression\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-CardGame-GameProgression.html#method___construct"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameProgression\u003A\u003AadvancePhaseIfNeeded\u0028\u0029",
+            "name": "advancePhaseIfNeeded",
+            "summary": "",
+            "url": "classes/App-CardGame-GameProgression.html#method_advancePhaseIfNeeded"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameProgression\u003A\u003A\u0024gameViewRenderer",
+            "name": "gameViewRenderer",
+            "summary": "",
+            "url": "classes/App-CardGame-GameProgression.html#property_gameViewRenderer"
+        },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck",
             "name": "GameResultCheck",
             "summary": "Methods\u0020for\u0020checking\u0020game\u0020results",
@@ -480,6 +510,26 @@ Search.appendIndex(
             "name": "stage",
             "summary": "",
             "url": "classes/App-CardGame-GameStageManager.html#property_stage"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameViewRenderer",
+            "name": "GameViewRenderer",
+            "summary": "",
+            "url": "classes/App-CardGame-GameViewRenderer.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameViewRenderer\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-CardGame-GameViewRenderer.html#method___construct"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameViewRenderer\u003A\u003ArenderGameView\u0028\u0029",
+            "name": "renderGameView",
+            "summary": "",
+            "url": "classes/App-CardGame-GameViewRenderer.html#method_renderGameView"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameViewRenderer\u003A\u003A\u0024twig",
+            "name": "twig",
+            "summary": "",
+            "url": "classes/App-CardGame-GameViewRenderer.html#property_twig"
         },                {
             "fqsen": "\\App\\CardGame\\HandEvaluator",
             "name": "HandEvaluator",
@@ -1536,6 +1586,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemController.html"
         },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemController.html#method___construct"
+        },                {
             "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003Aindex\u0028\u0029",
             "name": "index",
             "summary": "",
@@ -1576,20 +1631,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemController.html#method_apiPage"
         },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AadvancePhaseIfNeeded\u0028\u0029",
-            "name": "advancePhaseIfNeeded",
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003A\u0024gameInitializer",
+            "name": "gameInitializer",
             "summary": "",
-            "url": "classes/App-Controller-TexasHoldemController.html#method_advancePhaseIfNeeded"
+            "url": "classes/App-Controller-TexasHoldemController.html#property_gameInitializer"
         },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003ArenderGameView\u0028\u0029",
-            "name": "renderGameView",
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003A\u0024gameHandlerService",
+            "name": "gameHandlerService",
             "summary": "",
-            "url": "classes/App-Controller-TexasHoldemController.html#method_renderGameView"
+            "url": "classes/App-Controller-TexasHoldemController.html#property_gameHandlerService"
         },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003AhandleAllInScenario\u0028\u0029",
-            "name": "handleAllInScenario",
-            "summary": "Handle\u0020the\u0020scenario\u0020when\u0020an\u0020All\u002DIn\u0020has\u0020occurred.",
-            "url": "classes/App-Controller-TexasHoldemController.html#method_handleAllInScenario"
+            "fqsen": "\\App\\Controller\\TexasHoldemController\u003A\u003A\u0024scoreService",
+            "name": "scoreService",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemController.html#property_scoreService"
         },                {
             "fqsen": "\\App\\Controller\\TexasHoldemJson",
             "name": "TexasHoldemJson",
@@ -2056,6 +2111,51 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Service-DatabaseResetService.html#property_libraryRepository"
         },                {
+            "fqsen": "\\App\\Service\\GameHandlerService",
+            "name": "GameHandlerService",
+            "summary": "",
+            "url": "classes/App-Service-GameHandlerService.html"
+        },                {
+            "fqsen": "\\App\\Service\\GameHandlerService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-GameHandlerService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\GameHandlerService\u003A\u003AhandleAllInScenario\u0028\u0029",
+            "name": "handleAllInScenario",
+            "summary": "",
+            "url": "classes/App-Service-GameHandlerService.html#method_handleAllInScenario"
+        },                {
+            "fqsen": "\\App\\Service\\GameHandlerService\u003A\u003AadvancePhaseIfNeeded\u0028\u0029",
+            "name": "advancePhaseIfNeeded",
+            "summary": "",
+            "url": "classes/App-Service-GameHandlerService.html#method_advancePhaseIfNeeded"
+        },                {
+            "fqsen": "\\App\\Service\\GameHandlerService\u003A\u003ArenderGameView\u0028\u0029",
+            "name": "renderGameView",
+            "summary": "",
+            "url": "classes/App-Service-GameHandlerService.html#method_renderGameView"
+        },                {
+            "fqsen": "\\App\\Service\\GameHandlerService\u003A\u003A\u0024gameViewRenderer",
+            "name": "gameViewRenderer",
+            "summary": "",
+            "url": "classes/App-Service-GameHandlerService.html#property_gameViewRenderer"
+        },                {
+            "fqsen": "\\App\\Service\\GameInitializer",
+            "name": "GameInitializer",
+            "summary": "",
+            "url": "classes/App-Service-GameInitializer.html"
+        },                {
+            "fqsen": "\\App\\Service\\GameInitializer\u003A\u003AinitializeGame\u0028\u0029",
+            "name": "initializeGame",
+            "summary": "",
+            "url": "classes/App-Service-GameInitializer.html#method_initializeGame"
+        },                {
+            "fqsen": "\\App\\Service\\GameInitializer\u003A\u003AsaveGameToSession\u0028\u0029",
+            "name": "saveGameToSession",
+            "summary": "",
+            "url": "classes/App-Service-GameInitializer.html#method_saveGameToSession"
+        },                {
             "fqsen": "\\App\\Service\\PlayerScoreResetService",
             "name": "PlayerScoreResetService",
             "summary": "",
@@ -2085,6 +2185,26 @@ Search.appendIndex(
             "name": "entityManager",
             "summary": "",
             "url": "classes/App-Service-PlayerScoreResetService.html#property_entityManager"
+        },                {
+            "fqsen": "\\App\\Service\\ScoreService",
+            "name": "ScoreService",
+            "summary": "",
+            "url": "classes/App-Service-ScoreService.html"
+        },                {
+            "fqsen": "\\App\\Service\\ScoreService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-ScoreService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\ScoreService\u003A\u003AsubmitScore\u0028\u0029",
+            "name": "submitScore",
+            "summary": "",
+            "url": "classes/App-Service-ScoreService.html#method_submitScore"
+        },                {
+            "fqsen": "\\App\\Service\\ScoreService\u003A\u003A\u0024doctrine",
+            "name": "doctrine",
+            "summary": "",
+            "url": "classes/App-Service-ScoreService.html#property_doctrine"
         },                {
             "fqsen": "\\",
             "name": "\\",

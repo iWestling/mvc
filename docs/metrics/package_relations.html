@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2024-08-26 08:49:31        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2024-08-26 21:56:01        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -278,11 +278,23 @@
         "size": 3000,
         "relations": [
             "Symfony\\Component\\HttpFoundation\\Session",
+            "Symfony\\Component\\HttpFoundation",
+            "Twig",
             "global"
         ]
     },
     {
         "name": "Symfony\\Component\\HttpFoundation\\Session",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "Symfony\\Component\\HttpFoundation",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "Twig",
         "size": 3000,
         "relations": []
     },
@@ -297,18 +309,11 @@
             "App\\Card",
             "App\\Service",
             "App\\Repository",
-            "App\\Entity",
-            "Doctrine\\Persistence",
-            "global"
+            "App\\Entity"
         ]
     },
     {
         "name": "Symfony\\Bundle\\FrameworkBundle\\Controller",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "Symfony\\Component\\HttpFoundation",
         "size": 3000,
         "relations": []
     },
@@ -319,8 +324,11 @@
             "App\\Repository",
             "Symfony\\Component\\HttpFoundation",
             "App\\Entity",
+            "App\\CardGame",
+            "Symfony\\Component\\HttpFoundation\\Session",
             "Doctrine\\ORM",
-            "global"
+            "global",
+            "Doctrine\\Persistence"
         ]
     },
     {
@@ -338,11 +346,6 @@
         "relations": [
             "Doctrine\\Common\\Collections"
         ]
-    },
-    {
-        "name": "Doctrine\\Persistence",
-        "size": 3000,
-        "relations": []
     },
     {
         "name": "App\\Dice",
@@ -368,6 +371,11 @@
     },
     {
         "name": "Doctrine\\Bundle\\DoctrineBundle\\Repository",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "Doctrine\\Persistence",
         "size": 3000,
         "relations": []
     },

@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2024-08-26 08:49:30        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2024-08-26 21:56:00        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -287,6 +287,24 @@
         "relations": []
     },
     {
+        "name": "\\App\\CardGame\\AllInScenarioHandler",
+        "size": 3000,
+        "relations": [
+            "\\App\\CardGame\\TexasHoldemGame",
+            "\\App\\CardGame\\PlayerActionHandler"
+        ]
+    },
+    {
+        "name": "\\App\\CardGame\\TexasHoldemGame",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\CardGame\\PlayerActionHandler",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\App\\CardGame\\Bank",
         "size": 3000,
         "relations": [
@@ -349,12 +367,27 @@
         "relations": []
     },
     {
-        "name": "\\App\\CardGame\\TexasHoldemGame",
+        "name": "\\App\\CardGame\\PlayerActionInit",
         "size": 3000,
         "relations": []
     },
     {
-        "name": "\\App\\CardGame\\PlayerActionInit",
+        "name": "\\App\\CardGame\\GameProgression",
+        "size": 3000,
+        "relations": [
+            "\\App\\CardGame\\GameViewRenderer",
+            "\\Symfony\\Component\\HttpFoundation\\Session\\SessionInterface",
+            "\\App\\CardGame\\TexasHoldemGame",
+            "\\Symfony\\Component\\HttpFoundation\\Response"
+        ]
+    },
+    {
+        "name": "\\App\\CardGame\\GameViewRenderer",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\HttpFoundation\\Response",
         "size": 3000,
         "relations": []
     },
@@ -370,6 +403,11 @@
     },
     {
         "name": "\\App\\CardGame\\GameStageManager",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Twig\\Environment",
         "size": 3000,
         "relations": []
     },
@@ -402,11 +440,6 @@
     },
     {
         "name": "\\InvalidArgumentException",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\App\\CardGame\\PlayerActionHandler",
         "size": 3000,
         "relations": []
     },
@@ -450,11 +483,6 @@
     },
     {
         "name": "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\Symfony\\Component\\HttpFoundation\\Response",
         "size": 3000,
         "relations": []
     },
@@ -605,39 +633,47 @@
         "size": 3000,
         "relations": [
             "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController",
+            "\\App\\Service\\GameHandlerService",
+            "\\App\\Service\\GameInitializer",
+            "\\App\\Service\\ScoreService",
             "\\Symfony\\Component\\HttpFoundation\\Response",
             "\\Symfony\\Component\\HttpFoundation\\Request",
             "\\Symfony\\Component\\HttpFoundation\\Session\\SessionInterface",
+            "\\App\\CardGame\\PlayerActionHandler",
+            "\\Symfony\\Component\\HttpFoundation\\JsonResponse"
+        ]
+    },
+    {
+        "name": "\\App\\Service\\GameHandlerService",
+        "size": 3000,
+        "relations": [
+            "\\App\\CardGame\\GameViewRenderer",
+            "\\App\\CardGame\\TexasHoldemGame",
+            "\\App\\CardGame\\PlayerActionHandler",
+            "\\Symfony\\Component\\HttpFoundation\\Session\\SessionInterface",
+            "\\Symfony\\Component\\HttpFoundation\\Response"
+        ]
+    },
+    {
+        "name": "\\App\\Service\\GameInitializer",
+        "size": 3000,
+        "relations": [
             "\\App\\CardGame\\TexasHoldemGame",
             "\\App\\CardGame\\Player",
             "\\App\\CardGame\\PlayerActionInit",
-            "\\App\\CardGame\\PlayerActionHandler",
+            "\\Symfony\\Component\\HttpFoundation\\Session\\SessionInterface"
+        ]
+    },
+    {
+        "name": "\\App\\Service\\ScoreService",
+        "size": 3000,
+        "relations": [
             "\\Doctrine\\Persistence\\ManagerRegistry",
             "\\Symfony\\Component\\HttpFoundation\\JsonResponse",
             "\\App\\Entity\\GamePlayer",
             "\\App\\Entity\\Scores",
             "\\DateTime"
         ]
-    },
-    {
-        "name": "\\Doctrine\\Persistence\\ManagerRegistry",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\App\\Entity\\GamePlayer",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\App\\Entity\\Scores",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\DateTime",
-        "size": 3000,
-        "relations": []
     },
     {
         "name": "\\App\\Controller\\TexasHoldemJson",
@@ -657,12 +693,22 @@
         "relations": []
     },
     {
+        "name": "\\App\\Entity\\GamePlayer",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\Doctrine\\Common\\Collections\\ArrayCollection",
         "size": 3000,
         "relations": []
     },
     {
         "name": "\\Doctrine\\Common\\Collections\\Collection",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\App\\Entity\\Scores",
         "size": 3000,
         "relations": []
     },
@@ -689,6 +735,11 @@
         "relations": []
     },
     {
+        "name": "\\Doctrine\\Persistence\\ManagerRegistry",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\App\\Repository\\ProductRepository",
         "size": 3000,
         "relations": [
@@ -698,6 +749,11 @@
     },
     {
         "name": "\\Doctrine\\ORM\\EntityManagerInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\DateTime",
         "size": 3000,
         "relations": []
     }
