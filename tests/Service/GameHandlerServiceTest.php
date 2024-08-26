@@ -61,8 +61,8 @@ class GameHandlerServiceTest extends TestCase
         $potManager->method('haveAllActivePlayersMatchedCurrentBet')->willReturn(true);
 
         $this->game->/** @scrutinizer ignore-call */ method('getPotManager')->willReturn($potManager);
-        $this->game->method('getPlayers')->willReturn([]);
-        $this->game->method('isGameOver')->willReturn(true);
+        $this->game->/** @scrutinizer ignore-call */ method('getPlayers')->willReturn([]);
+        $this->game->/** @scrutinizer ignore-call */ method('isGameOver')->willReturn(true);
 
         $this->gameViewRenderer->/** @scrutinizer ignore-call */ method('renderGameView')
             ->willReturn(new Response());
