@@ -92,20 +92,37 @@
                     <p>Folded</p>
                 {% else %}
                     <div class="cards">
-                        {% for card in player.getHand() %}
-                            <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card">
-                        {% endfor %}
+                        {% if player.getName() == 'Computer 1' or player.getName() == 'Computer 2' %}
+                            {% if not isGameOver %}
+                                <!-- Show unturned cards if the game is not over -->
+                                <img class="card-image" src="{{ asset(player.getHand()[0].getUnturned()) }}" alt="Unturned Card">
+                                <img class="card-image" src="{{ asset(player.getHand()[1].getUnturned()) }}" alt="Unturned Card">
+                            {% else %}
+                                <!-- Show real cards if the game is over -->
+                                {% for card in player.getHand() %}
+                                    <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card">
+                                {% endfor %}
+                            {% endif %}
+                        {% else %}
+                            <!-- For human player, always show real cards -->
+                            {% for card in player.getHand() %}
+                                <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card">
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 {% endif %}
                 <p>Chips: {{ player.getChips() }}</p>
                 <p>Took action: {{ action }}</p>
                 <br>
-            <details>
-            {# Dump the evaluated hand and rank #}
-                {% set bestHand = game.getHandEvaluator().getBestHand(player.getHand() | merge(game.getCommunityCardManager().getCommunityCards())) %}
-                <p>Best Hand: {{ bestHand.rank }}</p>
-                <p>Values: {{ bestHand.values|join(', ') }}</p>
-            </details>
+                <details>
+                    <summary>Cheat:</summary>
+                    {% for card in player.getHand() %}
+                        <img class="card-image" src="{{ asset(card.getAsString()) }}" alt="Card">
+                    {% endfor %}
+                    {% set bestHand = game.getHandEvaluator().getBestHand(player.getHand() | merge(game.getCommunityCardManager().getCommunityCards())) %}
+                    <p>Best Hand: {{ bestHand.rank }}</p>
+                    <pre>{{ dump(bestHand) }}</pre>
+                </details>
             </div>
         {% endfor %}
     </div>
