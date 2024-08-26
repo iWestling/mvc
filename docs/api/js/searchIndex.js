@@ -376,6 +376,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-CardGame-GameLogger.html#method_updateGameLog"
         },                {
+            "fqsen": "\\App\\CardGame\\GameManagerJson",
+            "name": "GameManagerJson",
+            "summary": "",
+            "url": "classes/App-CardGame-GameManagerJson.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameManagerJson\u003A\u003AstartNewGame\u0028\u0029",
+            "name": "startNewGame",
+            "summary": "",
+            "url": "classes/App-CardGame-GameManagerJson.html#method_startNewGame"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameManagerJson\u003A\u003AgetGameState\u0028\u0029",
+            "name": "getGameState",
+            "summary": "",
+            "url": "classes/App-CardGame-GameManagerJson.html#method_getGameState"
+        },                {
+            "fqsen": "\\App\\CardGame\\GameManagerJson\u003A\u003AgetCommunityCards\u0028\u0029",
+            "name": "getCommunityCards",
+            "summary": "",
+            "url": "classes/App-CardGame-GameManagerJson.html#method_getCommunityCards"
+        },                {
             "fqsen": "\\App\\CardGame\\GameResultCheck",
             "name": "GameResultCheck",
             "summary": "Methods\u0020for\u0020checking\u0020game\u0020results",
@@ -860,6 +880,21 @@ Search.appendIndex(
             "name": "potManager",
             "summary": "",
             "url": "classes/App-CardGame-PlayerActionInit.html#property_potManager"
+        },                {
+            "fqsen": "\\App\\CardGame\\PlayerManagerJson",
+            "name": "PlayerManagerJson",
+            "summary": "",
+            "url": "classes/App-CardGame-PlayerManagerJson.html"
+        },                {
+            "fqsen": "\\App\\CardGame\\PlayerManagerJson\u003A\u003AsetChips\u0028\u0029",
+            "name": "setChips",
+            "summary": "",
+            "url": "classes/App-CardGame-PlayerManagerJson.html#method_setChips"
+        },                {
+            "fqsen": "\\App\\CardGame\\PlayerManagerJson\u003A\u003AgetPlayerCards\u0028\u0029",
+            "name": "getPlayerCards",
+            "summary": "",
+            "url": "classes/App-CardGame-PlayerManagerJson.html#method_getPlayerCards"
         },                {
             "fqsen": "\\App\\CardGame\\PotManager",
             "name": "PotManager",
@@ -1541,10 +1576,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemJson.html"
         },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AapiPage\u0028\u0029",
-            "name": "apiPage",
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
             "summary": "",
-            "url": "classes/App-Controller-TexasHoldemJson.html#method_apiPage"
+            "url": "classes/App-Controller-TexasHoldemJson.html#method___construct"
         },                {
             "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AstartNewGame\u0028\u0029",
             "name": "startNewGame",
@@ -1556,11 +1591,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemJson.html#method_getGameState"
         },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AstartNewRound\u0028\u0029",
-            "name": "startNewRound",
-            "summary": "",
-            "url": "classes/App-Controller-TexasHoldemJson.html#method_startNewRound"
-        },                {
             "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AresetGame\u0028\u0029",
             "name": "resetGame",
             "summary": "",
@@ -1571,16 +1601,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemJson.html#method_setChips"
         },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AsetChipsCompOne\u0028\u0029",
-            "name": "setChipsCompOne",
-            "summary": "",
-            "url": "classes/App-Controller-TexasHoldemJson.html#method_setChipsCompOne"
-        },                {
-            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AsetChipsCompTwo\u0028\u0029",
-            "name": "setChipsCompTwo",
-            "summary": "",
-            "url": "classes/App-Controller-TexasHoldemJson.html#method_setChipsCompTwo"
-        },                {
             "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003AgetCommunityCards\u0028\u0029",
             "name": "getCommunityCards",
             "summary": "",
@@ -1590,6 +1610,16 @@ Search.appendIndex(
             "name": "getPlayerCards",
             "summary": "",
             "url": "classes/App-Controller-TexasHoldemJson.html#method_getPlayerCards"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003A\u0024gameManager",
+            "name": "gameManager",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#property_gameManager"
+        },                {
+            "fqsen": "\\App\\Controller\\TexasHoldemJson\u003A\u003A\u0024playerManager",
+            "name": "playerManager",
+            "summary": "",
+            "url": "classes/App-Controller-TexasHoldemJson.html#property_playerManager"
         },                {
             "fqsen": "\\App\\Dice\\Dice",
             "name": "Dice",

@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content content-first">
         <div class="report-details">
-            Created at 2024-08-22 21:08:57        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2024-08-25 20:46:08        , with PHPMetrics v2.8.2 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
         
@@ -60,21 +60,21 @@
         <div class="bloc bloc-number">
             <div class="label">Test suites</div>
             <div class="number">
-                45            </div>
+                47            </div>
         </div>
     </div>
     <div class="column">
         <div class="bloc bloc-number">
             <div class="label">Assertions</div>
             <div class="number">
-                992            </div>
+                1015            </div>
         </div>
     </div>
     <div class="column">
         <div class="bloc bloc-number">
             <div class="label">
                 classes never called by tests
-                <small>(19.61 %)</small>
+                <small>(18.87 %)</small>
             </div>
             <div class="number">
                 10            </div>
@@ -405,6 +405,23 @@
                                                                     </td>
                             </tr>
                                                     <tr>
+                                <td valign="top"><span class="path">App\Tests\CardGame\GameManagerJsonTest</span></td>
+                                <td style="padding-bottom: 1em;">
+                                                                                                                    <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">PHPUnit\Framework\TestCase</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            1                                        </span>
+                                        <span class="path">App\CardGame\GameManagerJson</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            24                                        </span>
+                                        <span class="path">App\CardGame\TexasHoldemGame</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            1                                        </span>
+                                        <span class="path">App\CardGame\Player</span>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
                                 <td valign="top"><span class="path">App\Tests\CardGame\GameResultCheckTest</span></td>
                                 <td style="padding-bottom: 1em;">
                                                                                                                     <span class="badge" title="Cyclomatic complexity of class">
@@ -554,6 +571,17 @@
                                                                             <br>                                        <span class="badge" title="Cyclomatic complexity of class">
                                             1                                        </span>
                                         <span class="path">App\CardGame\Player</span>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
+                                <td valign="top"><span class="path">App\Tests\CardGame\PlayerManagerJsonTest</span></td>
+                                <td style="padding-bottom: 1em;">
+                                                                                                                    <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">PHPUnit\Framework\TestCase</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            5                                        </span>
+                                        <span class="path">App\CardGame\PlayerManagerJson</span>
                                                                     </td>
                             </tr>
                                                     <tr>
@@ -760,6 +788,9 @@
                                                                             <br>                                        <span class="badge" title="Cyclomatic complexity of class">
                                             -                                        </span>
                                         <span class="path">Symfony\Component\HttpFoundation\RedirectResponse</span>
+                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
+                                            -                                        </span>
+                                        <span class="path">ReflectionClass</span>
                                                                     </td>
                             </tr>
                                                     <tr>
@@ -769,11 +800,8 @@
                                             -                                        </span>
                                         <span class="path">Symfony\Bundle\FrameworkBundle\Test\WebTestCase</span>
                                                                             <br>                                        <span class="badge" title="Cyclomatic complexity of class">
-                                            11                                        </span>
+                                            8                                        </span>
                                         <span class="path">App\Controller\TexasHoldemJson</span>
-                                                                            <br>                                        <span class="badge" title="Cyclomatic complexity of class">
-                                            -                                        </span>
-                                        <span class="path">Symfony\Component\HttpFoundation\Response</span>
                                                                             <br>                                        <span class="badge" title="Cyclomatic complexity of class">
                                             -                                        </span>
                                         <span class="path">Symfony\Component\HttpFoundation\Request</span>
@@ -920,7 +948,7 @@
                             <path d="M0 0h24v24H0z" fill="none">
                             <path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z">
                         </svg>
-                        Violations (14)
+                        Violations (13)
                     </a>
                 </li>
                                     <li>
@@ -1129,7 +1157,7 @@
 
 
             
-            var json = {"name":"Execution time","children":[{"name":"App\\Tests\\Card\\CardGraphicTest","time":0.143956},{"name":"App\\Tests\\Card\\CardHandTest","time":0.028342},{"name":"App\\Tests\\Card\\CardTest","time":0.001903},{"name":"App\\Tests\\Card\\DeckOfCardsTest","time":0.008119},{"name":"App\\Tests\\CardGame\\BankTest","time":0.023532},{"name":"App\\Tests\\CardGame\\CardGraphicTest","time":0.012064},{"name":"App\\Tests\\CardGame\\CardHandTest","time":0.021951},{"name":"App\\Tests\\CardGame\\CardTest","time":0.001277},{"name":"App\\Tests\\CardGame\\CommunityCardManagerTest","time":0.341685},{"name":"App\\Tests\\CardGame\\DeckOfCardsTest","time":0.007393},{"name":"App\\Tests\\CardGame\\DeckTest","time":0.077786},{"name":"App\\Tests\\CardGame\\GameDataServiceTest","time":0.042464},{"name":"App\\Tests\\CardGame\\GameLoggerTest","time":0.031113},{"name":"App\\Tests\\CardGame\\GameResultCheckTest","time":0.018213},{"name":"App\\Tests\\CardGame\\GameServiceTest","time":0.025006},{"name":"App\\Tests\\CardGame\\GameStageManagerTest","time":0.019484},{"name":"App\\Tests\\CardGame\\HandEvaluatorTest","time":0.018831},{"name":"App\\Tests\\CardGame\\HandRankingEvaluatorTest","time":0.007832},{"name":"App\\Tests\\CardGame\\IntelligentComputerTest","time":0.01281},{"name":"App\\Tests\\CardGame\\MoneyHandlingTest","time":0.006934},{"name":"App\\Tests\\CardGame\\NormalComputerTest","time":0.002538},{"name":"App\\Tests\\CardGame\\PlayerActionHandlerTest","time":0.209907},{"name":"App\\Tests\\CardGame\\PlayerActionInitTest","time":0.004733},{"name":"App\\Tests\\CardGame\\PlayerTest","time":0.012399},{"name":"App\\Tests\\CardGame\\PotManagerTest","time":0.004466},{"name":"App\\Tests\\CardGame\\TexasHoldemGameTest","time":0.038183},{"name":"App\\Tests\\CardGame\\WinnerEvaluatorTest","time":0.009023},{"name":"App\\Tests\\Controller\\BlackJackControllerTest","time":0.181185},{"name":"App\\Tests\\Controller\\BlackJackJsonTest","time":0.025631},{"name":"App\\Tests\\Controller\\CardGameControllerTest","time":0.046705},{"name":"App\\Tests\\Controller\\GamePlayerControllerTest","time":0.124034},{"name":"App\\Tests\\Controller\\LibraryControllerTest","time":0.039243},{"name":"App\\Tests\\Controller\\LuckyControllerTest","time":0.04655},{"name":"App\\Tests\\Controller\\ReportSiteJsonTest","time":0.03322},{"name":"App\\Tests\\Controller\\ReportSiteTest","time":0.012612},{"name":"App\\Tests\\Controller\\TexasHoldemControllerTest","time":0.122842},{"name":"App\\Tests\\Controller\\TexasHoldemJsonTest","time":0.023181},{"name":"App\\Dice\\DiceTest","time":0.008026},{"name":"App\\Tests\\Entity\\GamePlayerTest","time":0.005753},{"name":"App\\Tests\\Entity\\ScoresTest","time":0.001678},{"name":"App\\Entity\\LibraryTest","time":0.002119},{"name":"App\\Tests\\Entity\\ProductTest","time":0.007235},{"name":"App\\Tests\\Service\\ApiServiceTest","time":0.003297},{"name":"App\\Tests\\Service\\DatabaseResetServiceTest","time":0.000884},{"name":"App\\Tests\\Service\\PlayerScoreResetServiceTest","time":0.012128}]};
+            var json = {"name":"Execution time","children":[{"name":"App\\Tests\\Card\\CardGraphicTest","time":0.212288},{"name":"App\\Tests\\Card\\CardHandTest","time":0.031631},{"name":"App\\Tests\\Card\\CardTest","time":0.00146},{"name":"App\\Tests\\Card\\DeckOfCardsTest","time":0.0109},{"name":"App\\Tests\\CardGame\\BankTest","time":0.031325},{"name":"App\\Tests\\CardGame\\CardGraphicTest","time":0.017328},{"name":"App\\Tests\\CardGame\\CardHandTest","time":0.032452},{"name":"App\\Tests\\CardGame\\CardTest","time":0.001326},{"name":"App\\Tests\\CardGame\\CommunityCardManagerTest","time":0.397799},{"name":"App\\Tests\\CardGame\\DeckOfCardsTest","time":0.009626},{"name":"App\\Tests\\CardGame\\DeckTest","time":0.092736},{"name":"App\\Tests\\CardGame\\GameDataServiceTest","time":0.054016},{"name":"App\\Tests\\CardGame\\GameLoggerTest","time":0.037318},{"name":"App\\Tests\\CardGame\\GameManagerJsonTest","time":0.278062},{"name":"App\\Tests\\CardGame\\GameResultCheckTest","time":0.017346},{"name":"App\\Tests\\CardGame\\GameServiceTest","time":0.039264},{"name":"App\\Tests\\CardGame\\GameStageManagerTest","time":0.016199},{"name":"App\\Tests\\CardGame\\HandEvaluatorTest","time":0.005083},{"name":"App\\Tests\\CardGame\\HandRankingEvaluatorTest","time":0.007403},{"name":"App\\Tests\\CardGame\\IntelligentComputerTest","time":0.003883},{"name":"App\\Tests\\CardGame\\MoneyHandlingTest","time":0.009296},{"name":"App\\Tests\\CardGame\\NormalComputerTest","time":0.003105},{"name":"App\\Tests\\CardGame\\PlayerActionHandlerTest","time":0.037},{"name":"App\\Tests\\CardGame\\PlayerActionInitTest","time":0.0042},{"name":"App\\Tests\\CardGame\\PlayerManagerJsonTest","time":0.03244},{"name":"App\\Tests\\CardGame\\PlayerTest","time":0.014784},{"name":"App\\Tests\\CardGame\\PotManagerTest","time":0.004597},{"name":"App\\Tests\\CardGame\\TexasHoldemGameTest","time":0.043553},{"name":"App\\Tests\\CardGame\\WinnerEvaluatorTest","time":0.014968},{"name":"App\\Tests\\Controller\\BlackJackControllerTest","time":0.213995},{"name":"App\\Tests\\Controller\\BlackJackJsonTest","time":0.021856},{"name":"App\\Tests\\Controller\\CardGameControllerTest","time":0.051955},{"name":"App\\Tests\\Controller\\GamePlayerControllerTest","time":0.155019},{"name":"App\\Tests\\Controller\\LibraryControllerTest","time":0.053454},{"name":"App\\Tests\\Controller\\LuckyControllerTest","time":0.05864},{"name":"App\\Tests\\Controller\\ReportSiteJsonTest","time":0.036619},{"name":"App\\Tests\\Controller\\ReportSiteTest","time":0.017943},{"name":"App\\Tests\\Controller\\TexasHoldemControllerTest","time":0.130019},{"name":"App\\Tests\\Controller\\TexasHoldemJsonTest","time":0.023953},{"name":"App\\Dice\\DiceTest","time":0.010733},{"name":"App\\Tests\\Entity\\GamePlayerTest","time":0.005499},{"name":"App\\Tests\\Entity\\ScoresTest","time":0.001796},{"name":"App\\Entity\\LibraryTest","time":0.001675},{"name":"App\\Tests\\Entity\\ProductTest","time":0.011077},{"name":"App\\Tests\\Service\\ApiServiceTest","time":0.003125},{"name":"App\\Tests\\Service\\DatabaseResetServiceTest","time":0.000886},{"name":"App\\Tests\\Service\\PlayerScoreResetServiceTest","time":0.015389}]};
             root = json;
             var nodes = treemap.nodes(json)
                 .filter(function (d) {
