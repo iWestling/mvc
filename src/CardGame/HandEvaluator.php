@@ -19,13 +19,22 @@ class HandEvaluator
      */
     public function getBestHand(array $cards): array
     {
-        $bestHand = ['rank' => '', 'values' => []];
+        $bestHand = ['rank' => '', 'values' => [], 'kickers' => [], 'hand' => []];
         $combinations = $this->combinations($cards, 5);
 
         foreach ($combinations as $combination) {
             $rank = $this->rankingEvaluator->evaluateHand($combination);
             if ($this->isBetterHand($rank, $bestHand)) {
-                $bestHand = ['hand' => $combination, 'rank' => $rank['rank'], 'values' => $rank['values']];
+                // Extract kickers from remaining cards
+                $remainingCards = array_udiff($cards, $combination, function ($cardA, $cardB) {
+                    return $cardA->getValue() === $cardB->getValue() && $cardA->getSuit() === $cardB->getSuit() ? 0 : -1;
+                });
+                usort($remainingCards, fn ($carda, $cardb) => $cardb->getValue() - $carda->getValue()); // Sort remaining cards by value
+                $kickers = array_slice(array_map(fn ($card) => $card->getValue(), $remainingCards), 0, 2); // Take top 2 kickers
+
+                // Include the combination of cards as the hand
+                $bestHand = ['hand' => $combination, 'rank' => $rank['rank'], 'values' => $rank['values'], 'kickers' => $kickers];
+
             }
         }
 
@@ -41,7 +50,6 @@ class HandEvaluator
     {
         return $this->compareHands($rank, $bestHand) > 0;
     }
-
     /**
      * @param CardGraphic[] $cards
      * @return CardGraphic[][]
@@ -84,25 +92,61 @@ class HandEvaluator
             return -1;
         }
 
+        // Compare the ranks
+        $rankComparison = $this->compareRanks($hand1, $hand2);
+        if ($rankComparison !== 0) {
+            return $rankComparison;
+        }
+
+        // Compare the hand values
+        $values1 = $this->filterToIntArray($hand1['values'] ?? []);
+        $values2 = $this->filterToIntArray($hand2['values'] ?? []);
+        $valueComparison = $this->compareHandValuesSafely($values1, $values2);
+        if ($valueComparison !== 0) {
+            return $valueComparison;
+        }
+
+        // Compare the kickers
+        $kickers1 = $this->filterToIntArray($hand1['kickers'] ?? []);
+        $kickers2 = $this->filterToIntArray($hand2['kickers'] ?? []);
+        return $this->compareHandValuesSafely($kickers1, $kickers2);
+    }
+
+    /**
+     * @param mixed $array
+     * @return int[]
+     */
+    private function filterToIntArray($array): array
+    {
+        return is_array($array) ? array_filter($array, 'is_int') : [];
+    }
+
+    /**
+     * @param array<string, mixed> $hand1
+     * @param array<string, mixed> $hand2
+     * @return int
+     */
+    private function compareRanks(array $hand1, array $hand2): int
+    {
         $rank1 = $this->getRankValue($hand1);
         $rank2 = $this->getRankValue($hand2);
 
-        // Compare ranks
         if ($rank1 > $rank2) {
             return 1;
         } elseif ($rank1 < $rank2) {
             return -1;
         }
 
-        // Ensure 'values' is an array before comparing
-        $values1 = $hand1['values'] ?? [];
-        $values2 = $hand2['values'] ?? [];
+        return 0;
+    }
 
-        if (!is_array($values1) || !is_array($values2)) {
-            return 0; // Treat invalid values as equal
-        }
-
-        // Compare the hand values (kickers)
+    /**
+     * @param int[] $values1
+     * @param int[] $values2
+     * @return int
+     */
+    private function compareHandValuesSafely(array $values1, array $values2): int
+    {
         return $this->compareHandValues($values1, $values2);
     }
 
