@@ -22,7 +22,7 @@ class IntelligentComputer
         $rankValue = $this->handEvaluator->getRankValue($bestHand);
         $hasHighCard = $this->hasHighCard($player);
 
-        if ($currentBet > 4 && !$hasHighCard) {
+        if ($currentBet > 4 && !$hasHighCard || $rankValue < 1) {
             return 'fold';
         }
 
