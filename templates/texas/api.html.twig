@@ -6,37 +6,34 @@
     <h1>Texas Hold'em API</h1>
 
     <p>Click the buttons below to interact with the API:</p>
-    <form action="{{ path('api_start_game') }}" method="POST">
+    <form action="{{ path('api_start_game') }}" method="POST" target="_blank">
         <button type="submit">Start New Game</button>
     </form>
-    <form action="{{ path('api_game') }}" method="GET">
+    <form action="{{ path('api_game') }}" method="GET" target="_blank">
         <button type="submit">Get Game State</button>
     </form>
-    <form action="{{ path('api_community_cards') }}" method="GET">
+    <form action="{{ path('api_community_cards') }}" method="GET" target="_blank">
         <button type="submit">Get Community Cards</button>
     </form>
 
-    <form action="{{ path('api_new_round') }}" method="POST">
-        <button type="submit">Start New Round</button>
-    </form>
-
-    <form action="{{ path('api_reset_game') }}" method="POST">
+    <form action="{{ path('api_reset_game') }}" method="POST" target="_blank">
         <button type="submit">Reset Game</button>
     </form>
 
-    <form action="{{ path('api_set_chips_you') }}" method="POST">
+    <form action="{{ path('api_set_chips', { 'playerIndex': 0 }) }}" method="POST" target="_blank">
         <input type="number" name="chips" placeholder="Your new chip count">
         <button type="submit">Set Your Chips</button>
     </form>
-    <form action="{{ path('api_set_chips_comp_one') }}" method="POST">
+
+    <form action="{{ path('api_set_chips', { 'playerIndex': 1 }) }}" method="POST" target="_blank">
         <input type="number" name="chips" placeholder="Computer 1's new chip count">
         <button type="submit">Set Computer 1 Chips</button>
     </form>
-    <form action="{{ path('api_set_chips_comp_two') }}" method="POST">
+
+    <form action="{{ path('api_set_chips', { 'playerIndex': 2 }) }}" method="POST" target="_blank">
         <input type="number" name="chips" placeholder="Computer 2's new chip count">
         <button type="submit">Set Computer 2 Chips</button>
     </form>
-
 
     <form action="{{ path('api_player_cards', { playerName: 'You' }) }}" method="GET" target="_blank">
         <button type="submit">Get Your Cards</button>
