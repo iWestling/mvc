@@ -162,7 +162,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testPlayRoundWithNormalScenario(): void
     {
-        $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
+        /** @scrutinizer ignore-deprecated */ $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);
@@ -229,7 +229,7 @@ class TexasHoldemControllerTest extends TestCase
         ]);
 
         // Simulate that no game is present in the session
-        $this->session->method('get')->with('game')->willReturn(null);
+        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn(null);
 
         // Ensure that the ScoreService returns a successful response
         $this->scoreService->/** @scrutinizer ignore-call */ expects($this->once())
@@ -248,7 +248,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testStartNewRoundWhenNoGameInSession(): void
     {
-        $this->session->method('get')->with('game')->willReturn(null);
+        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn(null);
 
         $response = $this->controller->startNewRound($this->session);
 
@@ -258,7 +258,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testStartNewRoundWithGameInSession(): void
     {
-        $this->session->method('get')->with('game')->willReturn($this->game);
+        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn($this->game);
 
         $this->game->expects($this->once())->method('startNewRound');
 
