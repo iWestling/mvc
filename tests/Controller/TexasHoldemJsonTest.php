@@ -65,7 +65,7 @@ class TexasHoldemJsonTest extends WebTestCase
             ->willReturn($gameMock);
 
         // Expect session to store the game and the current_action_index
-        /** @scrutinizer ignore-call */ $this->sessionMock->expects($this->exactly(2))
+        /** @scrutinizer ignore-call */ /** @scrutinizer ignore-deprecated */ $this->sessionMock->expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
                 ['game', $gameMock],

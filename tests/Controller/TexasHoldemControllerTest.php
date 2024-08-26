@@ -365,7 +365,7 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testStartNewRoundRedirectsToStartIfNoGameInSession(): void
     {
         // Mock the session to return null when getting the 'game'
-        $this->session->expects($this->once())
+        $this->session->/** @scrutinizer ignore-call */expects($this->once())
             ->method('get')
             ->with('game')
             ->willReturn(null);
@@ -429,7 +429,7 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testSubmitScoreRedirectsToStartIfNoGameInSession(): void
     {
         // Mock the session to return null when getting the 'game'
-        $this->session->expects($this->once())
+        $this->session->/** @scrutinizer ignore-call */expects($this->once())
             ->method('get')
             ->with('game')
             ->willReturn(null);
@@ -439,7 +439,7 @@ class TexasHoldemControllerTest extends WebTestCase
             ->onlyMethods(['redirectToRoute'])
             ->getMock();
 
-        $controller->expects($this->once())
+        $controller->/** @scrutinizer ignore-call */expects($this->once())
             ->method('redirectToRoute')
             ->with('proj_start')
             ->willReturn(new RedirectResponse('/proj/start'));
@@ -467,7 +467,7 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testDatabaseRequest(): void
     {
         // Mock the controller to expect the render method call
-        $this->controller->expects($this->once())
+        $this->controller->/** @scrutinizer ignore-call */expects($this->once())
             ->method('render')
             ->with('texas/database.html.twig')
             ->willReturn(new Response());
@@ -482,13 +482,13 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testPlayRoundRendersGameView(): void
     {
         // Mock the session to return the game object and handle multiple calls to 'current_action_index'
-        /** @scrutinizer ignore-deprecated */ $this->session->expects($this->any())  // Use 'any' to allow multiple calls
+        /** @scrutinizer ignore-deprecated */ $this->session->/** @scrutinizer ignore-call */expects($this->any())  // Use 'any' to allow multiple calls
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);
 
         // Mock the game behavior to indicate the game is not over
-        $this->game->expects($this->once())
+        $this->game->/** @scrutinizer ignore-call */expects($this->once())
             ->method('isGameOver')
             ->willReturn(false);
 
@@ -498,7 +498,7 @@ class TexasHoldemControllerTest extends WebTestCase
             ->getMock();
 
         // Expect the `render` method to be called with the correct template and parameters
-        $this->controller->expects($this->once())
+        $this->controller->/** @scrutinizer ignore-call */expects($this->once())
             ->method('render')
             ->with('texas/game.html.twig', $this->isType('array'))
             ->willReturn(new Response());
@@ -543,7 +543,7 @@ class TexasHoldemControllerTest extends WebTestCase
             ]);
 
         // Expect the session to reset the action index to 0
-        $this->session->expects($this->any())  // Relax expectation on set call
+        $this->session->/** @scrutinizer ignore-call */expects($this->any())  // Relax expectation on set call
             ->method('set');
 
         // Call the playRound method and check the actual response
@@ -572,7 +572,7 @@ class TexasHoldemControllerTest extends WebTestCase
             ->willReturn([$player]);
 
         // Relax expectation on session set call
-        $this->session->expects($this->any())
+        $this->session->/** @scrutinizer ignore-call */expects($this->any())
             ->method('set');
 
         // Call the playRound method and check the actual response
@@ -594,16 +594,16 @@ class TexasHoldemControllerTest extends WebTestCase
 
         // Mock the players and the game behavior
         $player = $this->createMock(Player::class);
-        $player->expects($this->once())
+        $player->/** @scrutinizer ignore-call */expects($this->once())
             ->method('getName')
             ->willReturn('Computer 1');
 
-        $this->game->expects($this->once())
+        $this->game->/** @scrutinizer ignore-call */expects($this->once())
             ->method('getPlayersInOrder')
             ->willReturn([$player]);
 
         // Mock the render method to return the response
-        $this->controller->expects($this->once())
+        $this->controller->/** @scrutinizer ignore-call */expects($this->once())
             ->method('render')
             ->willReturn($mockResponse);
 
@@ -619,26 +619,26 @@ class TexasHoldemControllerTest extends WebTestCase
         $playerActionHandler = $this->createMock(PlayerActionHandler::class);
 
         // We will not strictly expect the session's `get` method to be called, allowing more flexibility
-        $this->session->method('get')
+        $this->session->/** @scrutinizer ignore-call */method('get')
             ->willReturn($this->game); // Return the game when `get` is called on the session
 
         // Mock the game behavior for All-In scenario
-        $this->game->expects($this->once())
+        $this->game->/** @scrutinizer ignore-call */expects($this->once())
             ->method('hasAllInOccurred')
             ->willReturn(true);
 
         // Expect the game to handle remaining players after All-In
-        $this->game->expects($this->once())
+        $this->game->/** @scrutinizer ignore-call */expects($this->once())
             ->method('handleRemainingPlayersAfterAllIn')
             ->with($playerActionHandler);
 
         // Mock the game advancing stages until it's over
-        $this->game->expects($this->exactly(2))
+        $this->game->/** @scrutinizer ignore-call */expects($this->exactly(2))
             ->method('isGameOver')
             ->willReturnOnConsecutiveCalls(false, true);  // First return false, then true
 
         // Expect the game to advance stages
-        $this->game->expects($this->once())
+        $this->game->/** @scrutinizer ignore-call */expects($this->once())
             ->method('advanceGameStage');
 
         // Invoke the handleAllInScenario method
