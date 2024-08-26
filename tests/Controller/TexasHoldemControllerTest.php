@@ -519,11 +519,11 @@ class TexasHoldemControllerTest extends WebTestCase
     public function testRenderGameViewWhenGameIsOver(): void
     {
         // Mock the session to return the game
-        $this->session->method('get')
+        $this->session->/** @scrutinizer ignore-call */ method('get')
             ->willReturn($this->game);
 
         // Mock the game to indicate it's over
-        $this->game->method('isGameOver')
+        $this->game->/** @scrutinizer ignore-call */ method('isGameOver')
             ->willReturn(true);
 
         // Call the playRound method and check the actual response
@@ -588,7 +588,7 @@ class TexasHoldemControllerTest extends WebTestCase
         $mockResponse = new Response();
 
         // Mock the session to return the game and action index
-        $this->session->expects($this->exactly(2))
+        $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);
@@ -663,6 +663,6 @@ class TexasHoldemControllerTest extends WebTestCase
     }
 
 
-    
+
 
 }

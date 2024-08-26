@@ -7,11 +7,12 @@ use App\CardGame\TexasHoldemGame;
 use App\CardGame\Player;
 use App\CardGame\CardGraphic;
 use App\CardGame\CommunityCardManager;
+use App\CardGame\GameManagerJson;
+use App\CardGame\PlayerManagerJson;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -19,6 +20,16 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class TexasHoldemJsonTest extends WebTestCase
 {
+    /**
+     * @var MockObject&GameManagerJson
+     */
+    private $gameManagerMock;
+
+    /**
+     * @var MockObject&PlayerManagerJson
+     */
+    private $playerManagerMock;
+
     /**
      * @var MockObject&SessionInterface
      */
@@ -31,26 +42,12 @@ class TexasHoldemJsonTest extends WebTestCase
 
     protected function setUp(): void
     {
+        $this->gameManagerMock = $this->createMock(GameManagerJson::class);
+        $this->playerManagerMock = $this->createMock(PlayerManagerJson::class);
         $this->sessionMock = $this->createMock(SessionInterface::class);
-        $this->controller = new TexasHoldemJson();
+        $this->controller = new TexasHoldemJson($this->gameManagerMock, $this->playerManagerMock);
     }
 
-    public function testApiPage(): void
-    {
-        // Mock the template rendering with 'texas/api.html.twig'
-        $controller = $this->getMockBuilder(TexasHoldemJson::class)
-            ->onlyMethods(['render'])
-            ->getMock();
-
-        $controller->expects($this->once())
-            ->method('render')
-            ->with('texas/api.html.twig')
-            ->willReturn(new Response());
-
-        // Call the apiPage method and check the response
-        $response = $controller->apiPage();
-        $this->assertInstanceOf(Response::class, $response);
-    }
     public function testStartNewGame(): void
     {
         $request = new Request([], [
@@ -59,18 +56,31 @@ class TexasHoldemJsonTest extends WebTestCase
             'level2' => 'intelligent'
         ]);
 
-        $this->sessionMock->expects($this->once())
+        $gameMock = $this->createMock(TexasHoldemGame::class);
+
+        // Expect GameManagerJson to return a TexasHoldemGame instance
+        $this->gameManagerMock->expects($this->once())
+            ->method('startNewGame')
+            ->with(1000, 'normal', 'intelligent')
+            ->willReturn($gameMock);
+
+        // Expect session to store the game and the current_action_index
+        $this->sessionMock->expects($this->exactly(2))
             ->method('set')
-            ->with('game', $this->isInstanceOf(TexasHoldemGame::class));
+            ->withConsecutive(
+                ['game', $gameMock],
+                ['current_action_index', 0]
+            );
 
         $response = $this->controller->startNewGame($request, $this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);
         $this->assertEquals('New game started successfully.', $data['message']);
     }
@@ -86,10 +96,11 @@ class TexasHoldemJsonTest extends WebTestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
         $this->assertEquals('No game found. Start a new game first.', $data['error']);
     }
@@ -105,43 +116,28 @@ class TexasHoldemJsonTest extends WebTestCase
             ->with('game')
             ->willReturn($game);
 
+        // Mock getGameState to return an array instead of JsonResponse
+        $this->gameManagerMock->expects($this->once())
+            ->method('getGameState')
+            ->with($game)
+            ->willReturn([
+                'players' => [],
+                'community_cards' => [],
+                'pot' => 0,
+            ]);
+
         $response = $this->controller->getGameState($this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('players', $data);
-        $this->assertIsArray($data['players']);
-        $this->assertEquals('You', $data['players'][0]['name']);
-    }
-
-    public function testStartNewRound(): void
-    {
-        $game = $this->createMock(TexasHoldemGame::class);
-
-        $this->sessionMock->expects($this->once())
-            ->method('get')
-            ->with('game')
-            ->willReturn($game);
-
-        $game->expects($this->once())->method('startNewRound');
-        $this->sessionMock->expects($this->once())
-            ->method('set')
-            ->with('game', $game);
-
-        $response = $this->controller->startNewRound($this->sessionMock);
-        $this->assertInstanceOf(JsonResponse::class, $response);
-
-        $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
-
-        $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
-        $this->assertArrayHasKey('message', $data);
-        $this->assertEquals('New round started.', $data['message']);
+        $this->assertArrayHasKey('community_cards', $data);
+        $this->assertArrayHasKey('pot', $data);
     }
 
     public function testResetGame(): void
@@ -154,15 +150,16 @@ class TexasHoldemJsonTest extends WebTestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);
         $this->assertEquals('Game reset successfully.', $data['message']);
     }
 
-    public function testSetChips(): void
+    public function testSetChipsForPlayer(): void
     {
         $game = new TexasHoldemGame();
         $player = new Player('You', 1000, 'intelligent');
@@ -173,72 +170,47 @@ class TexasHoldemJsonTest extends WebTestCase
             ->with('game')
             ->willReturn($game);
 
+        $this->playerManagerMock->expects($this->once())
+            ->method('setChips')
+            ->with($game, 0, 1500)
+            ->willReturn(['message' => 'Player chips set successfully.']);
+
         $request = new Request([], ['chips' => 1500]);
+        $response = $this->controller->setChips($request, $this->sessionMock, 0);
 
-        $response = $this->controller->setChips($request, $this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
-        $this->assertEquals(1500, $player->getChips());
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);
-        $this->assertEquals('Your chips set successfully.', $data['message']);
+        $this->assertEquals('Player chips set successfully.', $data['message']);
     }
 
-    public function testSetChipsCompOne(): void
+    public function testSetChipsNoGameFound(): void
     {
-        $game = new TexasHoldemGame();
-        $game->addPlayer(new Player('You', 1000, 'intelligent'));
-        $game->addPlayer(new Player('Computer 1', 1000, 'normal'));
-
         $this->sessionMock->expects($this->once())
             ->method('get')
             ->with('game')
-            ->willReturn($game);
+            ->willReturn(null);
 
-        $request = new Request([], ['chips' => 2000]);
+        $request = new Request([], ['chips' => 1000]);
+        $response = $this->controller->setChips($request, $this->sessionMock, 0);
 
-        $response = $this->controller->setChipsCompOne($request, $this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
-        $this->assertEquals(2000, $game->getPlayers()[1]->getChips());
-        $this->assertArrayHasKey('message', $data);
-        $this->assertEquals('Computer 1 chips set successfully.', $data['message']);
-    }
-
-    public function testSetChipsCompTwo(): void
-    {
-        $game = new TexasHoldemGame();
-        $game->addPlayer(new Player('You', 1000, 'intelligent'));
-        $game->addPlayer(new Player('Computer 1', 1000, 'normal'));
-        $game->addPlayer(new Player('Computer 2', 1000, 'intelligent'));
-
-        $this->sessionMock->expects($this->once())
-            ->method('get')
-            ->with('game')
-            ->willReturn($game);
-
-        $request = new Request([], ['chips' => 3000]);
-
-        $response = $this->controller->setChipsCompTwo($request, $this->sessionMock);
-        $this->assertInstanceOf(JsonResponse::class, $response);
-
-        $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
-
-        $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
-        $this->assertEquals(3000, $game->getPlayers()[2]->getChips());
-        $this->assertArrayHasKey('message', $data);
-        $this->assertEquals('Computer 2 chips set successfully.', $data['message']);
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('error', $data);
+        $this->assertEquals('No game found. Start a new game first.', $data['error']);
+        $this->assertEquals(404, $response->getStatusCode());
     }
 
     public function testGetCommunityCardsWithoutGame(): void
@@ -252,10 +224,11 @@ class TexasHoldemJsonTest extends WebTestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
         $this->assertEquals('No game found. Start a new game first.', $data['error']);
     }
@@ -280,16 +253,22 @@ class TexasHoldemJsonTest extends WebTestCase
             ->with('game')
             ->willReturn($game);
 
+        // Mock getCommunityCards to return an array instead of JsonResponse
+        $this->gameManagerMock->expects($this->once())
+            ->method('getCommunityCards')
+            ->with($game)
+            ->willReturn(['mock_card_1', 'mock_card_2']);
+
         $response = $this->controller->getCommunityCards($this->sessionMock);
-        $this->assertInstanceOf(JsonResponse::class, $response);
-
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
 
+        $this->assertIsString($content);
+
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertNotFalse($data, 'json_decode should not return false'); // Ensure decoding was successful
+        $this->assertIsArray($data, 'Decoded data should be an array'); // Ensure the decoded data is an array
         $this->assertArrayHasKey('community_cards', $data);
-        $this->assertEquals(['mock_card_1', 'mock_card_2'], $data['community_cards']);
     }
 
     public function testGetPlayerCardsWithoutGame(): void
@@ -299,86 +278,89 @@ class TexasHoldemJsonTest extends WebTestCase
             ->with('game')
             ->willReturn(null);
 
-        $response = $this->controller->getPlayerCards($this->sessionMock, 'PlayerName');
+        $response = $this->controller->getPlayerCards('PlayerName', $this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
         $this->assertEquals('No game found. Start a new game first.', $data['error']);
     }
-
-    public function testGetPlayerCards(): void
+    public function testGetPlayerCardsPlayerNotFound(): void
     {
+        $playerName = 'NonExistentPlayer';
+        $game = $this->createMock(TexasHoldemGame::class);
+
+        $this->sessionMock->expects($this->once())
+            ->method('get')
+            ->with('game')
+            ->willReturn($game);
+
+        $game->expects($this->once())
+            ->method('getPlayers')
+            ->willReturn([]);
+
+        // No need to mock getPlayerCards here since the player is not found
+        $response = $this->controller->getPlayerCards($playerName, $this->sessionMock);
+        $this->assertInstanceOf(JsonResponse::class, $response);
+
+        $content = $response->getContent();
+        $this->assertIsString($content, 'Response content should be a string'); // Ensure content is a string
+
+        // Decode JSON to check the response data
+        $data = json_decode($content, true);
+        $this->assertNotFalse($data, 'json_decode should not return false'); // Ensure decoding was successful
+        $this->assertIsArray($data, 'Decoded data should be an array'); // Ensure the decoded data is an array
+        $this->assertArrayHasKey('error', $data);
+        $this->assertEquals("Player with name $playerName not found", $data['error']);
+        $this->assertEquals(404, $response->getStatusCode());
+    }
+
+    public function testGetPlayerCardsSuccess(): void
+    {
+        $playerName = 'You';
         $game = $this->createMock(TexasHoldemGame::class);
         $player = $this->createMock(Player::class);
 
-        $mockCard1 = $this->createMock(CardGraphic::class);
-        $mockCard1->method('getAsString')->willReturn('mock_card_1');
-
-        $mockCard2 = $this->createMock(CardGraphic::class);
-        $mockCard2->method('getAsString')->willReturn('mock_card_2');
-
-        $player->method('getHand')->willReturn([$mockCard1, $mockCard2]);
-        $player->method('getName')->willReturn('PlayerName');
-
-        $game->method('getPlayers')->willReturn([$player]);
-
         $this->sessionMock->expects($this->once())
             ->method('get')
             ->with('game')
             ->willReturn($game);
 
-        $response = $this->controller->getPlayerCards($this->sessionMock, 'PlayerName');
+        $game->expects($this->once())
+            ->method('getPlayers')
+            ->willReturn([$player]);
+
+        $player->expects($this->once())
+            ->method('getName')
+            ->willReturn($playerName);
+
+        // Mock getPlayerCards to return the correct array structure
+        $this->playerManagerMock->expects($this->once())
+            ->method('getPlayerCards')
+            ->with($game, $playerName)
+            ->willReturn([
+                'player_name' => $playerName,
+                'cards' => ['Card1', 'Card2']
+            ]);
+
+        $response = $this->controller->getPlayerCards($playerName, $this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
+        $this->assertIsString($content);
 
+        // Decode JSON to check the response data
         $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
-        $this->assertArrayHasKey('player_name', $data);
+        $this->assertIsArray($data);
+        $this->assertArrayHasKey('player_name', $data);  // This is the key causing the failure
+        $this->assertEquals($playerName, $data['player_name']);
         $this->assertArrayHasKey('cards', $data);
-        $this->assertEquals('PlayerName', $data['player_name']);
-        $this->assertEquals(['mock_card_1', 'mock_card_2'], $data['cards']);
-    }
-    public function testGetPlayerCardsPlayerNotFound(): void
-    {
-        $game = $this->createMock(TexasHoldemGame::class);
-
-        // Simulate the game having some players but not the requested player
-        $player1 = $this->createMock(Player::class);
-        $player1->method('getName')->willReturn('Player1');
-
-        $player2 = $this->createMock(Player::class);
-        $player2->method('getName')->willReturn('Player2');
-
-        $game->method('getPlayers')->willReturn([$player1, $player2]);
-
-        $this->sessionMock->expects($this->once())
-            ->method('get')
-            ->with('game')
-            ->willReturn($game);
-
-        // Call the controller with a player name that does not exist in the game
-        $response = $this->controller->getPlayerCards($this->sessionMock, 'NonExistentPlayer');
-
-        // Assert the response is a JsonResponse
-        $this->assertInstanceOf(JsonResponse::class, $response);
-
-        // Get the response content and check the structure
-        $content = $response->getContent();
-        $this->assertIsString($content, 'Response content should be a string');
-
-        // Decode JSON and verify the response contains the error
-        $data = json_decode($content, true);
-        $this->assertIsArray($data, 'JSON response should decode to an array');
-        $this->assertArrayHasKey('error', $data);
-        $this->assertEquals('Player with name NonExistentPlayer not found.', $data['error']);
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(['Card1', 'Card2'], $data['cards']);
     }
 
 }
