@@ -38,7 +38,7 @@ class GameHandlerServiceTest extends TestCase
 
     public function testHandleAllInScenarioWhenAllInOccurs(): void
     {
-        $this->game->method('hasAllInOccurred')->willReturn(true);
+        $this->game->/** @scrutinizer ignore-call */ method('hasAllInOccurred')->willReturn(true);
         $this->game->method('isGameOver')->willReturn(true);
 
         $result = $this->gameHandlerService->handleAllInScenario($this->game, $this->playerActionHandler);
@@ -64,7 +64,7 @@ class GameHandlerServiceTest extends TestCase
         $this->game->method('getPlayers')->willReturn([]);
         $this->game->method('isGameOver')->willReturn(true);
 
-        $this->gameViewRenderer->method('renderGameView')
+        $this->gameViewRenderer->/** @scrutinizer ignore-call */ method('renderGameView')
             ->willReturn(new Response());
 
         $response = $this->gameHandlerService->advancePhaseIfNeeded($this->session, $this->game, 3, 3);

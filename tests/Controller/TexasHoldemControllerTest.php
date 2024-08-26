@@ -111,7 +111,7 @@ class TexasHoldemControllerTest extends TestCase
             ->with($this->session, $game);
 
         // Mock redirectToRoute to return a RedirectResponse
-        $this->controller->method('redirectToRoute')->willReturn(new RedirectResponse('/proj_play'));
+        $this->controller->/** @scrutinizer ignore-call */ method('redirectToRoute')->willReturn(new RedirectResponse('/proj_play'));
 
         // Call the startGame method
         $response = $this->controller->startGame($request, $this->session);
@@ -134,7 +134,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testPlayRoundWhenNoGameInSession(): void
     {
-        $this->session->method('get')->with('game')->willReturn(null);
+        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn(null);
 
         $response = $this->controller->playRound(new Request(), $this->session);
 
@@ -144,7 +144,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testPlayRoundWithAllInScenario(): void
     {
-        $this->session->method('get')->with('game')->willReturn($this->game);
+        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn($this->game);
 
         $this->gameHandlerService->expects($this->once())
             ->method('handleAllInScenario')
@@ -162,20 +162,20 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testPlayRoundWithNormalScenario(): void
     {
-        $this->session->expects($this->exactly(2))
+        $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
             ->method('get')
             ->withConsecutive(['game'], ['current_action_index', 0])
             ->willReturnOnConsecutiveCalls($this->game, 0);
 
-        $this->gameHandlerService->expects($this->once())
+        $this->gameHandlerService->/** @scrutinizer ignore-call */ expects($this->once())
             ->method('handleAllInScenario')
             ->willReturn(false);
 
-        $this->gameHandlerService->expects($this->once())
+        $this->gameHandlerService->/** @scrutinizer ignore-call */ expects($this->once())
             ->method('advancePhaseIfNeeded')
             ->willReturn(null);
 
-        $this->gameHandlerService->expects($this->once())
+        $this->gameHandlerService->/** @scrutinizer ignore-call */ expects($this->once())
             ->method('renderGameView')
             ->with($this->game)
             ->willReturn(new Response());
@@ -193,7 +193,7 @@ class TexasHoldemControllerTest extends TestCase
             'score' => 1000
         ]);
 
-        $this->session->method('get')->with('game')->willReturn($this->game);
+        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn($this->game);
 
         $this->scoreService->expects($this->once())
             ->method('submitScore')
@@ -232,7 +232,7 @@ class TexasHoldemControllerTest extends TestCase
         $this->session->method('get')->with('game')->willReturn(null);
 
         // Ensure that the ScoreService returns a successful response
-        $this->scoreService->expects($this->once())
+        $this->scoreService->/** @scrutinizer ignore-call */ expects($this->once())
             ->method('submitScore')
             ->with('testuser', 30, 1000)
             ->willReturn(new JsonResponse(['success' => 'Score submitted successfully!'], Response::HTTP_OK));

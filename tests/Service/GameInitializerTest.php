@@ -41,7 +41,7 @@ class GameInitializerTest extends TestCase
         $game = new TexasHoldemGame();
 
         // Expect session to set the 'game' and 'current_action_index'
-        $this->session->expects($this->exactly(2))
+        $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
                 ['game', $game],

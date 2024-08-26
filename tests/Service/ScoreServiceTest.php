@@ -53,7 +53,7 @@ class ScoreServiceTest extends TestCase
     public function testSubmitScoreFailure(): void
     {
         // Simulate an exception being thrown during the flush operation
-        $this->entityManager->method('flush')->willThrowException(new Exception());
+        $this->entityManager->/** @scrutinizer ignore-call */ method('flush')->willThrowException(new Exception());
 
         // Call the submitScore method
         $response = $this->scoreService->submitScore('testuser', 30, 1000);
