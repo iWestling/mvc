@@ -66,6 +66,7 @@ class LibraryController extends AbstractController
     }
 
 
+
     #[Route('/library/books', name: 'book_show_all')]
     public function showAllBooks(LibraryRepository $libraryRepository): Response
     {

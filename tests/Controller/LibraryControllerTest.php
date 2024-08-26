@@ -49,6 +49,96 @@ class LibraryControllerTest extends WebTestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
+    public function testCreateBookFormRendering(): void
+    {
+        // Create a mock of the LibraryRepository (even if it's not used in this specific test)
+        $libRepoMock = $this->createMock(LibraryRepository::class);
+
+        // Create a controller instance
+        $controller = $this->getMockBuilder(LibraryController::class)
+            ->setConstructorArgs([$this->apiServiceMock, $this->dbResetServiceMock])
+            ->onlyMethods(['render'])
+            ->getMock();
+
+        // Expect the `render` method to be called once, returning the form view
+        $controller->expects($this->once())
+            ->method('render')
+            ->with('library/create.html.twig')
+            ->willReturn(new Response('Rendered content'));
+
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
+
+        // Simulate a GET request (which should render the form)
+        $request = new Request([], [], [], [], [], ['REQUEST_METHOD' => 'GET']);
+        $response = $controller->createBook($request, $libRepoMock);
+
+        // Assert that the response is a normal Response (not a redirect)
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testCreateBookWithPost(): void
+    {
+        // Create a mock of the LibraryRepository
+        $libRepoMock = $this->createMock(LibraryRepository::class);
+
+        // Create a controller instance
+        $controller = $this->getMockBuilder(LibraryController::class)
+            ->setConstructorArgs([$this->apiServiceMock, $this->dbResetServiceMock])
+            ->onlyMethods(['render'])
+            ->getMock();
+
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
+
+        // Simulate a POST request (which should be handled and check if the logic continues)
+        $request = new Request([], [], [], [], [], ['REQUEST_METHOD' => 'POST']);
+        $response = $controller->createBook($request, $libRepoMock);
+
+        // Assert that the response is a normal Response
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+    public function testUpdateBookFormRendering(): void
+    {
+        // Create a mock of the LibraryRepository
+        $libRepoMock = $this->createMock(LibraryRepository::class);
+
+        // Create a mock of the Library entity
+        $bookMock = $this->createMock(Library::class);
+
+        // Mock the find method to return the book entity
+        $libRepoMock->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(1))
+            ->willReturn($bookMock);
+
+        // Create a controller instance
+        $controller = $this->getMockBuilder(LibraryController::class)
+            ->setConstructorArgs([$this->apiServiceMock, $this->dbResetServiceMock])
+            ->onlyMethods(['render'])
+            ->getMock();
+
+        // Expect the `render` method to be called once, returning the form view
+        $controller->expects($this->once())
+            ->method('render')
+            ->with('library/update_book.html.twig', $this->isType('array'))
+            ->willReturn(new Response('Rendered content'));
+
+        $container = $this->createMock(ContainerInterface::class);
+        $controller->setContainer($container);
+
+        // Simulate a GET request (which should render the form)
+        $request = new Request([], [], [], [], [], ['REQUEST_METHOD' => 'GET']);
+        $response = $controller->updateBook($request, $libRepoMock, 1);
+
+        // Assert that the response is a normal Response (not a redirect)
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+
     public function testShowAllBooks(): void
     {
         $libRepoMock = $this->createMock(LibraryRepository::class);
