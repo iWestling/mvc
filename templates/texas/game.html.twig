@@ -138,14 +138,14 @@
     </div>
     <div class="actions">
         {% if isGameOver %}
-            {% if game.getPlayers()[0].getChips() >= 20 %}
+            {% set humanChips = game.getPlayers()[0].getChips() %}
+            {% set computer1Chips = game.getPlayers()[1].getChips() %}
+            {% set computer2Chips = game.getPlayers()[2].getChips() %}
+            {% if humanChips >= 20 and (computer1Chips >= 20 or computer2Chips >= 20) %}
                 <form method="post" action="{{ path('proj_new_round') }}">
                     <button type="submit">Start New Round</button>
                 </form>
             {% endif %}
-                <form method="get" action="{{ path('proj_start') }}">
-                    <button type="submit">Start New Game</button>
-                </form>
         {% else %}
         <h2>Your Actions</h2>
             {% set currentBet = game.getPotManager().getCurrentBet() %}
@@ -198,5 +198,8 @@
                 <p>You are all-in. Waiting for other players...</p>
             {% endif %}
         {% endif %}
+        <form method="get" action="{{ path('proj_start') }}">
+            <button type="submit">Start New Game</button>
+        </form>
     </div>
 {% endblock %}

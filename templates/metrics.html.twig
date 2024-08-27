@@ -72,18 +72,19 @@
     <br>
     Scrutinizer-analys:<br>
 
-    Code Coverage: Den totala kodtäckningen är låg på 15,4 %, med 160 av 1 041 linjer täckta. Betydande delar av kodbasen saknar tester, särskilt i kritiska klasser som BlackJackController och LibraryController.<br>
+    Code Coverage: Den totala kodtäckningen är låg på 15,4 %, med 160 av 1 041 lines covered. Betydande delar av kodbasen saknar tester, särskilt i kritiska klasser som BlackJackController och LibraryController.<br>
 
     Minst testade klasser och funktioner: Flera klasser, inklusive Card, DeckOfCards, Product och ProductController, har 0 % testtäckning. Nyckeloperationer i BlackJackController och LibraryController är också helt otestade.<br>
 
     Kodkvalitetsproblem: Flera filer, som BlackjackController.php och MoneyHandling.php, innehåller buggar. BlackJackController och LibraryController har höga CRAP-poäng, vilket indikerar hög komplexitet och potential för buggar.<br>
-
+    <br>
     Totalt betyg: Kodbasen har ett Scrutinizer-betyg på 9,68 (mycket bra), men den låga testtäckningen och identifierade buggar visar områden som behöver förbättras.<br>
-    <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main" alt="Quality Score"></a>
+    <br>
+<a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/quality-score.png?b=main" alt="Quality Score"></a>
     <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/coverage.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/coverage.png?b=main" alt="Coverage"></a>
     <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main" alt="Build"></a>
     <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main" <https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main alt="Code Intelligence"></a>
-    <br>
+    <br><br>
     Överlag är därmed de största problemen med min kod:<br>
     1. Overall code coverage är bara 15,4%. Detta ökar risk för buggar och andra problem med koden.<br>
 
@@ -118,6 +119,7 @@
     <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main"><img src="https://scrutinizer-ci.com/g/iWestling/mvc/badges/build.png?b=main" alt="Build"></a>
     <a href="https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main" <https://scrutinizer-ci.com/g/iWestling/mvc/badges/code-intelligence.svg?b=main alt="Code Intelligence"></a>
     <br>
+    Ny scrutinizer (till vänster efter kmom06, till höger efter kmom07/10 när mer av orelaterad kod täckts)<br>
     <a href="{{ asset('img/better11.jpg') }}">
         <img src="{{ asset('img/better11.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
     </a>
@@ -150,7 +152,7 @@
         <a href="{{ asset('img/better8.jpg') }}">
         <img src="{{ asset('img/better8.jpg') }}" class="metrics-image" alt="An PHPmetrics image">
     </a>
-
+    <br>
     Mest notaba förbättringar är alltså: <br>
     - Fått bort de två största class violations med Blob/God object.
     - Minskat på cyklomatisk complexitet där den största klassen (BlackJackController) gått från till 2.03 till 1.15, minskat LLOC från 256 till 187, volym från 6095.5 till 3445.73 m.m.

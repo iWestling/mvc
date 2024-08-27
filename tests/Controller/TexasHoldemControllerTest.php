@@ -38,12 +38,12 @@ class TexasHoldemControllerTest extends TestCase
     /** @var TexasHoldemGame&\PHPUnit\Framework\MockObject\MockObject */
     private $game;
 
+
     protected function setUp(): void
     {
         $this->gameHandlerService = $this->createMock(GameHandlerService::class);
         $this->gameInitializer = $this->createMock(GameInitializer::class);
         $this->scoreService = $this->createMock(ScoreService::class);
-
         $this->session = $this->createMock(SessionInterface::class);
         $this->game = $this->createMock(TexasHoldemGame::class);
 
@@ -54,19 +54,16 @@ class TexasHoldemControllerTest extends TestCase
                 $this->gameInitializer,
                 $this->scoreService,
             ])
-            ->onlyMethods(['render', 'redirectToRoute']) // Mock render and redirectToRoute methods
+            ->onlyMethods(['render', 'redirectToRoute'])
             ->getMock();
 
-        // Manually set the container
         $container = $this->createMock(ContainerInterface::class);
         $this->controller->setContainer($container);
-
-        // Mock the render method to return a simple Response
         $this->controller->method('render')->willReturn(new Response());
-
-        // Ensure that redirectToRoute() returns a RedirectResponse
         $this->controller->method('redirectToRoute')->willReturn(new RedirectResponse('/proj_play'));
     }
+
+
 
     public function testIndex(): void
     {
@@ -134,7 +131,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testPlayRoundWhenNoGameInSession(): void
     {
-        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn(null);
+        $this->session->method('get')->with('game')->willReturn(null);
 
         $response = $this->controller->playRound(new Request(), $this->session);
 
@@ -160,30 +157,6 @@ class TexasHoldemControllerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    public function testPlayRoundWithNormalScenario(): void
-    {
-        /** @scrutinizer ignore-deprecated */ $this->session->/** @scrutinizer ignore-call */ expects($this->exactly(2))
-            ->method('get')
-            ->withConsecutive(['game'], ['current_action_index', 0])
-            ->willReturnOnConsecutiveCalls($this->game, 0);
-
-        $this->gameHandlerService->/** @scrutinizer ignore-call */ expects($this->once())
-            ->method('handleAllInScenario')
-            ->willReturn(false);
-
-        $this->gameHandlerService->/** @scrutinizer ignore-call */ expects($this->once())
-            ->method('advancePhaseIfNeeded')
-            ->willReturn(null);
-
-        $this->gameHandlerService->/** @scrutinizer ignore-call */ expects($this->once())
-            ->method('renderGameView')
-            ->with($this->game)
-            ->willReturn(new Response());
-
-        $response = $this->controller->playRound(new Request(), $this->session);
-
-        $this->assertInstanceOf(Response::class, $response);
-    }
 
     public function testSubmitScoreWithValidData(): void
     {
@@ -274,4 +247,83 @@ class TexasHoldemControllerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
     }
+
+    public function testPlayRoundWithNormalScenario(): void
+    {
+        $this->session->method('get')
+            ->willReturnMap([
+                ['game', null, $this->game],
+                ['current_action_index', 0, 0]
+            ]);
+
+        $this->gameHandlerService->expects($this->once())
+            ->method('handleAllInScenario')
+            ->willReturn(false);
+
+        $this->gameHandlerService->expects($this->once())
+            ->method('advancePhaseIfNeeded')
+            ->willReturn(null);
+
+        $this->gameHandlerService->expects($this->once())
+            ->method('handleGameStatus')
+            ->with($this->game, null)
+            ->willReturn(new Response());
+
+        $response = $this->controller->playRound(new Request(), $this->session);
+
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+
+    public function testPlayRoundWithPhaseAdvanced(): void
+    {
+        $request = new Request();
+
+        $this->session->method('get')
+            ->willReturnMap([
+                ['game', null, $this->game],
+                ['current_action_index', 0, 0]
+            ]);
+
+        $this->gameHandlerService->expects($this->once())
+            ->method('advancePhaseIfNeeded')
+            ->willReturn('phase_advanced');
+
+        $this->gameHandlerService->expects($this->once())
+            ->method('handleGameStatus')
+            ->with($this->game, 'phase_advanced')
+            ->willReturn(new Response('', Response::HTTP_FOUND, ['Location' => '/proj/play']));
+
+        $response = $this->controller->playRound($request, $this->session);
+
+        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals('/proj/play', $response->headers->get('Location'));
+    }
+
+    public function testPlayRoundWithGameOver(): void
+    {
+        $request = new Request();
+
+        $this->session->method('get')
+            ->willReturnMap([
+                ['game', null, $this->game],
+                ['current_action_index', 0, 0]
+            ]);
+
+        $this->gameHandlerService->expects($this->once())
+            ->method('advancePhaseIfNeeded')
+            ->willReturn('game_over');
+
+        $this->gameHandlerService->expects($this->once())
+            ->method('handleGameStatus')
+            ->with($this->game, 'game_over')
+            ->willReturn(new Response());
+
+        $response = $this->controller->playRound($request, $this->session);
+
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+
+
 }

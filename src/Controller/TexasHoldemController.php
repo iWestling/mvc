@@ -18,7 +18,6 @@ class TexasHoldemController extends AbstractController
 {
     private GameInitializer $gameInitializer;
     private GameHandlerService $gameHandlerService;
-
     private ScoreService $scoreService;
 
     public function __construct(GameHandlerService $gameHandlerService, GameInitializer $gameInitializer, ScoreService $scoreService)
@@ -63,10 +62,10 @@ class TexasHoldemController extends AbstractController
         return $this->render('texas/start.html.twig');
     }
 
+
     #[Route('/proj/play', name: 'proj_play', methods: ['GET', 'POST'])]
     public function playRound(Request $request, SessionInterface $session): Response
     {
-        // Retrieve the game from the session
         $game = $session->get('game');
 
         if (!$game instanceof TexasHoldemGame) {
@@ -112,15 +111,19 @@ class TexasHoldemController extends AbstractController
             $session->set('current_action_index', $currentActionIndex);
         }
 
-        $response = $this->gameHandlerService->advancePhaseIfNeeded($session, $game, $currentActionIndex, count($playersInOrder));
+        $currentActionIndex = $session->get('current_action_index', 0);
 
-        if ($response === null) {
-            return $this->gameHandlerService->renderGameView($game);
+        // ensure numeric
+        if (!is_numeric($currentActionIndex)) {
+            $currentActionIndex = 0;
         }
+        $currentActionIndex = (int) $currentActionIndex;
+        $totalPlayers = count($game->getPlayersInOrder());
+        $status = $this->gameHandlerService->advancePhaseIfNeeded($session, $game, $currentActionIndex, $totalPlayers);
 
-        return $response;
+        return $this->gameHandlerService->handleGameStatus($game, $status);
+
     }
-
 
     #[Route('/proj/submit-score', name: 'submit_score', methods: ['POST'])]
     public function submitScore(Request $request, SessionInterface $session): Response
