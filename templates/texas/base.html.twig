@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>{% block title %}Texas Hold'em{% endblock %}</title>
     {% block stylesheets %}
-        {{ encore_entry_link_tags('project') }}
+        {{ encore_entry_link_tags('project') }}  {# This loads project.css #}
     {% endblock %}
 </head>
+
 <body>
     <header class="site-header" style="header-image: url({{ asset('img/header.webp') }})">
         <span class="site-title">My Symfony Site</span>
@@ -29,7 +30,6 @@
     </nav>
     <nav class="navbar2">
         <ul>
-            <li><a href="{{ path('home') }}">Report Page</a></li>
             <li><a href="{{ path('proj_home') }}">Home</a></li>
             <li><a href="{{ path('proj_start') }}">Start Game</a></li>
             <li><a href="{{ path('proj_about') }}">About</a></li>
@@ -40,11 +40,10 @@
     <main>
         {% block main %}{% endblock %}
     </main>
-
     {% block javascripts %}
         {{ encore_entry_script_tags('project') }}
+        {% block importmap %}{{ importmap('project') }}{% endblock %}
     {% endblock %}
-
     <footer>
         <p>Project by Isabel Westling</p>
     </footer>
