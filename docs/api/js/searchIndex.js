@@ -613,7 +613,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\App\\CardGame\\HandRankingEvaluator\u003A\u003AadjustAceValue\u0028\u0029",
             "name": "adjustAceValue",
-            "summary": "Adjust\u0020the\u0020value\u0020of\u0020an\u0020Ace\u0020from\u00201\u0020to\u002014\u0020for\u0020evaluation\u0020purposes.",
+            "summary": "Adjust\u0020Ace\u0020value\u0020since\u0020using\u0020old\u0020blackjack\u0020card\u0020logic\u0020where\u0020Ace\u0020is\u00201",
             "url": "classes/App-CardGame-HandRankingEvaluator.html#method_adjustAceValue"
         },                {
             "fqsen": "\\App\\CardGame\\HandRankingEvaluator\u003A\u003AisRoyalFlush\u0028\u0029",
@@ -670,6 +670,41 @@ Search.appendIndex(
             "name": "makeDecision",
             "summary": "",
             "url": "classes/App-CardGame-IntelligentComputer.html#method_makeDecision"
+        },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AshouldGoAllIn\u0028\u0029",
+            "name": "shouldGoAllIn",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method_shouldGoAllIn"
+        },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AshouldFoldForAllIn\u0028\u0029",
+            "name": "shouldFoldForAllIn",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method_shouldFoldForAllIn"
+        },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AshouldCallForAllIn\u0028\u0029",
+            "name": "shouldCallForAllIn",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method_shouldCallForAllIn"
+        },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AshouldRaise\u0028\u0029",
+            "name": "shouldRaise",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method_shouldRaise"
+        },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AshouldCall\u0028\u0029",
+            "name": "shouldCall",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method_shouldCall"
+        },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AshouldFold\u0028\u0029",
+            "name": "shouldFold",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method_shouldFold"
+        },                {
+            "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AshouldBluff\u0028\u0029",
+            "name": "shouldBluff",
+            "summary": "",
+            "url": "classes/App-CardGame-IntelligentComputer.html#method_shouldBluff"
         },                {
             "fqsen": "\\App\\CardGame\\IntelligentComputer\u003A\u003AhasHighCard\u0028\u0029",
             "name": "hasHighCard",
@@ -2130,6 +2165,11 @@ Search.appendIndex(
             "name": "advancePhaseIfNeeded",
             "summary": "",
             "url": "classes/App-Service-GameHandlerService.html#method_advancePhaseIfNeeded"
+        },                {
+            "fqsen": "\\App\\Service\\GameHandlerService\u003A\u003AhandleGameStatus\u0028\u0029",
+            "name": "handleGameStatus",
+            "summary": "",
+            "url": "classes/App-Service-GameHandlerService.html#method_handleGameStatus"
         },                {
             "fqsen": "\\App\\Service\\GameHandlerService\u003A\u003ArenderGameView\u0028\u0029",
             "name": "renderGameView",

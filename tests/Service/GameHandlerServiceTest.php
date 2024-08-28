@@ -64,7 +64,7 @@ class GameHandlerServiceTest extends TestCase
     public function testHandleAllInScenarioWhenNoAllInOccurs(): void
     {
         // @phpstan-ignore-next-line
-        $this->game->method('hasAllInOccurred')->willReturn(false);
+        $this->game->/** @scrutinizer ignore-call */ method('hasAllInOccurred')->willReturn(false);
 
         // @phpstan-ignore-next-line
         $result = $this->gameHandlerService->handleAllInScenario($this->game, $this->playerActionHandler);
@@ -76,11 +76,11 @@ class GameHandlerServiceTest extends TestCase
     {
         $potManager = $this->createMock(\App\CardGame\PotManager::class);
 
-        $potManager->method('haveAllActivePlayersMatchedCurrentBet')->willReturn(true);
+        $potManager->/** @scrutinizer ignore-call */ method('haveAllActivePlayersMatchedCurrentBet')->willReturn(true);
         // @phpstan-ignore-next-line
-        $this->game->method('getPotManager')->willReturn($potManager);
+        $this->game->/** @scrutinizer ignore-call */ method('getPotManager')->willReturn($potManager);
         // @phpstan-ignore-next-line
-        $this->game->method('isGameOver')->willReturn(false);
+        $this->game->/** @scrutinizer ignore-call */ method('isGameOver')->willReturn(false);
         // @phpstan-ignore-next-line
         $status = $this->gameHandlerService->advancePhaseIfNeeded($this->session, $this->game, 3, 3);
 
@@ -91,11 +91,11 @@ class GameHandlerServiceTest extends TestCase
     {
         $potManager = $this->createMock(\App\CardGame\PotManager::class);
 
-        $potManager->method('haveAllActivePlayersMatchedCurrentBet')->willReturn(true);
+        $potManager->/** @scrutinizer ignore-call */ method('haveAllActivePlayersMatchedCurrentBet')->willReturn(true);
         // @phpstan-ignore-next-line
-        $this->game->method('getPotManager')->willReturn($potManager);
+        $this->game->/** @scrutinizer ignore-call */ method('getPotManager')->willReturn($potManager);
         // @phpstan-ignore-next-line
-        $this->game->method('isGameOver')->willReturn(true);
+        $this->game->/** @scrutinizer ignore-call */ method('isGameOver')->willReturn(true);
         // @phpstan-ignore-next-line
         $status = $this->gameHandlerService->advancePhaseIfNeeded($this->session, $this->game, 3, 3);
 
@@ -132,7 +132,7 @@ class GameHandlerServiceTest extends TestCase
     public function testHandleGameStatusWhenStatusIsNull(): void
     {
         // @phpstan-ignore-next-line
-        $this->gameViewRenderer->method('renderGameView')->willReturn(new Response());
+        $this->gameViewRenderer->/** @scrutinizer ignore-call */ method('renderGameView')->willReturn(new Response());
         // @phpstan-ignore-next-line
         $response = $this->gameHandlerService->handleGameStatus($this->game, null);
 
@@ -142,7 +142,7 @@ class GameHandlerServiceTest extends TestCase
     public function testRenderGameView(): void
     {
         // @phpstan-ignore-next-line
-        $this->gameViewRenderer->method('renderGameView')->willReturn(new Response());
+        $this->gameViewRenderer->/** @scrutinizer ignore-call */ method('renderGameView')->willReturn(new Response());
         // @phpstan-ignore-next-line
         $response = $this->gameHandlerService->renderGameView($this->game);
 
