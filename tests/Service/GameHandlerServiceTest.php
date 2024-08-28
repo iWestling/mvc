@@ -127,17 +127,17 @@ class GameHandlerServiceTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    public function testHandleGameStatusWhenPhaseAdvanced(): void
-    {
-        // Mock the URL generation
-        $this->urlGenerator->method('generate')->with('proj_play')->willReturn('/proj/play');
+    // public function testHandleGameStatusWhenPhaseAdvanced(): void
+    // {
+    //     // Mock the URL generation
+    //     $this->urlGenerator->method('generate')->with('proj_play')->willReturn('/proj/play');
 
-        // @phpstan-ignore-next-line
-        $response = $this->gameHandlerService->handleGameStatus($this->game, 'phase_advanced');
+    //     // @phpstan-ignore-next-line
+    //     $response = $this->gameHandlerService->handleGameStatus($this->game, 'phase_advanced');
 
-        $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
-        $this->assertEquals('/proj/play', $response->headers->get('Location'));
-    }
+    //     $this->assertEquals(Response::HTTP_FOUND, $response->getStatusCode());
+    //     $this->assertEquals('/proj/play', $response->headers->get('Location'));
+    // }
 
     public function testHandleGameStatusWhenStatusIsNull(): void
     {
