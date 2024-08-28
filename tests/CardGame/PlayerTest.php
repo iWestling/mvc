@@ -47,7 +47,6 @@ class PlayerTest extends TestCase
 
         $strategy = $strategyProperty->getValue($player);
 
-        // Explicitly cast the result to the expected types
         return $strategy instanceof NormalComputer || $strategy instanceof IntelligentComputer ? $strategy : null;
     }
 
@@ -156,6 +155,5 @@ class PlayerTest extends TestCase
         $decision = $player->makeDecision($communityCards, 100);
 
         $this->assertIsString($decision);
-        // Optionally check for specific behavior of IntelligentComputer strategy
     }
 }

@@ -65,7 +65,6 @@ class PlayerActionInitTest extends TestCase
 
         $this->actionInit->handleCheck($player);
 
-        // No assertion here, handleCheck doesn't modify the player's state
         $this->assertTrue(true);
     }
 

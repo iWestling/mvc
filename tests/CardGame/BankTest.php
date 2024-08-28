@@ -66,6 +66,6 @@ class BankTest extends TestCase
 
         $this->assertEquals(0, $bank->getPlayerBet($player1));
         $this->assertEquals(0, $bank->getPlayerBet($player2));
-        $this->assertEquals(300, $bank->getPot()); // The pot remains unchanged after resetting bets
+        $this->assertEquals(300, $bank->getPot());
     }
 }

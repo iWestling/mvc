@@ -25,6 +25,10 @@ class IntelligentComputer
         $playerChips = $player->getChips();
         $hasHighCard = $this->hasHighCard($player);
 
+        if ($this->shouldBluff()) {
+            return 'all-in';
+        }
+
         if ($this->shouldGoAllIn($rankValue)) {
             return 'all-in';
         }
@@ -41,7 +45,7 @@ class IntelligentComputer
             return 'raise';
         }
 
-        if ($this->shouldCall($rankValue, $currentBet, $playerChips)) {
+        if ($this->shouldCall($rankValue, $currentBet)) {
             return 'call';
         }
 
@@ -49,9 +53,9 @@ class IntelligentComputer
             return 'fold';
         }
 
-        if ($currentBet > 0) {
-            return 'call';
-        }
+        // if ($currentBet > 0) {
+        //     return 'call';
+        // }
 
         return 'check';
     }
@@ -76,14 +80,19 @@ class IntelligentComputer
         return $rankValue > 4; // Raise if rank value is higher than 4
     }
 
-    private function shouldCall(int $rankValue, int $currentBet, int $playerChips): bool
+    private function shouldCall(int $rankValue, int $currentBet): bool
     {
-        return $rankValue >= 2 && $currentBet <= ($playerChips / 20);
+        return $rankValue >= 2 && $currentBet > 0;
     }
 
     private function shouldFold(int $currentBet, bool $hasHighCard, int $rankValue): bool
     {
         return $currentBet > 0 && !$hasHighCard && $rankValue < 2;
+    }
+
+    private function shouldBluff(): bool
+    {
+        return rand(0, 100) <= 2; // 2% chance to bluff
     }
 
     private function hasHighCard(Player $player): bool

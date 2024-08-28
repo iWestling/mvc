@@ -14,12 +14,11 @@ class AllInScenarioHandlerTest extends TestCase
         $game = $this->createMock(TexasHoldemGame::class);
         $actionHandler = $this->createMock(PlayerActionHandler::class);
 
-        // Mock the game to simulate an All-In scenario
+        // simulate an All-In scenario
         $game->expects($this->once())
             ->method('hasAllInOccurred')
             ->willReturn(true);
 
-        // Expect handleRemainingPlayersAfterAllIn to be called
         $game->expects($this->once())
             ->method('handleRemainingPlayersAfterAllIn')
             ->with($actionHandler);
@@ -28,7 +27,7 @@ class AllInScenarioHandlerTest extends TestCase
         $game->expects($this->exactly(2))
             ->method('advanceGameStage');
 
-        // Mock the game over status to allow two stage advancements
+        // game over status, allow two stage advancements
         $game->expects($this->exactly(3))
             ->method('isGameOver')
             ->willReturnOnConsecutiveCalls(false, false, true);
@@ -45,7 +44,7 @@ class AllInScenarioHandlerTest extends TestCase
         $game = $this->createMock(TexasHoldemGame::class);
         $actionHandler = $this->createMock(PlayerActionHandler::class);
 
-        // Mock the game to simulate no All-In scenario
+        // Simulate no All-In scenario
         $game->expects($this->once())
             ->method('hasAllInOccurred')
             ->willReturn(false);

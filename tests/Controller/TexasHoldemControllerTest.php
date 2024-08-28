@@ -47,7 +47,6 @@ class TexasHoldemControllerTest extends TestCase
         $this->session = $this->createMock(SessionInterface::class);
         $this->game = $this->createMock(TexasHoldemGame::class);
 
-        // Create a partial mock for the TexasHoldemController
         $this->controller = $this->getMockBuilder(TexasHoldemController::class)
             ->setConstructorArgs([
                 $this->gameHandlerService,
@@ -97,7 +96,6 @@ class TexasHoldemControllerTest extends TestCase
 
         $game = $this->createMock(TexasHoldemGame::class);
 
-        // Expect gameInitializer to be called
         $this->gameInitializer->expects($this->once())
             ->method('initializeGame')
             ->with(1000, 'normal', 'normal')
@@ -113,7 +111,6 @@ class TexasHoldemControllerTest extends TestCase
         // Call the startGame method
         $response = $this->controller->startGame($request, $this->session);
 
-        // Assert that the response is a RedirectResponse
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals(302, $response->getStatusCode());
         /** @var RedirectResponse $response */
@@ -131,7 +128,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testPlayRoundWhenNoGameInSession(): void
     {
-        $this->session->method('get')->with('game')->willReturn(null);
+        $this->session->/** @scrutinizer ignore-call */ method('get')->with('game')->willReturn(null);
 
         $response = $this->controller->playRound(new Request(), $this->session);
 

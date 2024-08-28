@@ -7,19 +7,21 @@
     <form method="post" action="{{ path('proj_start') }}">
         <label for="chips">Starting Chips:</label>
         <input type="number" id="chips" name="chips" value="1000" required>
-<br>
+        <br>
         <label for="level1">Computer 1 Level:</label>
         <select id="level1" name="level1">
             <option value="normal">Normal</option>
             <option value="intelligent">Intelligent</option>
         </select>
-<br>
+        <br>
         <label for="level2">Computer 2 Level:</label>
         <select id="level2" name="level2">
             <option value="normal">Normal</option>
             <option value="intelligent">Intelligent</option>
         </select>
-<br><br>
+        <br><br>
+        <p>Small Blind is 2 chips, Big Blind is 4 chips.</p>
+        <br><br>
         <button type="submit">Start Game</button>
     </form>
 {% endblock %}

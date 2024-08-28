@@ -13,10 +13,9 @@ class DeckTest extends TestCase
         $deck = new Deck();
         $cards = $deck->getCards();
 
-        // The deck should have 52 cards initially
+        // The deck should have 52 cards
         $this->assertCount(52, $cards);
 
-        // Ensure all cards are instances of CardGraphic
         foreach ($cards as $card) {
             $this->assertInstanceOf(CardGraphic::class, $card);
         }
@@ -30,7 +29,6 @@ class DeckTest extends TestCase
         $expectedCards = [];
         $suits = ['hearts', 'diamonds', 'clubs', 'spades'];
 
-        // Create the expected set of cards
         foreach ($suits as $suit) {
             for ($value = 1; $value <= 13; $value++) {
                 $expectedCards[] = new CardGraphic($value, $suit);
@@ -76,11 +74,9 @@ class DeckTest extends TestCase
         $deck1 = new Deck();
         $deck2 = new Deck();
 
-        // Get the card orders for two separate decks
         $cards1 = $deck1->getCards();
         $cards2 = $deck2->getCards();
 
-        // Assert that the two decks are not in the same order
         $this->assertNotEquals($cards1, $cards2, "Two shuffled decks should not be in the same order.");
     }
 }

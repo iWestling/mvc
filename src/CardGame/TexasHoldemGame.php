@@ -17,8 +17,8 @@ class TexasHoldemGame
     private PlayerActionInit $actionInit;
     private WinnerEvaluator $winnerEvaluator;
 
-    private bool $allInOccurred = false; // New flag for tracking All-In
-    private bool $winnerDetermined = false; // Add this at the top of your class
+    private bool $allInOccurred = false;
+    private bool $winnerDetermined = false;
 
     /** @var string[] */
     private array $actions = [];
@@ -28,7 +28,7 @@ class TexasHoldemGame
 
     private bool $gameOver = false;
 
-    private int $dealerIndex = 0;  // Track the current dealer's index
+    private int $dealerIndex = 0;
 
     public function __construct()
     {
@@ -38,7 +38,6 @@ class TexasHoldemGame
         $this->communityCardManager = new CommunityCardManager($this->deck);
         $this->winnerEvaluator = new WinnerEvaluator(new HandEvaluator());
 
-        // Initialize action handler and action initializer
         $this->actionInit = new PlayerActionInit($this->potManager);
         $this->actionHandler = new PlayerActionHandler($this->potManager);
     }
@@ -55,8 +54,6 @@ class TexasHoldemGame
     {
         return $this->players;
     }
-
-    // Getter for stageManager if needed outside the class
     public function getStageManager(): GameStageManager
     {
         return $this->stageManager;
@@ -109,10 +106,10 @@ class TexasHoldemGame
     }
     public function playRound(PlayerActionHandler $playerActionHandler, string $action, int $raiseAmount = 0): void
     {
-        // Ensure blinds are handled at the start of the round
+        // blinds handled at the start of the round
         $this->actionInit->handleBlinds($this->players);
 
-        // Process all actions in the correct order
+        // Process all actions in correct order
         $this->processActionsInOrder($playerActionHandler, $action, $raiseAmount);
 
         // If the first player is out of chips, advance the game stages until it ends
@@ -123,7 +120,7 @@ class TexasHoldemGame
             return;
         }
 
-        // Automatically advance the game stages if all players have either folded or matched the current bet
+        // Automatically advance the game stages if all players have folded or matched current bet
         if ($this->potManager->haveAllActivePlayersMatchedCurrentBet($this->players) && !$this->isGameOver()) {
             $this->advanceGameStage();
         }
@@ -163,7 +160,7 @@ class TexasHoldemGame
     {
         // Check if the player is a computer and if the action is "raise"
         if ($action === 'raise' && strpos($player->getName(), 'Computer') !== false) {
-            // Set the raise amount to a fixed value (e.g., 10 chips) for the computer player
+            // Set the raise amount for computer player
             $raiseAmount = 10;
         }
 
@@ -220,7 +217,7 @@ class TexasHoldemGame
             return; // Prevent advancing stages after the game is over
         }
 
-        // If only one player remains, end the game immediately
+        // If only one player remains, end the game
         if ($this->countActivePlayers() === 1) {
             $this->determineWinner();
             return;
@@ -233,7 +230,7 @@ class TexasHoldemGame
             return;
         }
 
-        // If it's the final stage, handle the showdown and determine the winner
+        // if it's the final stage, handle showdown and determine winner
         dump("Showdown...");
         $this->determineWinner();
         $this->potManager->resetCurrentBet();
@@ -242,7 +239,7 @@ class TexasHoldemGame
     public function determineWinner(): void
     {
         if ($this->winnerDetermined) {
-            return; // Prevent duplicate calls
+            return; // Prevent duplicates
         }
 
         $remainingPlayers = array_filter($this->players, fn ($player) => !$player->isFolded());
@@ -297,8 +294,8 @@ class TexasHoldemGame
         $this->actionInit->initializeRoles($this->players, $this->dealerIndex);
 
         // Reset player states and handle blinds
-        $this->actionInit->resetPlayersForNewRound($this->players, $this->actions);  // Reset player states for the new round
-        $this->actionInit->handleBlinds($this->players);  // Handle blinds (small blind, big blind)
+        $this->actionInit->resetPlayersForNewRound($this->players, $this->actions);
+        $this->actionInit->handleBlinds($this->players);
 
         $this->gameOver = false;
         $this->allInOccurred = false;

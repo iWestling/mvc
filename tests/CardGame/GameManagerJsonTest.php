@@ -20,7 +20,6 @@ class GameManagerJsonTest extends TestCase
 
     protected function setUp(): void
     {
-        // Instantiate GameManagerJson
         $this->gameManager = new GameManagerJson();
     }
 
@@ -33,13 +32,10 @@ class GameManagerJsonTest extends TestCase
         // Call startNewGame method
         $game = $this->gameManager->startNewGame($chips, $level1, $level2);
 
-        // Assert that the game is an instance of TexasHoldemGame
         $this->assertInstanceOf(TexasHoldemGame::class, $game);
 
-        // Assert that the game has the correct number of players
         $this->assertCount(3, $game->getPlayers());
 
-        // Assert that the first player is the human player
         $players = $game->getPlayers();
         $this->assertEquals('You', $players[0]->getName());
         $this->assertEquals($chips, $players[0]->getChips());
@@ -54,29 +50,23 @@ class GameManagerJsonTest extends TestCase
         $game = new TexasHoldemGame();
         $game->addPlayer(new Player('You', 1000, 'intelligent'));
 
-        // Call getGameState method, which now returns an array
         $gameState = $this->gameManager->getGameState($game);
 
-        // Assert that the gameState is an array
         $this->assertIsArray($gameState);
 
-        // Assert that the array contains the expected keys
         $this->assertArrayHasKey('players', $gameState);
         $this->assertArrayHasKey('community_cards', $gameState);
         $this->assertArrayHasKey('pot', $gameState);
     }
     public function testGetCommunityCards(): void
     {
-        // Create a mock Deck and CommunityCardManager
         $deck = $this->createMock(Deck::class);
         $communityCardManager = new CommunityCardManager($deck);
 
-        // Manually add some community cards to the CommunityCardManager
         $card1 = new CardGraphic(10, 'hearts');
         $card2 = new CardGraphic(12, 'spades');
         $card3 = new CardGraphic(5, 'diamonds');
 
-        // Use reflection to set community cards (if the method is not public)
         $communityCardManager->dealCommunityCards(0); // reset cards
         $reflection = new ReflectionClass($communityCardManager);
         $property = $reflection->getProperty('communityCards');
@@ -90,10 +80,8 @@ class GameManagerJsonTest extends TestCase
         $propertyGame->setAccessible(true);
         $propertyGame->setValue($game, $communityCardManager);
 
-        // Call getCommunityCards method and check the results
         $communityCards = $this->gameManager->getCommunityCards($game);
 
-        // Assert that the community cards are returned as expected
         $this->assertIsArray($communityCards);
         $this->assertCount(3, $communityCards);
         $this->assertEquals('img/carddeck/hearts_10.png', $communityCards[0]);

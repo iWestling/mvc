@@ -117,8 +117,6 @@ class PlayerActionHandlerTest extends TestCase
 
         $this->actionHandler->processNextPlayerActions($this->game);
 
-        // No assertion here because the method handles game advancement internally.
-        // The primary goal is to ensure no errors occur during execution.
         $this->assertNotNull($this->game->getPlayersInOrder());
     }
 
@@ -133,7 +131,6 @@ class PlayerActionHandlerTest extends TestCase
 
         $this->actionHandler->processRaiseResponses($this->game);
 
-        // Again, no direct assertion is needed since we're testing method execution without errors.
         $this->assertNotNull($this->game->getPlayers());
     }
 
@@ -166,17 +163,13 @@ class PlayerActionHandlerTest extends TestCase
         $player1 = $this->createMock(Player::class);
         $player1->expects($this->once())->method('isFolded')->willReturn(false);
 
-        // Create a mock for TexasHoldemGame
         $gameMock = $this->createMock(TexasHoldemGame::class);
 
-        // Mock game behavior to simulate only one active player
         $gameMock->expects($this->once())->method('countActivePlayers')->willReturn(1);
         $gameMock->expects($this->once())->method('determineWinner');
         $gameMock->expects($this->once())->method('setGameOver')->with(true);
 
         $this->actionHandler->processPlayerAction($player1, $gameMock, 'fold', 0);
-
-        // No need to test further actions, as the return statement should prevent them
     }
 
     public function testProcessPlayerActionCallsProcessNextPlayerActions(): void
@@ -188,13 +181,10 @@ class PlayerActionHandlerTest extends TestCase
         $player2 = $this->createMock(Player::class);
         $player2->method('isFolded')->willReturn(false);
 
-        // Create a mock for TexasHoldemGame
         $gameMock = $this->createMock(TexasHoldemGame::class);
 
-        // Ensure countActivePlayers is called once and returns 2
         $gameMock->expects($this->once())->method('countActivePlayers')->willReturn(2);
 
-        // Mock PlayerActionHandler to ensure processNextPlayerActions is called
         $actionHandlerMock = $this->getMockBuilder(PlayerActionHandler::class)
             ->setConstructorArgs([$this->potManager])
             ->onlyMethods(['processNextPlayerActions'])
@@ -216,13 +206,10 @@ class PlayerActionHandlerTest extends TestCase
         $player1->expects($this->once())->method('isFolded')->willReturn(false);
         $player1->expects($this->once())->method('getChips')->willReturn(100);
 
-        // Create a mock for TexasHoldemGame
         $gameMock = $this->createMock(TexasHoldemGame::class);
 
-        // Mock getPlayersInOrder to return the list of players
         $gameMock->expects($this->once())->method('getPlayersInOrder')->willReturn([$player1]);
 
-        // Mock game behavior to simulate only one active player
         $gameMock->expects($this->once())->method('countActivePlayers')->willReturn(1);
         $gameMock->expects($this->once())->method('determineWinner');
         $gameMock->expects($this->once())->method('setGameOver')->with(true);
@@ -268,7 +255,6 @@ class PlayerActionHandlerTest extends TestCase
 
     public function testProcessActionsInOrderSkipsFoldedPlayer(): void
     {
-        // Create mock players
         $player1 = $this->createMock(Player::class);
         $player2 = $this->createMock(Player::class);
 
@@ -298,21 +284,17 @@ class PlayerActionHandlerTest extends TestCase
 
     public function testProcessActionsInOrderHandlesHumanPlayer(): void
     {
-        // Create a human player and a computer player
         $humanPlayer = $this->createMock(Player::class);
         $computerPlayer = $this->createMock(Player::class);
 
-        // Simulate human player actions
         $humanPlayer->expects($this->once())->method('isFolded')->willReturn(false);
         $humanPlayer->expects($this->once())->method('getName')->willReturn('You');
 
-        // Simulate computer player actions
         $computerPlayer->expects($this->once())->method('isFolded')->willReturn(false);
         $computerPlayer->expects($this->once())->method('getName')->willReturn('Computer');
 
         $communityCardManager = $this->createMock(CommunityCardManager::class);
 
-        // Define a callable (anonymous function) to act as handleAction
         $handleAction = function ($player, $action, $raiseAmount = 0) use ($humanPlayer) {
             if ($player === $humanPlayer) {
                 $this->assertEquals('raise', $action);

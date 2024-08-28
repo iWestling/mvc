@@ -51,9 +51,9 @@ class GameHandlerServiceTest extends TestCase
     public function testHandleAllInScenarioWhenAllInOccurs(): void
     {
         // @phpstan-ignore-next-line
-        $this->game->method('hasAllInOccurred')->willReturn(true);
+        $this->game->/** @scrutinizer ignore-call */ method('hasAllInOccurred')->willReturn(true);
         // @phpstan-ignore-next-line
-        $this->game->method('isGameOver')->willReturn(true);
+        $this->game->/** @scrutinizer ignore-call */ method('isGameOver')->willReturn(true);
 
         // @phpstan-ignore-next-line
         $result = $this->gameHandlerService->handleAllInScenario($this->game, $this->playerActionHandler);
@@ -113,7 +113,7 @@ class GameHandlerServiceTest extends TestCase
     public function testHandleGameStatusWhenGameOver(): void
     {
         // @phpstan-ignore-next-line
-        $this->gameViewRenderer->method('renderGameView')->willReturn(new Response());
+        $this->gameViewRenderer->/** @scrutinizer ignore-call */ method('renderGameView')->willReturn(new Response());
         // @phpstan-ignore-next-line
         $response = $this->gameHandlerService->handleGameStatus($this->game, 'game_over');
 
@@ -133,7 +133,7 @@ class GameHandlerServiceTest extends TestCase
     {
         // @phpstan-ignore-next-line
         $this->gameViewRenderer->method('renderGameView')->willReturn(new Response());
-    // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line
         $response = $this->gameHandlerService->handleGameStatus($this->game, null);
 
         $this->assertInstanceOf(Response::class, $response);

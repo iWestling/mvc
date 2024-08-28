@@ -20,7 +20,6 @@ class GamePlayerControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        // Create a mock of the PlayerScoreResetService
         $this->resetServiceMock = $this->createMock(PlayerScoreResetService::class);
     }
 
@@ -49,7 +48,6 @@ class GamePlayerControllerTest extends WebTestCase
     {
         $gamePlayerRepoMock = $this->createMock(GamePlayerRepository::class);
 
-        // Create mock GamePlayer entities
         $player1 = $this->createMock(GamePlayer::class);
         $player1->method('getId')->willReturn(1);
         $player1->method('getUsername')->willReturn('Player1');
@@ -60,7 +58,6 @@ class GamePlayerControllerTest extends WebTestCase
         $player2->method('getUsername')->willReturn('Player2');
         $player2->method('getAge')->willReturn(25);
 
-        // Simulate fetching players from the repository
         $gamePlayerRepoMock->expects($this->once())
             ->method('findAll')
             ->willReturn([$player1, $player2]);
@@ -89,7 +86,6 @@ class GamePlayerControllerTest extends WebTestCase
     {
         $scoresRepoMock = $this->createMock(ScoresRepository::class);
 
-        // Simulate fetching scores from the repository
         $scoresRepoMock->expects($this->once())
             ->method('findAllWithPlayersOrderedByScore')
             ->willReturn([
@@ -118,7 +114,6 @@ class GamePlayerControllerTest extends WebTestCase
 
     public function testResetPlayerDatabase(): void
     {
-        // Simulate the reset service's resetPlayerData method
         $this->resetServiceMock->expects($this->once())
             ->method('resetPlayerData')
             ->willReturn(new Response('Player and score database reset successful'));

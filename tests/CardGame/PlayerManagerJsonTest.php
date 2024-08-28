@@ -15,7 +15,6 @@ class PlayerManagerJsonTest extends TestCase
 
     protected function setUp(): void
     {
-        // Instantiate PlayerManagerJson
         $this->playerManager = new PlayerManagerJson();
     }
 
@@ -32,10 +31,8 @@ class PlayerManagerJsonTest extends TestCase
             ->method('setChips')
             ->with(1500);
 
-        // Now returns an array instead of JsonResponse
         $result = $this->playerManager->setChips($gameMock, 0, 1500);
 
-        // Assert the returned array contains the expected data
         $this->assertIsArray($result);
         $this->assertEquals('Player chips set successfully', $result['message']);
     }
@@ -48,10 +45,8 @@ class PlayerManagerJsonTest extends TestCase
             ->method('getPlayers')
             ->willReturn([]);
 
-        // Now returns an array instead of JsonResponse
         $result = $this->playerManager->setChips($gameMock, 0, 1500);
 
-        // Assert the returned array contains the expected error message
         $this->assertIsArray($result);
         $this->assertEquals('Invalid player index', $result['error']);
     }
@@ -78,10 +73,8 @@ class PlayerManagerJsonTest extends TestCase
                 $this->createConfiguredMock(CardGraphic::class, ['getAsString' => 'Card2']),
             ]);
 
-        // Now returns an array instead of JsonResponse
         $result = $this->playerManager->getPlayerCards($gameMock, $playerName);
 
-        // Assert the returned array contains the expected data
         $this->assertIsArray($result);
         $this->assertEquals($playerName, $result['player_name']);
         $this->assertEquals(['Card1', 'Card2'], $result['cards']);
@@ -97,10 +90,8 @@ class PlayerManagerJsonTest extends TestCase
             ->method('getPlayers')
             ->willReturn([]);
 
-        // Now returns an array instead of JsonResponse
         $result = $this->playerManager->getPlayerCards($gameMock, $playerName);
 
-        // Assert the returned array contains the expected error message
         $this->assertIsArray($result);
         $this->assertEquals("Player with name NonExistentPlayer not found", $result['error']);
     }

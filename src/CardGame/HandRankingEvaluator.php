@@ -37,7 +37,7 @@ class HandRankingEvaluator
     }
 
     /**
-     * Adjust the value of an Ace from 1 to 14 for evaluation purposes.
+     * Adjust Ace value since using old blackjack card logic where Ace is 1
      *
      * @param CardGraphic $card
      * @return CardGraphic

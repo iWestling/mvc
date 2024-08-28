@@ -42,17 +42,14 @@ class PotManagerTest extends TestCase
 
     public function testHaveAllActivePlayersMatchedCurrentBet(): void
     {
-        // Create mock players for the first scenario
         $player1 = $this->createMock(Player::class);
         $player2 = $this->createMock(Player::class);
 
-        // Setup player 1: Not folded, matched the current bet
         $player1->method('isFolded')
             ->willReturn(false);
         $player1->method('getCurrentBet')
             ->willReturn(200);
 
-        // Setup player 2: Not folded, did not match the current bet
         $player2->method('isFolded')
             ->willReturn(false);
         $player2->method('getCurrentBet')

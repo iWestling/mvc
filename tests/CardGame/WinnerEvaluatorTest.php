@@ -57,11 +57,9 @@ class WinnerEvaluatorTest extends TestCase
         $player2 = $this->createMock(Player::class);
         $communityCards = [$this->createMock(CardGraphic::class)];
 
-        // Mock player hands
         $player1->method('getHand')->willReturn([$this->createMock(CardGraphic::class)]);
         $player2->method('getHand')->willReturn([$this->createMock(CardGraphic::class)]);
 
-        // Mock hand evaluator responses
         $this->handEvaluator->method('getBestHand')->willReturnOnConsecutiveCalls(
             ['rank' => 'pair', 'values' => [10]],  // Player 1's hand
             ['rank' => 'pair', 'values' => [10]]   // Player 2's hand
@@ -72,7 +70,6 @@ class WinnerEvaluatorTest extends TestCase
         // Test determining the winner
         $winners = $this->winnerEvaluator->determineWinners([$player1, $player2], $communityCards);
 
-        // Assert that both players are winners
         $this->assertCount(2, $winners);
         $this->assertSame($player1, $winners[0]);
         $this->assertSame($player2, $winners[1]);
@@ -85,13 +82,11 @@ class WinnerEvaluatorTest extends TestCase
         // Test with no players
         $winners = $this->winnerEvaluator->determineWinners([], $communityCards);
 
-        // Assert that there are no winners
         $this->assertEmpty($winners);
     }
 
     public function testGetHandEvaluator(): void
     {
-        // Ensure that getHandEvaluator returns the correct HandEvaluator instance
         $this->assertSame($this->handEvaluator, $this->winnerEvaluator->getHandEvaluator());
     }
 }

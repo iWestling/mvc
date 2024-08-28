@@ -9,19 +9,18 @@ class AllInScenarioHandler
 {
     public function handleAllInScenario(TexasHoldemGame $game, PlayerActionHandler $playerActionHandler): bool
     {
-        // Check if an All-In has occurred, and if so, ensure all players have acted
+        // check if all-in, ensure all players have acted
         if ($game->hasAllInOccurred()) {
-            // Ensure remaining players have had a chance to call or fold
+            // ensure remaining players have had a chance to call or fold
             $game->handleRemainingPlayersAfterAllIn($playerActionHandler);
 
-            // After all players have acted, proceed with the game stages
             while (!$game->isGameOver()) {
                 $game->advanceGameStage();
             }
 
-            return true; // Game has ended after the All-In scenario
+            return true;
         }
 
-        return false; // No All-In scenario handled
+        return false;
     }
 }

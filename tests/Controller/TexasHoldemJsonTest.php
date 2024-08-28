@@ -58,13 +58,11 @@ class TexasHoldemJsonTest extends WebTestCase
 
         $gameMock = $this->createMock(TexasHoldemGame::class);
 
-        // Expect GameManagerJson to return a TexasHoldemGame instance
         $this->gameManagerMock->expects($this->once())
             ->method('startNewGame')
             ->with(1000, 'normal', 'intelligent')
             ->willReturn($gameMock);
 
-        // Expect session to store the game and the current_action_index
         /** @scrutinizer ignore-call */ /** @scrutinizer ignore-deprecated */ $this->sessionMock->expects($this->exactly(2))
             ->method('set')
             ->withConsecutive(
@@ -98,7 +96,6 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
@@ -116,7 +113,6 @@ class TexasHoldemJsonTest extends WebTestCase
             ->with('game')
             ->willReturn($game);
 
-        // Mock getGameState to return an array instead of JsonResponse
         $this->gameManagerMock->expects($this->once())
             ->method('getGameState')
             ->with($game)
@@ -132,7 +128,6 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
         $this->assertArrayHasKey('players', $data);
@@ -152,7 +147,6 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);
@@ -183,7 +177,6 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
         $this->assertArrayHasKey('message', $data);
@@ -205,7 +198,6 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
@@ -226,7 +218,6 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
@@ -253,7 +244,6 @@ class TexasHoldemJsonTest extends WebTestCase
             ->with('game')
             ->willReturn($game);
 
-        // Mock getCommunityCards to return an array instead of JsonResponse
         $this->gameManagerMock->expects($this->once())
             ->method('getCommunityCards')
             ->with($game)
@@ -264,7 +254,6 @@ class TexasHoldemJsonTest extends WebTestCase
 
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertNotFalse($data, 'json_decode should not return false'); // Ensure decoding was successful
         $this->assertIsArray($data, 'Decoded data should be an array'); // Ensure the decoded data is an array
@@ -284,7 +273,6 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
         $this->assertArrayHasKey('error', $data);
@@ -304,14 +292,12 @@ class TexasHoldemJsonTest extends WebTestCase
             ->method('getPlayers')
             ->willReturn([]);
 
-        // No need to mock getPlayerCards here since the player is not found
         $response = $this->controller->getPlayerCards($playerName, $this->sessionMock);
         $this->assertInstanceOf(JsonResponse::class, $response);
 
         $content = $response->getContent();
         $this->assertIsString($content, 'Response content should be a string'); // Ensure content is a string
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertNotFalse($data, 'json_decode should not return false'); // Ensure decoding was successful
         $this->assertIsArray($data, 'Decoded data should be an array'); // Ensure the decoded data is an array
@@ -339,7 +325,6 @@ class TexasHoldemJsonTest extends WebTestCase
             ->method('getName')
             ->willReturn($playerName);
 
-        // Mock getPlayerCards to return the correct array structure
         $this->playerManagerMock->expects($this->once())
             ->method('getPlayerCards')
             ->with($game, $playerName)
@@ -354,10 +339,9 @@ class TexasHoldemJsonTest extends WebTestCase
         $content = $response->getContent();
         $this->assertIsString($content);
 
-        // Decode JSON to check the response data
         $data = json_decode($content, true);
         $this->assertIsArray($data);
-        $this->assertArrayHasKey('player_name', $data);  // This is the key causing the failure
+        $this->assertArrayHasKey('player_name', $data);
         $this->assertEquals($playerName, $data['player_name']);
         $this->assertArrayHasKey('cards', $data);
         $this->assertEquals(['Card1', 'Card2'], $data['cards']);

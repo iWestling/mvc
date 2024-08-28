@@ -54,11 +54,9 @@ class ScoresTest extends TestCase
         $score = new Scores();
         $player = new GamePlayer();
 
-        // Test setting and getting the user ID
         $score->setUserId($player);
         $this->assertSame($player, $score->getUserId());
 
-        // Test setting score and date
         $scoreValue = 200;
         $date = new DateTime('2024-01-01');
 

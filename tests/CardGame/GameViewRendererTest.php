@@ -15,19 +15,15 @@ class GameViewRendererTest extends TestCase
         // Mock the Twig environment
         $twig = $this->createMock(Environment::class);
 
-        // Create a dummy TexasHoldemGame instance
         $game = $this->createMock(TexasHoldemGame::class);
 
-        // Mock the render method to return a response
         $twig->expects($this->once())
             ->method('render')
             ->with('texas/game.html.twig', $this->isType('array'))
             ->willReturn('rendered_template');
 
-        // Instantiate GameViewRenderer with the mocked Twig environment
         $renderer = new GameViewRenderer($twig);
 
-        // Call renderGameView and check the response
         $response = $renderer->renderGameView($game);
 
         $this->assertInstanceOf(Response::class, $response);

@@ -44,19 +44,16 @@ class TexasHoldemGameTest extends TestCase
         // Create a mock HandEvaluator
         $mockHandEvaluator = $this->createMock(HandEvaluator::class);
 
-        // Create a mock WinnerEvaluator and set up the expectation for getHandEvaluator
         $mockWinnerEvaluator = $this->createMock(WinnerEvaluator::class);
         $mockWinnerEvaluator->expects($this->once())
             ->method('getHandEvaluator')
             ->willReturn($mockHandEvaluator);
 
-        // Inject the mock WinnerEvaluator into TexasHoldemGame
         $reflection = new ReflectionClass(TexasHoldemGame::class);
         $winnerEvaluProp = $reflection->getProperty('winnerEvaluator');
         $winnerEvaluProp->setAccessible(true);
         $winnerEvaluProp->setValue($this->game, $mockWinnerEvaluator);
 
-        // Call the getHandEvaluator method and assert it returns the mock
         $result = $this->game->getHandEvaluator();
         $this->assertSame($mockHandEvaluator, $result);
     }

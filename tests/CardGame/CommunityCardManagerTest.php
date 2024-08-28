@@ -12,7 +12,6 @@ class CommunityCardManagerTest extends TestCase
 {
     public function testDealCommunityCardsAddsCardsToCommunity(): void
     {
-        // Mocking the Deck to return predefined CardGraphic objects
         $deck = $this->createMock(Deck::class);
         $deck->method('drawCard')->willReturn(new CardGraphic(1, 'hearts'));
 
@@ -37,7 +36,6 @@ class CommunityCardManagerTest extends TestCase
 
     public function testResetCommunityCardsClearsCommunityCards(): void
     {
-        // Mocking the Deck to return predefined CardGraphic objects
         $deck = $this->createMock(Deck::class);
         $deck->method('drawCard')->willReturn(new CardGraphic(1, 'hearts'));
 
@@ -52,7 +50,6 @@ class CommunityCardManagerTest extends TestCase
 
     public function testDealInitialCardsAddsCardsToPlayerHands(): void
     {
-        // Mocking the Deck to return predefined CardGraphic objects
         $deck = $this->createMock(Deck::class);
         $deck->method('drawCard')->willReturn(new CardGraphic(1, 'hearts'));
 
@@ -60,13 +57,11 @@ class CommunityCardManagerTest extends TestCase
         $player1 = $this->createMock(Player::class);
         $player2 = $this->createMock(Player::class);
 
-        // Expecting `addCardToHand` method to be called twice for each player
         $player1->expects($this->exactly(2))->method('addCardToHand');
         $player2->expects($this->exactly(2))->method('addCardToHand');
 
         $communityCardManager = new CommunityCardManager($deck);
         $communityCardManager->dealInitialCards([$player1, $player2]);
 
-        // Since the actual cards are added in the mock, we just ensure the calls were made
     }
 }

@@ -17,8 +17,8 @@ class MoneyHandlingTest extends TestCase
 
         [$newPlayerMoney, $newDealerMoney] = $moneyHandler->handleMoney($gameResult, $playerBet, $playerMoney, $dealerMoney);
 
-        $this->assertEquals(70, $newPlayerMoney); // Player's money should increase by 2 times the bet
-        $this->assertEquals(50, $newDealerMoney); // Dealer's money should remain the same
+        $this->assertEquals(70, $newPlayerMoney); // Players money should increase by 2 times the bet
+        $this->assertEquals(50, $newDealerMoney); // Dealers money should remain the same
     }
 
     public function testHandleMoneyDealerWins(): void
@@ -31,8 +31,8 @@ class MoneyHandlingTest extends TestCase
 
         [$newPlayerMoney, $newDealerMoney] = $moneyHandler->handleMoney($gameResult, $playerBet, $playerMoney, $dealerMoney);
 
-        $this->assertEquals(50, $newPlayerMoney); // Player's money should remain the same
-        $this->assertEquals(70, $newDealerMoney); // Dealer's money should increase by 2 times the bet
+        $this->assertEquals(50, $newPlayerMoney);
+        $this->assertEquals(70, $newDealerMoney);
     }
 
     public function testHandleMoneyTie(): void
@@ -45,8 +45,8 @@ class MoneyHandlingTest extends TestCase
 
         [$newPlayerMoney, $newDealerMoney] = $moneyHandler->handleMoney($gameResult, $playerBet, $playerMoney, $dealerMoney);
 
-        $this->assertEquals(60, $newPlayerMoney); // Player's money should increase by the bet
-        $this->assertEquals(60, $newDealerMoney); // Dealer's money should increase by the bet
+        $this->assertEquals(60, $newPlayerMoney);
+        $this->assertEquals(60, $newDealerMoney);
     }
 
     public function testHandleMoneyNoChange(): void
@@ -59,7 +59,7 @@ class MoneyHandlingTest extends TestCase
 
         [$newPlayerMoney, $newDealerMoney] = $moneyHandler->handleMoney($gameResult, $playerBet, $playerMoney, $dealerMoney);
 
-        $this->assertEquals(50, $newPlayerMoney); // Player's money should remain the same
-        $this->assertEquals(50, $newDealerMoney); // Dealer's money should remain the same
+        $this->assertEquals(50, $newPlayerMoney);
+        $this->assertEquals(50, $newDealerMoney);
     }
 }

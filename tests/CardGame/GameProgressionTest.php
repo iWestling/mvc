@@ -32,7 +32,6 @@ class GameProgressionTest extends TestCase
 
         $advancer = new GameProgression($viewRenderer);
 
-        // Call the method and assert that it returns a Response
         $response = $advancer->advancePhaseIfNeeded($session, $game, 3, 3);
 
         $this->assertInstanceOf(Response::class, $response);
@@ -45,7 +44,6 @@ class GameProgressionTest extends TestCase
         $session = $this->createMock(SessionInterface::class);
         $viewRenderer = $this->createMock(GameViewRenderer::class);
 
-        // Mock game behavior
         $game->method('isGameOver')->willReturn(false);
         $game->method('getPotManager')
             ->willReturn($this->createConfiguredMock(PotManager::class, [
@@ -56,10 +54,8 @@ class GameProgressionTest extends TestCase
             ->method('set')
             ->with('current_action_index', 0);
 
-        // Instantiate the GameProgression object
         $advancer = new GameProgression($viewRenderer);
 
-        // Call the method and assert that it returns a RedirectResponse
         $response = $advancer->advancePhaseIfNeeded($session, $game, 3, 3);
 
         $this->assertInstanceOf(Response::class, $response);

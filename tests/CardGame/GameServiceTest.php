@@ -63,7 +63,6 @@ class GameServiceTest extends TestCase
                 ['dealerMoney', null, 100],
             ]);
 
-        // Separate expectation statements for each call
         $this->session->expects($this->exactly(2))
             ->method('set')
             ->willReturnCallback(function ($name, $value) {

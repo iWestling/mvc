@@ -19,10 +19,8 @@ class HandEvaluatorTest extends TestCase
 
     protected function setUp(): void
     {
-        // Mock the HandRankingEvaluator
         $this->mockRankingEvaluator = $this->createMock(HandRankingEvaluator::class);
 
-        // Inject the mocked HandRankingEvaluator into HandEvaluator
         $this->handEvaluator = new HandEvaluator($this->mockRankingEvaluator);
     }
 
@@ -38,7 +36,6 @@ class HandEvaluatorTest extends TestCase
             new CardGraphic(7, 'clubs'),
         ];
 
-        // Configure the mock to return a valid array for each call to evaluateHand
         $this->mockRankingEvaluator->method('evaluateHand')
             ->willReturn(['rank' => 'Straight', 'values' => [5]]);
 
@@ -126,7 +123,6 @@ class HandEvaluatorTest extends TestCase
 
         $result = $method->invoke($this->handEvaluator, $values1, $values2);
 
-        // Ensure that the result is an integer, otherwise handle it accordingly
         if (!is_int($result)) {
             throw new UnexpectedValueException('Expected an integer from compareHandValues.');
         }

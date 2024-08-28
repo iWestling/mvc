@@ -27,7 +27,6 @@ class GamePlayerTest extends TestCase
         $player = new GamePlayer();
         $this->assertNull($player->getId());
 
-        // Set the ID manually to test the getter
         $reflection = new ReflectionClass(GamePlayer::class);
         $property = $reflection->getProperty('idn');
         $property->setAccessible(true);
@@ -40,7 +39,6 @@ class GamePlayerTest extends TestCase
         $player = new GamePlayer();
         $this->assertNull($player->getUsername());
 
-        // Set the username manually to test the getter
         $reflection = new ReflectionClass(GamePlayer::class);
         $property = $reflection->getProperty('username');
         $property->setAccessible(true);
@@ -61,7 +59,6 @@ class GamePlayerTest extends TestCase
         $player = new GamePlayer();
         $this->assertNull($player->getAge());
 
-        // Set the age manually to test the getter
         $reflection = new ReflectionClass(GamePlayer::class);
         $property = $reflection->getProperty('age');
         $property->setAccessible(true);

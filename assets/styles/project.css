@@ -118,6 +118,10 @@ footer {
     text-align: center;
 }
 
+.startbutton {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
 
 .winner-announcement {
     text-align: center;

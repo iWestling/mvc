@@ -148,14 +148,85 @@
     
             <h2 id="kmom07/10">Kmom07/10</h2> 
             <p>Rapport för kmom07/10.</p>
-            <p>Krav: 1-3:<br>
-            För mitt projekt valde jag att göra ett Texas Hold’em spel. Jag valde därför att skapa en enkel sida med grön bakgrund för att efterlikna ett pokerbord. Då utseendet inte hade några stora krav och jag insåg att spel-logiken förmodligen skulle kräva mycket jobb valde jag att inte lägga alltför mycket tid på utseendet av sidan, jag såg bara till att göra den annorlunda än rapport-sidan genom att lägga till ett nytt stylesheet med lite enkel css.<br>
-            Jag skapade sedan en TexasHoldemController där jag skapade nya /proj och /proj/about routes som renderade mina vyer jag lagt i en specifik texas-mapp och skrev en liten kort introduktion till projektet. 
+            
+            <h3>Krav: 1-3:</h3>
+
+            <p>För mitt projekt valde jag att göra ett Texas Hold’em spel. Jag valde därför att skapa en enkel sida med grön bakgrund för att efterlikna ett pokerbord. Då utseendet inte hade några stora krav och jag insåg att spel-logiken förmodligen skulle kräva mycket jobb valde jag att inte lägga alltför mycket tid på utseendet av sidan, jag såg bara till att göra den annorlunda än rapport-sidan genom att lägga till ett nytt stylesheet med lite enkel css.<br>
+            Jag skapade sedan en TexasHoldemController där jag skapade nya /proj och /proj/about routes som renderade mina vyer jag lagt i en specifik texas-mapp och skrev en liten kort introduktion till projektet.<br>
             <br>
-            Mitt repo har en readme.md-fil där jag har klickbara badges som leder till uppdaterade Scrutinizer rapporter för build, coverage och quality. Jag skrev en kort introduktion och beskrivning av innehållet samt hur man klonar och startar det.<br>
-            Jag gjorde tester för nästan allt och uppnådde över 90% kodtäckning (vilket jag kommer prata lite mer utförligt om i krav 6) samt genererade dokumentation och metrics.
+            För själva projektet skapade jag en startsida där man kan välja hur mycket man går in i spelet med (hur många chips) samt vilken nivå spelarna man möter ska vara på. Sedan startas spelet genom att gå till play-routen. Kortfattat fungerar det såhär: Större delen av spel-logiken hanteras av olika separata klasser (models enligt mvc-mönstret), t.ex. hanteras spelets olika faser (pre-flop, flop, turn, river, showdown) av GameStageManager, utdelning av community-card korten av CommunityCardManager, pot-hantering av PotManager och så vidare.<br>
+            När spelet börjar tilldelas alla spelare en roll (dealer, small blind eller big blind) och blindsen hanteras utifrån det i PlayerActionInit. Efter det utförs spelarnas aktioner med hjälp av lite olika klasser som TexasHoldemGame och PlayerActionHandler, allt kopplat till varandra då man måste kunna låta andra spelare “svara” på andras aktioner även efter sin tur om t.ex. den sista spelaren raisar.<br>
+            Du som spelare väljer dina aktioner genom att klicka på knappar men datorspelarna agerar utifrån en satt strategi baserat på sin svårighetsnivå och korten de har (NormalComputer och IntelligentComputer). HandEvaluator och HandRankingEvaluator hjälper till att bedöma “värdet” på spelarnas kort och vilken som är deras bästa hand och WinnerEvaluator tar sedan fram vinnaren.<br>
+            <br>
+            Mitt repo har en readme.md-fil där jag har klickbara badges som leder till uppdaterade Scrutinizer rapporter för build, coverage och quality. Jag skrev en kort introduktion och beskrivning av innehållet samt hur man klonar och startar det. 
+            Jag gjorde tester för nästan allt och uppnådde över 90% kodtäckning (vilket jag kommer prata lite mer utförligt om i krav 6) samt genererade dokumentation och metrics.</p>
             </p>
-            <p>Krav 4:<br>
+            <br>
+            <h3>Krav: 4:</h3>
+            <br>
+            <p>
+            För krav 4 skapade jag en ny TexasHoldemJson-fil där jag skapade routes för mitt API.<br>
+            Jag valde att skapa 3 GET routes; <br>
+            1. getGameState, som får ut all information om spelet i nuvarande stadium <br>
+            2. getCommunityCards, som får ut informationen om alla utlagda community cards (floppen, turnen och rivern).<br>
+            3. getPlayerCards, som får ut informationen om valfri spelares kort<br>
+            Sedan skapade jag 3 POST routes:<br>
+            1. startNewGame, som startar ett nytt spel.<br>
+            2. resetGame, som startar om spelet.<br>
+            3. setChips, där man kan sätta valfri spelares chips till valfritt nummer genom att skriva in siffran via formulär. <br>
+            Dess routes länkas sedan i knappar i min api-vy och öppnas i ett nytt fönster. Allt skrivs ut med Json pretty print för att få det snyggt upplagt. <br>
+            Man kan använda dessa både efter att ha skapat ett nytt spel via api men även när man är mitt i ett spel. <br>
+            </p>
+            <br>
+            <h3>Krav 5:</h3>
+            <br>
+            <p>
+            För min databas via ORM gjorde jag två tabeller, en för GamePlayer och en för Score. Jag har en en-till-många relation mellan tabellerna där varje GamePlayer kan ha flera scores. <br>
+            I GamePlayer har vi idn som primary key medan username och age sparar information om spelaren.I Score är har vi också en idn som primary key medan user_id är en foreign key som länkar till idn i GamePlayer-tabellen. Score och date sparar sedan information om resulatet och tiden den sparades. <br>
+            <br>
+            När jag gjorde detta projekt var jag väldigt osäker på hur det var tänkt att jag skulle implementera databasen. Först tänkte jag att det inte spelade någon roll vad den gjorde så länge den var en fungerande databas på sidan, men sedan insåg jag att man nog ville att man implementerade det i spelet. Därför gjorde jag så att man, när man har vunnit en runda och tagit hem en pot, kan spara detta och därmed hamna på en highscore–lista över vilka spelare som tagit hem de största poker-potterna. <br>
+            Jag skapade GamePlayerController som hanterar mina databas-relaterade routes där jag visar tabeller för spelare samt highscore-listan som kombinerar spelartabellen med scores-tabellen, detta via en funktion i min ScoresRepository. Själva submitScore funktionen återfinns i min ScoreService och använder sig utav mina Scores och GamePlayer entitiys och för att resetta databasen skapade jag en PlayerScoreResetService där jag först tar bort den existerande datan och sedan insertar original-datan. <br>
+            </p>
+            <br>
+            <h3>Krav 6:</h3>
+            <br>
+            <p>
+            Mitt projekt har varit ganska omfattande då det krävdes en hel del logik för att få spelet att fungera. Jag spenderade många timmar på att få till dessa features: 
+            <br>
+            Utvärdering av värdet på händerna. För detta krävdes det att jag först rankade vilka händer som är bäst, allt från ett par till kåk till royal straight flush (något jag ärligt talat inte hade stor koll på innan), för att sedan loopa igenom spelarnas händerna och få ut den bästa möjliga handen (5 kort max) av alla tillgängliga kort, detta vid varje ny fas i spelet. När jag väl fått ut vad man hade för hand krävdes det även att jämföra värden på korten, t.ex. att ett par kungar vinner över ett par sjuor, och sedan att jämföra övriga kortvärden (“kickers”) utifall att det skulle behövas en tie-breaker. <br>
+            För att göra det enklare för spelaren gjorde jag en liten “cheat-flik” där man kan klicka och inte bara se de andra spelarnas händer utan även se vilken som är din och deras bästa möjliga hand samt värdet på deras kort och kickers. 
+            <br>
+            Att göra olika intelligens på computer-spelarna (dvs koda mer specific cases för den intelligenta spelaren) gick ganska bra, jag introducerade bland annat även en liten chans att den intelligenta spelaren kan bluffa och gå all-in. Det större problemet var att få till hur spelarna agerade och reagerade på händelser, som t.ex. att om Du och Computer 1 checkat och Computer 2 senare i turen väljer raise så måste man “gå tillbaka” så att du och Computer 1 kan välja att calla eller folda innan du kan gå vidare till nästa fas. Det kräves väldigt många “checks” för att kolla att olika krav var uppfyllda och jag använde ett “current bet” för att hela tiden hålla koll på om spelare behövde calla an raise eller ett blind bet för att gå vidare. 
+            Vilket även leder mig in till nästa krångliga del:<br>
+            <br>
+            Att rotera roller och därmed blinds. Detta låter kanske inte så konstigt, men det krävdes mycket tid att få till då spelarna alltid måste calla big blind för att gå vidare och all logik kring spelarens aktioner konstant måste ta hänsyn till turordningen. <br>
+            <br>
+            Jag lyckades även få över 90% kodtäckning på min kod vilket krävde väldigt mycket tid. De flesta kodrader är täckta då jag även gjorde tester för controllers och databas. <br>
+            </p>
+
+
+
+
+
+            <br>
+
+
+            <h3>Allmänt om projektet:</h3><br>
+            <p>
+            Jag tycker att det varit kul att arbeta med projektet, men såhär i efterhand tror jag att jag borde ha jobbat vidare på t.ex. mitt gamla Blackjack-spel eller gjort något annat än Texas Holdem då det krävdes väldigt mycket tid att få till det och det finns förmodligen fortfarande edge-cases som jag inte stött på där min lösning inte är helt komplett än. Jag stötte på problem vid olika logik-tänk och när jag väl gjort en lösning som jag tyckte fungerade bra fick jag anmärkningar av min linter/phpstan som gjorde att jag fick ändra om i koden (t.ex. at refactora den till andra klasser för att minska complexity) och så plötsligt fungerade inte lösningen igen och krävde fler timmar av kodande. <br>
+            Jag skulle alltså uppskatta att själva spellogiken och testningen krävde ca 90% av all min tid jag lade ner, andra delar som sidan, API och Databas gick väldigt lätt i jämförelse, nästan på den nivå att jag fick dubbelkolla flera gånger att jag faktiskt gjort allt som behövde göras. <br>
+            <br>
+            Då studentservern inte fungerat under sommaren kunde jag inte testa koden där medan jag jobbade, så när jag väl gjorde det stötte jag dock på lite problem där också, t.ex. gick det första inte att använda en annan css-fil som jag använde till projekt-sidan då jag behövde lägga till den som .addEntry i min webpack.config.js och inte som .addStyleEntry vilket hade fungerat lokalt. <br>
+            <br>
+            Jag tycker att projektet var rimligt, jag ville satsa högt och valde därför Texas Holdem-projektet då läraren beskrev det som svårt, men det hade kanske varit mer humant att satsa på ett enklare spel och gjort det mer utförligt. <br>
+            </p>
+            <br>
+
+            <h3>Allmänt om kursen.</h3>
+            <br>
+            <p>
+            Kursen har varit väldigt bra och lärorik. Det har varit bra kursmaterial och informerande övningar och jag tycker att handledningen varit toppen. Att lärarna alltid finns tillgängliga på discord är verkligen guld värt och ofta behöver man inte ens fråga den fråga man vill ställa då man kan söka där och hitta svar. <br>
+            Pga sjukdom i familjen fick jag pausa kursen ett tag vilket inte var optimalt för inlärningen, men trots detta tycker jag nog att detta är den kurs jag lärt mig mest i hittills. Jag skulle absolut rekommendera denna kurs till andra och ger den ett betyg på 9 av 10. Om jag skulle komma med förbättringsförslag kanske det är att kraven vid vissa uppgifter inte alltid är helt tydliga, men det är allt jag kan komma på. <br>
             </p>
         </div>
     </div>
