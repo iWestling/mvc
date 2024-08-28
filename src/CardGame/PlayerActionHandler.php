@@ -72,16 +72,17 @@ class PlayerActionHandler
             $this->processRaiseResponses($game);
         }
     }
+
     public function processNextPlayerActions(TexasHoldemGame $game): void
     {
         $playersInOrder = $game->getPlayersInOrder();
         $currentBet = $game->getPotManager()->getCurrentBet();
-
+    
         foreach ($playersInOrder as $player) {
             if (!$player->isFolded() && $player->getChips() > 0) {
                 $decision = $player->makeDecision($game->getCommunityCardManager()->getCommunityCards(), $currentBet);
                 $game->handleAction($player, $decision);
-
+    
                 // If only one player remains, end the game
                 if ($game->countActivePlayers() === 1) {
                     $game->determineWinner();
@@ -90,12 +91,13 @@ class PlayerActionHandler
                 }
             }
         }
-
-        // Automatically advance the game stage if all players have matched the current bet
+    
+        // After all actions, automatically advance the game stage if needed
         if ($game->getPotManager()->haveAllActivePlayersMatchedCurrentBet($game->getPlayers())) {
             $game->advanceGameStage();
         }
     }
+    
     public function processRaiseResponses(TexasHoldemGame $game): void
     {
         $currentBet = $game->getPotManager()->getCurrentBet();

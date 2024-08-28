@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GameHandlerServiceTest extends TestCase
 {
@@ -17,6 +18,11 @@ class GameHandlerServiceTest extends TestCase
      * @var GameViewRenderer|MockObject
      */
     private $gameViewRenderer;
+
+    /**
+     * @var UrlGeneratorInterface|MockObject
+     */
+    private $urlGenerator;
 
     /**
      * @var GameHandlerService
@@ -42,7 +48,8 @@ class GameHandlerServiceTest extends TestCase
     {
         // Create mock objects for dependencies
         $this->gameViewRenderer = $this->createMock(GameViewRenderer::class);
-        $this->gameHandlerService = new GameHandlerService($this->gameViewRenderer);
+        $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $this->gameHandlerService = new GameHandlerService($this->gameViewRenderer, $this->urlGenerator);
         $this->game = $this->createMock(TexasHoldemGame::class);
         $this->playerActionHandler = $this->createMock(PlayerActionHandler::class);
         $this->session = $this->createMock(SessionInterface::class);
@@ -122,6 +129,9 @@ class GameHandlerServiceTest extends TestCase
 
     public function testHandleGameStatusWhenPhaseAdvanced(): void
     {
+        // Mock the URL generation
+        $this->urlGenerator->method('generate')->with('proj_play')->willReturn('/proj/play');
+
         // @phpstan-ignore-next-line
         $response = $this->gameHandlerService->handleGameStatus($this->game, 'phase_advanced');
 

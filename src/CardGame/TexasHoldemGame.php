@@ -181,8 +181,6 @@ class TexasHoldemGame
             case 'all-in':
                 $this->actionInit->handleAllIn($player);
                 $this->setAllInOccurred(true); // Set the flag when an All-In occurs
-
-                // Handle actions for the remaining players
                 $this->handleRemainingPlayersAfterAllIn($this->actionHandler);
                 break;
         }
