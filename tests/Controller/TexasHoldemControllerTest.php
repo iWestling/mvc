@@ -247,7 +247,7 @@ class TexasHoldemControllerTest extends TestCase
 
     public function testPlayRoundWithNormalScenario(): void
     {
-        $this->session->method('get')
+        $this->session->/** @scrutinizer ignore-call */ method('get')
             ->willReturnMap([
                 ['game', null, $this->game],
                 ['current_action_index', 0, 0]
@@ -276,7 +276,7 @@ class TexasHoldemControllerTest extends TestCase
     {
         $request = new Request();
 
-        $this->session->method('get')
+        $this->session->/** @scrutinizer ignore-call */ method('get')
             ->willReturnMap([
                 ['game', null, $this->game],
                 ['current_action_index', 0, 0]
@@ -301,7 +301,7 @@ class TexasHoldemControllerTest extends TestCase
     {
         $request = new Request();
 
-        $this->session->method('get')
+        $this->session->/** @scrutinizer ignore-call */ method('get')
             ->willReturnMap([
                 ['game', null, $this->game],
                 ['current_action_index', 0, 0]
